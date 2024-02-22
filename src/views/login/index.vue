@@ -44,17 +44,18 @@
 
 <script setup lang="ts">
 import { User, Lock } from "@element-plus/icons-vue";
-import { reqLogin } from "@/api/user";
+import useUserStore from "@/store/user";
+import { useRoute, useRouter } from "vue-router";
 //收集账号与密码的数据
 let loginForm = reactive({ username: "admin", password: "atguigu123" });
-function login() {
-  reqLogin({ username: loginForm.username, password: loginForm.password })
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+const store = useUserStore();
+const $route = useRoute();
+//获取路由器
+let $router = useRouter();
+async function login() {
+  await store.userLogin(loginForm);
+  let redirect: any = $route.query.redirect;
+  $router.push({ path: redirect || "/" });
 }
 </script>
 

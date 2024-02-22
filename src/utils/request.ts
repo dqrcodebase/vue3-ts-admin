@@ -1,6 +1,7 @@
 //进行axios二次封装:使用请求与响应拦截器
 import axios from "axios";
 import { ElMessage } from "element-plus";
+import type { loginResponseData } from "@/api/user/type";
 //引入用户相关的仓库
 // import useUserStore from "@/store/modules/user";
 //第一步:利用axios对象的create方法,去创建axios实例(其他的配置:基础路径、超时的时间)
@@ -24,11 +25,11 @@ request.interceptors.request.use((config) => {
 //第三步:响应拦截器
 request.interceptors.response.use(
   (response) => {
-    console.log("🚀 ~ response:", response);
     //成功回调
     //简化数据
     //http状态码
     const code = response.data.code;
+    console.log("🚀 ~ response:", response);
     switch (code) {
       case 9999:
         //提示错误信息
