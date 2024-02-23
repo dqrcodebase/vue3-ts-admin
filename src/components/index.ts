@@ -1,7 +1,9 @@
 import SvgIcon from "./SvgIcon/index.vue";
+import Layout from "./Layout/index.vue";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
 const globalComponents: any = {
   SvgIcon,
+  Layout,
 };
 
 export default {
