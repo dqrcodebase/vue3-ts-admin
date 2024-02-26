@@ -1,7 +1,9 @@
 <template>
-  <div class="common-layout">
+  <div class="admin-layout">
     <el-container>
-      <AdminAside></AdminAside>
+      <el-aside>
+        <AdminAside></AdminAside>
+      </el-aside>
       <el-container>
         <el-header>
           <AdminHeader></AdminHeader>
@@ -20,3 +22,11 @@ import AdminAside from "./AdminAside.vue";
 import AdminMain from "./AdminMain.vue";
 import AdminFooter from "./AdminFooter.vue";
 </script>
+<style scoped>
+.admin-layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+</style>

@@ -1,7 +1,8 @@
 <template>
   <div aria-label="A complete example of page header">
     <div @click="layoutStore.setIsCollapse">
-      <el-icon><Fold /></el-icon>
+      <el-icon v-if="!layoutStore.getIsCollapse"><Fold /></el-icon>
+      <el-icon v-else><Expand /></el-icon>
     </div>
     <el-page-header @back="onBack">
       <template #breadcrumb>
