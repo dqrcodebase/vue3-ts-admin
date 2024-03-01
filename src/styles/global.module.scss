@@ -1,0 +1,6 @@
+// 如果要使用:export导出scss变量，则文件名必须以.module.scss结尾
+@import './variable.scss';
+
+:export {
+  baseMenuBackground: $base-menu-background;
+}

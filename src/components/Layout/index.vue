@@ -1,9 +1,7 @@
 <template>
   <div class="admin-layout">
     <el-container>
-      <el-aside>
-        <AdminAside></AdminAside>
-      </el-aside>
+      <AdminAside></AdminAside>
       <el-container>
         <el-header>
           <AdminHeader></AdminHeader>

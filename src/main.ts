@@ -11,6 +11,7 @@ const pinia = createPinia();
 //引入模板的全局的样式
 import "@/styles/index.scss";
 import "virtual:svg-icons-register";
+import globalStyle from "@/styles/global.module.scss";
 const app = createApp(App);
 app
   .use(ElementPlus, {
@@ -19,4 +20,6 @@ app
   .use(router)
   .use(globalComponent)
   .use(pinia);
+
+app.config.globalProperties.$globalStyle = globalStyle;
 app.mount("#app");
