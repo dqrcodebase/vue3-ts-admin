@@ -1,19 +1,18 @@
 <template>
   <MySubMenuItem v-if="route.children" :route="route" />
-  <MyMenuItem v-else />
+  <MyMenuItem v-else :route="route" />
 </template>
 
-<script setup>
+<script setup lang="ts">
 import MyMenuItem from "@/components/Menu/components/MyMenuItem.vue";
 import MySubMenuItem from "@/components/Menu/components/MySubMenuItem.vue";
-const props = defineProps({
+import type { RouteRecordRaw } from "vue-router";
+defineProps({
   route: {
-    type: Object,
+    type: Object as PropType<RouteRecordRaw>,
     required: true,
   },
 });
-const { route } = toRefs(props);
-console.log("🚀 ~ route:", route);
 </script>
 
 <style scoped></style>

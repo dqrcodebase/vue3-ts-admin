@@ -27,6 +27,109 @@ function createUserList() {
     },
   ];
 }
+function createRoutes() {
+  return [
+    {
+      path: "/acl",
+      // component: () => import("@/components/Layout/index.vue"),
+      name: "Acl",
+      meta: {
+        title: "权限管理",
+        icon: "Lock",
+      },
+      redirect: "/acl/user",
+      children: [
+        {
+          path: "/acl/user",
+          // component: () => import("@/views/Acl/User/index.vue"),
+          name: "User",
+          meta: {
+            title: "用户管理",
+            icon: "User",
+          },
+        },
+        {
+          path: "/acl/role",
+          // component: () => import("@/views/acl/role/index.vue"),
+          name: "Role",
+          meta: {
+            title: "角色管理",
+            icon: "UserFilled",
+          },
+        },
+        {
+          path: "/acl/permission2",
+          // component: () => import("@/views/acl/permission/index.vue"),
+          name: "Permission2",
+          meta: {
+            title: "菜单管理1",
+            icon: "Monitor",
+          },
+          children: [
+            {
+              path: "/acl/permission/category",
+              name: "Category",
+              meta: {
+                title: "菜单分类",
+              },
+            },
+            {
+              path: "/acl/permission/menu",
+              name: "MenuList",
+              meta: {
+                title: "菜单列表",
+                icon: "Menu",
+              },
+            },
+          ],
+        },
+      ],
+    },
+    {
+      path: "/product",
+      name: "Product",
+      meta: {
+        title: "商品管理",
+        icon: "Goods",
+      },
+      redirect: "/product/trademark",
+      children: [
+        {
+          path: "/product/trademark",
+          name: "Trademark",
+          meta: {
+            title: "品牌管理",
+            icon: "ShoppingCartFull",
+          },
+        },
+        {
+          path: "/product/attr",
+          name: "Attr",
+          meta: {
+            title: "属性管理",
+            icon: "ChromeFilled",
+          },
+        },
+        {
+          path: "/product/spu",
+          name: "Spu",
+          meta: {
+            title: "SPU管理",
+            icon: "Calendar",
+          },
+        },
+        {
+          path: "/product/sku",
+          name: "Sku",
+          meta: {
+            title: "SKU管理",
+            icon: "Orange",
+          },
+        },
+      ],
+    },
+  ];
+}
 //对外暴露一个数组:数组里面包含两个接口
 //登录假的接口
 //获取用户信息的假的接口
@@ -66,6 +169,17 @@ export default [
       }
       //如果有返回成功信息
       return { code: 200, data: { checkUser } };
+    },
+  },
+  {
+    url: "/api/user/routes",
+    method: "get",
+    response: (request) => {
+      //获取请求头携带token
+      const token = request.headers.token;
+      console.log("🚀 ~ token:", token);
+      if (!token) return { code: 200, data: { message: "获取用户信息失败" } };
+      return { code: 200, data: createRoutes() };
     },
   },
 ];

@@ -10,6 +10,7 @@ enum API {
   LOGIN_URL = "/api/user/login",
   USERINFO_URL = "/admin/acl/index/info",
   LOGOUT_URL = "/admin/acl/index/logout",
+  USER_ROUTES = "/api/user/routes",
 }
 
 export function reqLogin(data: loginFormData) {
@@ -22,4 +23,12 @@ export function reqLogin(data: loginFormData) {
 
 export function reqUserInfo() {
   return request<any, userInfoResponseData>({ url: API.USERINFO_URL });
+}
+
+export function reqLogout() {
+  return request<any>({ url: API.LOGOUT_URL });
+}
+
+export function reqUserRoutes() {
+  return request<any>({ url: API.USER_ROUTES });
 }

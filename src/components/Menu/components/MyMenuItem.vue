@@ -1,10 +1,20 @@
 <template>
-  <el-menu-item index="1-1">
-    <el-icon><component :is /></el-icon>
-    <span>666</span>
-  </el-menu-item>
+  <el-menu-item :index="route.path" :key="route.path">
+    <el-icon v-if="route.meta?.icon"
+      ><component :is="route.meta.icon"
+    /></el-icon>
+    <span>{{ route.meta?.title }}</span></el-menu-item
+  >
 </template>
 
-<script setup></script>
+<script lang="ts" setup>
+import type { RouteRecordRaw } from "vue-router";
+defineProps({
+  route: {
+    type: Object as PropType<RouteRecordRaw>,
+    required: true,
+  },
+});
+</script>
 
 <style scoped></style>

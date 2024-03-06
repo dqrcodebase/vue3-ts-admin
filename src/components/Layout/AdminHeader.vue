@@ -1,54 +1,84 @@
 <template>
   <div aria-label="A complete example of page header">
-    <div @click="layoutStore.setIsCollapse">
-      <el-icon v-if="!layoutStore.getIsCollapse"><Fold /></el-icon>
-      <el-icon v-else><Expand /></el-icon>
-    </div>
-    <el-page-header @back="onBack">
-      <template #breadcrumb>
-        <el-breadcrumb separator="/">
-          <el-breadcrumb-item :to="{ path: './page-header.html' }">
-            homepage
-          </el-breadcrumb-item>
-          <el-breadcrumb-item
-            ><a href="./page-header.html">route 1</a></el-breadcrumb-item
-          >
-          <el-breadcrumb-item>route 2</el-breadcrumb-item>
-        </el-breadcrumb>
-      </template>
-      <template #content>
-        <div class="flex items-center">
-          <el-avatar
-            class="mr-3"
-            :size="32"
-            src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-          />
-          <span class="text-large font-600 mr-3"> Title </span>
-          <span
-            class="text-sm mr-2"
-            style="color: var(--el-text-color-regular)"
-          >
-            Sub title
-          </span>
-          <el-tag>Default</el-tag>
-        </div>
-      </template>
-      <template #extra>
-        <div class="flex items-center">
-          <el-button>Print</el-button>
-          <el-button type="primary" class="ml-2">Edit</el-button>
-        </div>
-      </template>
-    </el-page-header>
+    <header @click="layoutStore.setIsCollapse">
+      <div class="admin-header-collapsed-button">
+        <el-icon v-if="!layoutStore.getIsCollapse"><Fold /></el-icon>
+        <el-icon v-else><Expand /></el-icon>
+      </div>
+      <div>
+        <el-avatar
+          class="mr-3"
+          :size="32"
+          src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+        />
+      </div>
+    </header>
+    <el-tabs
+      v-model="editableTabsValue"
+      type="card"
+      class="demo-tabs"
+      closable
+      @tab-remove="removeTab"
+    >
+      <el-tab-pane
+        v-for="item in editableTabs"
+        :key="item.name"
+        :label="item.title"
+        :name="item.name"
+      />
+    </el-tabs>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ElNotification as notify } from "element-plus";
 import useLayoutStore from "@/store/layout";
 const layoutStore = useLayoutStore();
 
-const onBack = () => {
-  notify("Back");
+import { ref } from "vue";
+
+let tabIndex = 2;
+const editableTabsValue = ref("2");
+const editableTabs = ref([
+  {
+    title: "Tab 1",
+    name: "1",
+    content: "Tab 1 content",
+  },
+  {
+    title: "Tab 2",
+    name: "2",
+    content: "Tab 2 content",
+  },
+]);
+
+const addTab = (targetName: string) => {
+  const newTabName = `${++tabIndex}`;
+  editableTabs.value.push({
+    title: "New Tab",
+    name: newTabName,
+    content: "New Tab content",
+  });
+  editableTabsValue.value = newTabName;
+};
+const removeTab = (targetName: string) => {
+  const tabs = editableTabs.value;
+  let activeName = editableTabsValue.value;
+  if (activeName === targetName) {
+    tabs.forEach((tab, index) => {
+      if (tab.name === targetName) {
+        const nextTab = tabs[index + 1] || tabs[index - 1];
+        if (nextTab) {
+          activeName = nextTab.name;
+        }
+      }
+    });
+  }
+
+  editableTabsValue.value = activeName;
+  editableTabs.value = tabs.filter((tab) => tab.name !== targetName);
 };
 </script>
+<style scoped lang="scss">
+header {
+}
+</style>
