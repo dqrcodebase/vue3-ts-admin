@@ -12,6 +12,7 @@ const pinia = createPinia();
 import "@/styles/index.scss";
 import "virtual:svg-icons-register";
 import globalStyle from "@/styles/global.module.scss";
+import "uno.css";
 const app = createApp(App);
 app
   .use(ElementPlus, {

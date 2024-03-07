@@ -5,7 +5,7 @@ import path from "path";
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import { viteMockServe } from "vite-plugin-mock";
 import AutoImport from "unplugin-auto-import/vite";
-
+import UnoCSS from "unocss/vite";
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
   return {
@@ -22,6 +22,7 @@ export default defineConfig(({ command, mode }) => {
         imports: ["vue"],
         dts: "src/auto-import.d.ts",
       }),
+      UnoCSS(),
     ],
     resolve: {
       alias: {
