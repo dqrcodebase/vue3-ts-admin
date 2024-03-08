@@ -31,8 +31,8 @@ function createRoutes() {
   return [
     {
       path: "/acl",
-      // component: () => import("@/components/Layout/index.vue"),
-      name: "Acl",
+      component: () => import("layout/default/index.vue"),
+      name: "acl",
       meta: {
         title: "权限管理",
         icon: "Lock",
@@ -41,8 +41,8 @@ function createRoutes() {
       children: [
         {
           path: "/acl/user",
-          // component: () => import("@/views/Acl/User/index.vue"),
-          name: "User",
+          component: () => import("@/views/acl/user/index.vue"),
+          name: "user",
           meta: {
             title: "用户管理",
             icon: "User",
@@ -60,7 +60,7 @@ function createRoutes() {
         {
           path: "/acl/permission2",
           // component: () => import("@/views/acl/permission/index.vue"),
-          name: "Permission2",
+          name: "permission2",
           meta: {
             title: "菜单管理1",
             icon: "Monitor",
@@ -90,7 +90,7 @@ function createRoutes() {
       name: "Product",
       meta: {
         title: "商品管理",
-        icon: "Goods",
+        icon: "goods",
       },
       redirect: "/product/trademark",
       children: [

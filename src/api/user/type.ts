@@ -1,7 +1,7 @@
 //定义用户相关数据的ts类型
 //用户登录接口携带参数的ts类型
+import type { AppRouteRecordRaw } from "@/router/type";
 
-import type { RouteRecordRaw } from "vue-router";
 export interface loginFormData {
   username: string;
   password: string;
@@ -34,5 +34,5 @@ export interface userInfoResponseData extends ResponseData {
 
 //定义获取用户路由返回数据类型
 export interface userRoutesResponseData extends ResponseData {
-  data: RouteRecordRaw[];
+  data: AppRouteRecordRaw[];
 }

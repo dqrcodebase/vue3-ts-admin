@@ -6,10 +6,11 @@
       :background-color="$globalStyle.baseMenuBackground"
       :text-color="$globalStyle.baseMenuColor"
       :collapse="layoutStore.getIsCollapse"
+      :router="true"
       @open="handleOpen"
       @close="handleClose"
     >
-      <Menu
+      <LayoutMenu
         v-for="item in userStore.userRoutes"
         :route="item"
         :key="item.name"
@@ -18,12 +19,22 @@
   </div>
 </template>
 <script lang="ts" setup>
-import Menu from "@/components/Menu/index.vue";
+import LayoutMenu from "layouts/default/menu/index.vue";
 import useLayoutStore from "@/store/layout";
 import useUserStore from "@/store/user";
+import { useRouter } from "vue-router";
 const layoutStore = useLayoutStore();
 const userStore = useUserStore();
+const router = useRouter();
 userStore.reqUserRoutes();
+userStore.userRoutes.forEach((item) => {
+  router.addRoute(item);
+});
+console.log(
+  "🚀 ~ userStore.userRoutes.forEach ~ userStore.userRoutes:",
+  userStore.userRoutes,
+);
+
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);
 };

@@ -3,11 +3,15 @@ import { defineStore } from "pinia";
 import { getLocalStorage, setLocalStorage } from "@/utils";
 import { reqLogin, reqUserInfo, reqUserRoutes } from "@/api/user";
 import { RouteRecordRaw } from "vue-router";
+import { constantMenuRoute } from "@/router/routers";
+import { formatRoutes } from "@/utils/common";
 import type {
   loginFormData,
   loginResponseData,
   userInfoResponseData,
+  userRoutesResponseData,
 } from "@/api/user/type";
+
 interface UserState {
   token?: string;
   userInfo: Nullable<UserInfo>;
@@ -43,9 +47,10 @@ export default defineStore("user", {
     },
     async reqUserRoutes() {
       // 请求路由
-      const res = await reqUserRoutes();
-      console.log("🚀 ~ reqUserRoutes ~ res:", res);
-      this.userRoutes = res.data;
+      const res: userRoutesResponseData = await reqUserRoutes();
+      const routes = formatRoutes(res.data);
+      console.log("🚀 ~ reqUserRoutes ~ routes:", routes);
+      this.userRoutes = [...constantMenuRoute, ...routes];
     },
     setToken(token: string) {
       this.token = token;

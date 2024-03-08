@@ -4,7 +4,6 @@
       v-model="editableTabsValue"
       type="card"
       class="demo-tabs"
-      closable
       @tab-remove="removeTab"
     >
       <el-tab-pane
@@ -12,11 +11,14 @@
         :key="item.name"
         :label="item.title"
         :name="item.name"
+        closable
       >
         <template #label>
           <span class="flex flex-bc">
-            <span class="mr-10px">Route</span>
-            <el-icon class="font-18"><RefreshRight /></el-icon>
+            <span class="mr-10px">{{ item.title }}</span>
+            <el-icon v-if="editableTabsValue === item.name" class="font-18"
+              ><RefreshRight
+            /></el-icon>
           </span>
         </template>
       </el-tab-pane>
@@ -39,7 +41,6 @@ const editableTabs = ref([
     content: "Tab 2 content",
   },
 ]);
-
 const addTab = (targetName: string) => {
   const newTabName = `${++tabIndex}`;
   editableTabs.value.push({
@@ -66,4 +67,10 @@ const removeTab = (targetName: string) => {
   editableTabsValue.value = activeName;
   editableTabs.value = tabs.filter((tab) => tab.name !== targetName);
 };
+watch(
+  () => editableTabsValue.value,
+  (val) => {
+    console.log(val);
+  },
+);
 </script>

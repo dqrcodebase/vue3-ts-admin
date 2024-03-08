@@ -1,24 +1,24 @@
 <template>
   <div class="admin-layout">
     <el-container>
-      <AdminAside></AdminAside>
+      <LayoutAside></LayoutAside>
       <el-container>
         <el-header>
-          <AdminHeader></AdminHeader>
+          <LayoutHeader></LayoutHeader>
         </el-header>
         <el-main>
-          <AdminMain></AdminMain>
+          <LayoutContent></LayoutContent>
         </el-main>
       </el-container>
     </el-container>
-    <AdminFooter>Footer</AdminFooter>
+    <LayoutFooter>Footer</LayoutFooter>
   </div>
 </template>
 <script setup>
-import AdminHeader from "./AdminHeader.vue";
-import AdminAside from "./AdminAside.vue";
-import AdminMain from "./AdminMain.vue";
-import AdminFooter from "./AdminFooter.vue";
+import LayoutHeader from "layouts/default/header/index.vue";
+import LayoutAside from "layouts/default/aside/index.vue";
+import LayoutContent from "layouts/default/content/index.vue";
+import LayoutFooter from "layouts/default/footer/index.vue";
 </script>
 <style scoped lang="scss">
 .admin-layout {

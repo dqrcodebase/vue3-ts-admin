@@ -1,7 +1,8 @@
-import type { RouteRecordRaw } from "vue-router";
+import type { AppRouteRecordRaw } from "@/router/type";
+import { LAYOUT } from "@/router/constant";
 
 //对外暴露配置路由(常量路由):全部用户都可以访问到的路由
-export const constantRoute: Array<RouteRecordRaw> = [
+export const constantRoute: Array<AppRouteRecordRaw> = [
   {
     //登录
     path: "/login",
@@ -16,25 +17,9 @@ export const constantRoute: Array<RouteRecordRaw> = [
   {
     //登录成功以后展示数据的路由
     path: "/",
-    component: () => import("@/components/Layout/index.vue"),
-    name: "Home",
-    meta: {
-      title: "",
-      hidden: false,
-      icon: "",
-    },
     redirect: "/home",
-    children: [
-      {
-        path: "/home",
-        component: () => import("@/views/Home/index.vue"),
-        meta: {
-          title: "首页",
-          hidden: false,
-          icon: "HomeFilled",
-        },
-      },
-    ],
+    name: "/",
+    meta: {},
   },
   // {
   //   //404
@@ -59,15 +44,30 @@ export const constantRoute: Array<RouteRecordRaw> = [
   // },
 ];
 
-// //任意路由
-// export const anyRoute = {
-//   //任意路由
-//   path: "/:pathMatch(.*)*",
-//   redirect: "/404",
-//   name: "Any",
-//   meta: {
-//     title: "任意路由",
-//     hidden: true,
-//     icon: "DataLine",
-//   },
-// };
+//在菜单栏的常规路由
+export const constantMenuRoute: Array<AppRouteRecordRaw> = [
+  {
+    path: "/home",
+    name: "home",
+    component: LAYOUT,
+    meta: {
+      title: "首页",
+      hidden: false,
+      icon: "HomeFilled",
+      hideChildrenInMenu: true,
+    },
+    children: [
+      {
+        path: "/home",
+        name: "homePage",
+        component: () => import("@/views/home/index.vue"),
+        meta: {
+          title: "首页",
+          hidden: false,
+          icon: "HomeFilled",
+          hideMenu: true,
+        },
+      },
+    ],
+  },
+];
