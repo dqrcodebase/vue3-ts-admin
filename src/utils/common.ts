@@ -1,23 +1,50 @@
-// import { useRouter } from "vue-router";
-// console.log("🚀 ~ useRouter:", useRouter);
-// const router = useRouter();
-// console.log("🚀 ~ router:", router);
-// 格式化路由
-export function formatRoutes(routes: any[]) {
-  const fmtRoutes: any[] = [];
-  routes.forEach((route) => {
-    const { componentPath, children } = route;
-    const component = () => import(componentPath);
-    delete route.componentPath;
-    const fmtRoute = {
-      ...route,
-      component,
-    };
-    if (children && children.length) {
-      route.children = formatRoutes(children);
+import type { AppRouteRecordRaw } from "/src/router/types";
+const viewsComponent: Record<string, any> = import.meta.glob(
+  "/src/views/**/*.vue",
+  { eager: true },
+);
+const layoutComponent: Record<string, any> = import.meta.glob(
+  "/layouts/default/index.vue",
+  { eager: true },
+);
+
+// 格式化路由,将component转换为真实的组件,并且将children转换为嵌套路由
+// export function formatRoutes(routes: AppRouteRecordRaw[]): AppRouteRecordRaw[] {
+//   return routes.map((item) => {
+//     const { component, children, ...otherProps } = item;
+//     const route: AppRouteRecordRaw = {
+//       ...otherProps,
+//       component: component && viewsComponent[component as string],
+//       children: children && formatRoutes(children),
+//     };
+//     return route;
+//   });
+// }
+export function formatRoutes(routes: Array<any>) {
+  const val = [];
+  for (let i = 0; i < routes.length; i++) {
+    if (!routes[i].component) break;
+
+    if (routes[i].children) {
+      const component = layoutComponent[routes[i].component];
+      if (component && component.default) {
+        val[i] = {
+          ...routes[i],
+          component: component.default,
+          children: [],
+        };
+        val[i].children = formatRoutes(routes[i].children);
+      }
+    } else if (routes[i].component) {
+      const component = viewsComponent[routes[i].component];
+
+      if (component && component.default) {
+        val[i] = {
+          ...routes[i],
+          component: component.default,
+        };
+      }
     }
-    fmtRoutes.push(fmtRoute);
-  });
-  return fmtRoutes;
+  }
+  return val;
 }
-// 获取接口配置的路由，并引入对应页面的component

@@ -11,7 +11,6 @@ import type {
   userInfoResponseData,
   userRoutesResponseData,
 } from "@/api/user/type";
-
 interface UserState {
   token?: string;
   userInfo: Nullable<UserInfo>;
@@ -29,6 +28,9 @@ export default defineStore("user", {
     },
     getUserInfo(): UserInfo {
       return this.userInfo || getLocalStorage("userInfo") || {};
+    },
+    getUserRoutes(): Array<RouteRecordRaw> {
+      return this.userRoutes;
     },
   },
   actions: {

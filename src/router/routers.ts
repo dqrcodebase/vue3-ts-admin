@@ -21,6 +21,7 @@ export const constantRoute: Array<AppRouteRecordRaw> = [
     name: "/",
     meta: {},
   },
+
   // {
   //   //404
   //   path: "/404",
@@ -66,6 +67,26 @@ export const constantMenuRoute: Array<AppRouteRecordRaw> = [
           hidden: false,
           icon: "HomeFilled",
           hideMenu: true,
+        },
+      },
+    ],
+  },
+  {
+    path: "/test",
+    component: () => import("layouts/default/index.vue"),
+    name: "test",
+    meta: {
+      title: "测试",
+      icon: "Lock",
+    },
+    children: [
+      {
+        path: "/test/user",
+        component: () => import("@/views/test/user/index.vue"),
+        name: "userTest",
+        meta: {
+          title: "用户测试",
+          icon: "test",
         },
       },
     ],
