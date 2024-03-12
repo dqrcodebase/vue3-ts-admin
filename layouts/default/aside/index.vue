@@ -22,18 +22,8 @@
 import LayoutMenu from "layouts/default/menu/index.vue";
 import useLayoutStore from "@/store/layout";
 import useUserStore from "@/store/user";
-import { useRouter } from "vue-router";
-import { storeToRefs } from "pinia";
 const layoutStore = useLayoutStore();
 const userStore = useUserStore();
-const { userRoutes } = storeToRefs(userStore);
-const router = useRouter();
-watch(userRoutes, (newVal) => {
-  newVal.forEach((item) => {
-    router.addRoute(item);
-  });
-  console.log("---------------", router.getRoutes());
-});
 userStore.reqUserRoutes();
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath);

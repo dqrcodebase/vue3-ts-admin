@@ -5,55 +5,19 @@
 import useUserStore from "@/store/user";
 import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
-import { AppRouteRecordRaw } from "./router/type";
-// const viewsComponent: Record<string, any> = import.meta.glob(
-//   "/src/views/**/*.vue",
-//   { eager: true },
-// );
-// const layoutComponent: Record<string, any> = import.meta.glob(
-//   "/layouts/default/index.vue",
-//   { eager: true },
-// );
+import type { AppRouteRecordRaw } from "./router/type";
+import type { RouteRecordRaw } from "vue-router";
+
 const userStore = useUserStore();
-// const { userRoutes } = storeToRefs(userStore);
-// const router = useRouter();
-// watch(userRoutes, (newVal) => {
-//   formatRoutes(newVal);
-// });
+const { userRoutes } = storeToRefs(userStore);
+const router = useRouter();
+watch(userRoutes, (newVal) => {
+  newVal.forEach((route: AppRouteRecordRaw) => {
+    router.addRoute(route as RouteRecordRaw);
+  });
+  console.log("---------", router.getRoutes());
+});
 
-// function formatRoutes(newVal) {
-//   console.log("🚀 ~ formatRoutes ~ newVal:", newVal);
-//   for (let i = 0; i < newVal.length; i++) {
-//     if (!newVal[i].component) return;
-//     console.log(
-//       "🚀 ~ formatRoutes ~ newVal[i].component:",
-//       newVal[i].component,
-//     );
-
-//     if (newVal[i].children) {
-//       const component = layoutComponent[newVal[i].component];
-//       if (component && component.default) {
-//         newVal[i] = {
-//           ...newVal[i],
-//           component: component.default,
-//         };
-//       }
-//       router.addRoute(newVal[i]);
-
-//       formatRoutes(newVal[i].children);
-//     } else if (newVal[i].component) {
-//       const component = viewsComponent[newVal[i].component];
-
-//       if (component && component.default) {
-//         newVal[i] = {
-//           ...newVal[i],
-//           component: component.default,
-//         };
-//       }
-//       router.addRoute(newVal[i]);
-//     }
-//   }
-// }
 userStore.reqUserRoutes();
 </script>
 <style>

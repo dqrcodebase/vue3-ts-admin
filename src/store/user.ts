@@ -2,7 +2,7 @@ import type { UserInfo } from "types/store";
 import { defineStore } from "pinia";
 import { getLocalStorage, setLocalStorage } from "@/utils";
 import { reqLogin, reqUserInfo, reqUserRoutes } from "@/api/user";
-import { RouteRecordRaw } from "vue-router";
+import type { AppRouteRecordRaw } from "@/router/type";
 import { constantMenuRoute } from "@/router/routers";
 import { formatRoutes } from "@/utils/common";
 import type {
@@ -14,7 +14,7 @@ import type {
 interface UserState {
   token?: string;
   userInfo: Nullable<UserInfo>;
-  userRoutes: Array<RouteRecordRaw>;
+  userRoutes: Array<AppRouteRecordRaw>;
 }
 export default defineStore("user", {
   state: (): UserState => ({
@@ -29,7 +29,7 @@ export default defineStore("user", {
     getUserInfo(): UserInfo {
       return this.userInfo || getLocalStorage("userInfo") || {};
     },
-    getUserRoutes(): Array<RouteRecordRaw> {
+    getUserRoutes(): Array<AppRouteRecordRaw> {
       return this.userRoutes;
     },
   },
@@ -51,7 +51,6 @@ export default defineStore("user", {
       // 请求路由
       const res: userRoutesResponseData = await reqUserRoutes();
       const routes = formatRoutes(res.data);
-      console.log("🚀 ~ reqUserRoutes ~ routes:", routes);
       this.userRoutes = [...constantMenuRoute, ...routes];
     },
     setToken(token: string) {

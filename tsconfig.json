@@ -24,7 +24,7 @@
     "paths": {
       "@/*": ["src/*"],
       "#/*": ["types/*"],
-      "layouts/*": ["layouts/*"],
+      "layouts/*": ["layouts/*"]
     }
   },
   "include": [
@@ -36,6 +36,9 @@
     "layouts/**/*.ts",
     "layouts/**/*.tsx",
     "layouts/**/*.vue",
+    "router/**/*.vue",
+    "router/**/*.tsx",
+    "router/**/*.ts",
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
