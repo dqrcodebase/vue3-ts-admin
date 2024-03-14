@@ -38,7 +38,7 @@
     "layouts/**/*.vue",
     "router/**/*.vue",
     "router/**/*.tsx",
-    "router/**/*.ts",
+    "router/**/*.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
