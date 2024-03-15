@@ -37,12 +37,12 @@ module.exports = {
     "no-var": "error", // 要求使用 let 或 const 而不是 var
     "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-unexpected-multiline": "error", // 禁止空余的多行
+    "no-unexpected-multiline": "error", // 禁止使用令人困惑的多行表达式
     "no-useless-escape": "off", // 禁止不必要的转义字符
     "no-undef": "off", // 禁用未声明的变量
 
     // typeScript (https://typescript-eslint.io/rules)
-    "@typescript-eslint/no-unused-vars": "error", // 禁止定义未使用的变量
+    "@typescript-eslint/no-unused-vars": "off", // 禁止定义未使用的变量
     "@typescript-eslint/prefer-ts-expect-error": "error", // 禁止使用 @ts-ignore
     "@typescript-eslint/no-explicit-any": "off", // 禁止使用 any 类型
     "@typescript-eslint/no-non-null-assertion": "off",
@@ -60,6 +60,8 @@ module.exports = {
       "error",
       {
         // 解决 prettier 与 eslint 冲突
+        //  Prettier 的默认行为是删除连续的空行，这是不能通过配置来更改的
+        // 所以对于有多个空行报 Delete `⏎`错误，不可以通过配置来解决
         endOfLine: "auto",
       },
     ],

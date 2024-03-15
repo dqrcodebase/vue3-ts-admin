@@ -58,6 +58,7 @@
     "eslint-plugin-vue": "^9.21.1",
     "express": "^4.16.4",
     "husky": "^8.0.0",
+    "lint-staged": "^15.2.2",
     "postcss": "^8.4.35",
     "postcss-html": "^1.6.0",
     "postcss-scss": "^4.0.9",
