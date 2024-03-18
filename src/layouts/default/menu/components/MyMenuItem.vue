@@ -12,6 +12,7 @@
 </template>
 
 <script lang="ts" setup>
+import type { RouteRecordRaw } from "vue-router";
 defineProps({
   route: {
     type: Object as PropType<RouteRecordRaw>,

@@ -9,6 +9,7 @@
       :router="true"
       @open="handleOpen"
       @close="handleClose"
+      @select="handleSelect"
     >
       <LayoutMenu
         v-for="item in userStore.userRoutes"
@@ -22,15 +23,26 @@
 import LayoutMenu from "@/layouts/default/menu/index.vue";
 import useLayoutStore from "@/store/layout";
 import useUserStore from "@/store/user";
+import { useRouter } from "vue-router";
 const layoutStore = useLayoutStore();
 const userStore = useUserStore();
-userStore.reqUserRoutes();
+const router = useRouter();
+
 const handleOpen = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+  console.log("handleOpen", key, keyPath);
 };
 
-let handleClose = (key: string, keyPath: string[]) => {
-  console.log(key, keyPath);
+const handleClose = (key: string, keyPath: string[]) => {
+  console.log("handleClose", key, keyPath);
+};
+const handleSelect = (
+  key: string,
+  keyPath: string,
+  item: any,
+  routeResult: any,
+) => {
+  console.log("handleSelect", key, keyPath, item, routeResult.value);
+  layoutStore.setOpenTabs(routeResult);
 };
 </script>
 <style scoped lang="scss">

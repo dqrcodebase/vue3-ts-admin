@@ -14,7 +14,10 @@ export default defineConfig({
     "flex-ac": "flex justify-around items-center",
     "flex-bc": "flex justify-between items-center",
   },
-  rules: [[/^font-(\d+)$/, ([, d]) => ({ "font-size": `${d}px` })]],
+  rules: [
+    [/^font-(\d+)$/, ([, d]) => ({ "font-size": `${d}px` })],
+    ["theme-color", { color: `#1890ff` }],
+  ],
   presets: [
     presetUno(),
     presetAttributify(),
