@@ -15,10 +15,10 @@
   </div>
 </template>
 <script setup>
-import LayoutHeader from "layouts/default/header/index.vue";
-import LayoutAside from "layouts/default/aside/index.vue";
-import LayoutContent from "layouts/default/content/index.vue";
-import LayoutFooter from "layouts/default/footer/index.vue";
+import LayoutHeader from "@/layouts/default/header/index.vue";
+import LayoutAside from "@/layouts/default/aside/index.vue";
+import LayoutContent from "@/layouts/default/content/index.vue";
+import LayoutFooter from "@/layouts/default/footer/index.vue";
 </script>
 <style scoped lang="scss">
 .admin-layout {

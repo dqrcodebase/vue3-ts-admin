@@ -71,24 +71,4 @@ export const constantMenuRoute: Array<AppRouteRecordRaw> = [
       },
     ],
   },
-  {
-    path: "/test",
-    component: () => import("layouts/default/index.vue"),
-    name: "test",
-    meta: {
-      title: "测试",
-      icon: "Lock",
-    },
-    children: [
-      {
-        path: "/test/user",
-        component: () => import("@/views/test/user/index.vue"),
-        name: "userTest",
-        meta: {
-          title: "用户测试",
-          icon: "test",
-        },
-      },
-    ],
-  },
 ];

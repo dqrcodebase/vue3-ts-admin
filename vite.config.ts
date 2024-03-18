@@ -35,7 +35,7 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         "@": path.resolve("./src"),
         "#": path.resolve("./types"),
-        layouts: path.resolve("./layouts"),
+        layouts: path.resolve("./src/layouts"),
       },
     },
     css: {

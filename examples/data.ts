@@ -1,9 +1,11 @@
-export const createRoutes = () => {
+import type { AppRouteRecordRaw } from "../src/router/type.d.ts";
+
+export const createRoutes = (): Array<AppRouteRecordRaw> => {
   return [
     {
       path: "/acl",
       // component: () => import("layout/default/index.vue"),
-      component: "/layouts/default/index.vue",
+      component: "/src/layouts/default/index.vue",
       name: "acl",
       meta: {
         title: "权限管理",

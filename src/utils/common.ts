@@ -4,7 +4,7 @@ const viewsComponent: Record<string, any> = import.meta.glob(
   { eager: true },
 );
 const layoutComponent: Record<string, any> = import.meta.glob(
-  "/layouts/default/index.vue",
+  "@/layouts/default/index.vue",
   { eager: true },
 );
 

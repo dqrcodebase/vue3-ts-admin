@@ -1,21 +1,9 @@
 import express from "express";
 import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import multipart from "connect-multiparty";
-import path from "path";
-import { fileURLToPath } from "url";
 import { createRoutes } from "./data.js";
 
 const router = express.Router();
 const app = express();
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-app.use(cookieParser());
-app.use(
-  multipart({
-    uploadDir: path.resolve(__dirname, "upload-file"),
-  }),
-);
 //设置跨域访问
 app.all("*", function (req, res, next) {
   //设置允许跨域的域名，*代表允许任意域名跨域
@@ -36,13 +24,6 @@ app.all("*", function (req, res, next) {
   }
 });
 registerUserRouter();
-app.use(
-  express.static(__dirname, {
-    setHeaders(res) {
-      res.cookie("XSRF-TOKEN-D", "1234abc");
-    },
-  }),
-);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

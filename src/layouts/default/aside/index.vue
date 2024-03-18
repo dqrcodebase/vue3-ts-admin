@@ -19,7 +19,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import LayoutMenu from "layouts/default/menu/index.vue";
+import LayoutMenu from "@/layouts/default/menu/index.vue";
 import useLayoutStore from "@/store/layout";
 import useUserStore from "@/store/user";
 const layoutStore = useLayoutStore();

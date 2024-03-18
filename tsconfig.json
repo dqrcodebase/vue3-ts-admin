@@ -23,8 +23,7 @@
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"],
-      "#/*": ["types/*"],
-      "layouts/*": ["layouts/*"]
+      "#/*": ["types/*"]
     }
   },
   "include": [
@@ -33,9 +32,6 @@
     "src/**/*.vue",
     "types/**/*.d.ts",
     "types/**/*.ts",
-    "layouts/**/*.ts",
-    "layouts/**/*.tsx",
-    "layouts/**/*.vue",
     "router/**/*.vue",
     "router/**/*.tsx",
     "router/**/*.ts"
