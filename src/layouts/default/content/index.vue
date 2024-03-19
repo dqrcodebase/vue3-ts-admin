@@ -23,7 +23,6 @@
           </el-dropdown>
         </template>
       </el-tab-pane>
-      {{ openTabs }}
       <el-tab-pane
         v-for="item in openTabs"
         :key="item.name"

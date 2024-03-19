@@ -15,11 +15,19 @@ export const createRoutes = (): Array<AppRouteRecordRaw> => {
       children: [
         {
           path: "/acl/user",
-          // component: () => import("@/views/acl/user/index.vue"),
           component: "/src/views/acl/user/index.vue",
           name: "user",
           meta: {
             title: "用户管理",
+            icon: "User",
+          },
+        },
+        {
+          path: "/acl/router",
+          component: "/src/views/acl/router/index.vue",
+          name: "router",
+          meta: {
+            title: "路由配置",
             icon: "User",
           },
         },
