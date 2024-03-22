@@ -30,5 +30,8 @@ import LayoutFooter from "@/layouts/default/footer/index.vue";
     height: auto;
     box-shadow: 0 1px 4px rgba(0, 21, 41, 0.09);
   }
+  .el-main {
+    --el-main-padding: 0;
+  }
 }
 </style>

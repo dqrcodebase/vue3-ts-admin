@@ -49,9 +49,11 @@ export default defineStore("user", {
     },
     async reqUserRoutes() {
       // 请求路由
-      const res: userRoutesResponseData = await reqUserRoutes();
-      const routes = formatRoutes(res.data);
-      this.userRoutes = [...constantMenuRoute, ...routes];
+      // const res: userRoutesResponseData = await reqUserRoutes();
+      // const routes = formatRoutes(res.data);
+      // this.userRoutes = [...constantMenuRoute, ...routes];
+      this.userRoutes = constantMenuRoute;
+      return this.userRoutes;
     },
     setToken(token: string) {
       this.token = token;

@@ -28,7 +28,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(router);
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8090;
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}, Ctrl+C to stop`);
 });
@@ -52,11 +52,13 @@ router.get("/sse", (req, res) => {
 
 function registerUserRouter() {
   router.get("/user/routes", function (req, res) {
-    console.log("-------------------------");
+    // console.log("-------------------------");
     const token = req.headers.token;
     console.log("🚀 ~ token:", token);
     // if (!token) return { code: 200, data: { message: "获取用户信息失败" } };
     const data = { code: 200, data: createRoutes() };
-    res.json(data);
+    setTimeout(() => {
+      res.json(data);
+    }, 2000);
   });
 }
