@@ -17,6 +17,7 @@ export default defineConfig({
   rules: [
     [/^font-(\d+)$/, ([, d]) => ({ "font-size": `${d}px` })],
     ["theme-color", { color: `#1890ff` }],
+    [/^border-radius-(\d+)$/, ([, d]) => ({ "border-radius": `${d}px` })],
   ],
   presets: [
     presetUno(),
