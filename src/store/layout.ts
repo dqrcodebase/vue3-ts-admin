@@ -1,8 +1,9 @@
 import { defineStore } from "pinia";
-import type { AppRouteRecordRaw } from "/@/router/types";
+import type { AppRouteRecordRaw } from "@/router/type.d.ts";
 interface LayoutState {
   isCollapse: boolean;
   openTabs: AppRouteRecordRaw[];
+  activeTab: string;
 }
 
 export default defineStore("layout", {
@@ -10,6 +11,7 @@ export default defineStore("layout", {
     isCollapse: false,
     // 打开页面的tab
     openTabs: [],
+    activeTab: "",
   }),
   getters: {
     getIsCollapse(): boolean {
@@ -18,6 +20,9 @@ export default defineStore("layout", {
     getOpenTabs(): AppRouteRecordRaw[] {
       return this.openTabs;
     },
+    getActiveTab(): string {
+      return this.activeTab;
+    },
   },
   actions: {
     setIsCollapse() {
@@ -25,11 +30,12 @@ export default defineStore("layout", {
     },
     setOpenTabs(route: AppRouteRecordRaw) {
       const index = this.openTabs.findIndex((item) => item.path === route.path);
-      console.log("🚀 ~ setOpenTabs ~ index:", index, route);
       if (index === -1 && route.path !== "/home") {
         this.openTabs.push(route);
       }
-      console.log("🚀 ~ setOpenTabs ~ this.openTabs:", this.openTabs);
+    },
+    setActiveTab(path: string) {
+      this.activeTab = path;
     },
   },
 });

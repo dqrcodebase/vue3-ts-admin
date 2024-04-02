@@ -20,6 +20,7 @@ defineProps({
   },
 });
 const handleMenuItemClick = (item: RouteRecordRaw) => {
+  console.log("🚀 ~ handleMenuItemClick ~ item:", item);
   const { isExt, extOpenMode } = item.meta || {};
   if (isExt && extOpenMode !== 2) {
     window.open(item.path);

@@ -1,15 +1,13 @@
 import type { UserInfo } from "types/store";
 import { defineStore } from "pinia";
 import { getLocalStorage, setLocalStorage } from "@/utils";
-import { reqLogin, reqUserInfo, reqUserRoutes } from "@/api/user";
+import { reqLogin, reqUserInfo } from "@/api/user";
 import type { AppRouteRecordRaw } from "@/router/type";
 import { constantMenuRoute } from "@/router/routers";
-import { formatRoutes } from "@/utils/common";
 import type {
   loginFormData,
   loginResponseData,
   userInfoResponseData,
-  userRoutesResponseData,
 } from "@/api/user/type";
 interface UserState {
   token?: string;

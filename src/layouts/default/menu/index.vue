@@ -9,10 +9,10 @@
 <script setup lang="ts">
 import MyMenuItem from "@/layouts/default/menu/components/MyMenuItem.vue";
 import MySubMenuItem from "@/layouts/default/menu/components/MySubMenuItem.vue";
-import type { RouteRecordRaw } from "vue-router";
+import type { AppRouteRecordRaw } from "@/router/types";
 defineProps({
   route: {
-    type: Object as PropType<RouteRecordRaw>,
+    type: Object as PropType<AppRouteRecordRaw>,
     required: true,
   },
 });

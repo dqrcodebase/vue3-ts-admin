@@ -22,11 +22,10 @@
 import LayoutMenu from "@/layouts/default/menu/index.vue";
 import useLayoutStore from "@/store/layout";
 import useUserStore from "@/store/user";
-import { onBeforeRouteUpdate, onBeforeRouteLeave, useRouter } from "vue-router";
+import { onBeforeRouteUpdate, onBeforeRouteLeave } from "vue-router";
 
 const layoutStore = useLayoutStore();
 const userStore = useUserStore();
-const router = useRouter();
 
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log("handleOpen", key, keyPath);
@@ -36,11 +35,9 @@ const handleClose = (key: string, keyPath: string[]) => {
   console.log("handleClose", key, keyPath);
 };
 onBeforeRouteUpdate((to) => {
-  console.log("🚀 ~ to:onBeforeRouteUpdate", to);
   layoutStore.setOpenTabs(to);
 });
 onBeforeRouteLeave((to, from) => {
-  console.log("🚀 ~ to:onBeforeRouteLeave", to, from);
   layoutStore.setOpenTabs(to);
 });
 </script>
