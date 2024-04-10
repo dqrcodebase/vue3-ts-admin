@@ -1,9 +1,9 @@
 <template>
   <el-sub-menu :index="route.path">
     <template #title>
-      <el-icon v-if="route.meta?.icon"
-        ><component :is="route.meta.icon"
-      /></el-icon>
+      <el-icon v-if="route.meta?.icon">
+        <component :is="route.meta.icon" />
+      </el-icon>
       <span>{{ route.meta?.title }}</span>
     </template>
     <template v-for="item in route.children">
@@ -14,8 +14,8 @@
 </template>
 
 <script setup lang="ts">
-import MyMenuItem from "./MyMenuItem.vue";
-import type { RouteRecordRaw } from "vue-router";
+import MyMenuItem from './MyMenuItem.vue';
+import type { RouteRecordRaw } from 'vue-router';
 defineProps({
   route: {
     type: Object as PropType<RouteRecordRaw>,

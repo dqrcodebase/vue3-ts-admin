@@ -1,20 +1,20 @@
-import type { UserInfo } from "types/store";
-import { defineStore } from "pinia";
-import { getLocalStorage, setLocalStorage } from "@/utils";
-import { reqLogin, reqUserInfo } from "@/api/user";
-import type { AppRouteRecordRaw } from "@/router/type";
-import { constantMenuRoute } from "@/router/routers";
+import type { UserInfo } from 'types/store';
+import { defineStore } from 'pinia';
+import { getLocalStorage, setLocalStorage } from '@/utils';
+import { reqLogin, reqUserInfo } from '@/api/user';
+import type { AppRouteRecordRaw } from '@/router/type';
+import { constantMenuRoute } from '@/router/routers';
 import type {
   loginFormData,
   loginResponseData,
   userInfoResponseData,
-} from "@/api/user/type";
+} from '@/api/user/type';
 interface UserState {
   token?: string;
   userInfo: Nullable<UserInfo>;
   userRoutes: Array<AppRouteRecordRaw>;
 }
-export default defineStore("user", {
+export default defineStore('user', {
   state: (): UserState => ({
     token: undefined,
     userInfo: null,
@@ -22,10 +22,10 @@ export default defineStore("user", {
   }),
   getters: {
     getToken(): string {
-      return this.token || getLocalStorage("token") || "";
+      return this.token || getLocalStorage('token') || '';
     },
     getUserInfo(): UserInfo {
-      return this.userInfo || getLocalStorage("userInfo") || {};
+      return this.userInfo || getLocalStorage('userInfo') || {};
     },
     getUserRoutes(): Array<AppRouteRecordRaw> {
       return this.userRoutes;
@@ -55,11 +55,11 @@ export default defineStore("user", {
     },
     setToken(token: string) {
       this.token = token;
-      setLocalStorage("token", token);
+      setLocalStorage('token', token);
     },
     setUserInfo(userInfo: any) {
       this.userInfo = userInfo;
-      setLocalStorage("userInfo", userInfo);
+      setLocalStorage('userInfo', userInfo);
     },
   },
 });

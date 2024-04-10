@@ -1,6 +1,6 @@
 //定义用户相关数据的ts类型
 //用户登录接口携带参数的ts类型
-import type { AppRouteRecordRaw } from "@/router/type";
+import type { AppRouteRecordRaw } from '@/router/type';
 
 export interface loginFormData {
   username: string;

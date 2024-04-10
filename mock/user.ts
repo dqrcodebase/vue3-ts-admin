@@ -4,81 +4,81 @@ function createUserList() {
     {
       userId: 1,
       avatar:
-        "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-      username: "admin",
-      password: "111111",
-      desc: "平台管理员",
-      roles: ["平台管理员"],
-      buttons: ["cuser.detail"],
-      routes: ["home"],
-      token: "Admin Token",
+        'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+      username: 'admin',
+      password: '111111',
+      desc: '平台管理员',
+      roles: ['平台管理员'],
+      buttons: ['cuser.detail'],
+      routes: ['home'],
+      token: 'Admin Token',
     },
     {
       userId: 2,
       avatar:
-        "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
-      username: "system",
-      password: "111111",
-      desc: "系统管理员",
-      roles: ["系统管理员"],
-      buttons: ["cuser.detail", "cuser.user"],
-      routes: ["home"],
-      token: "System Token",
+        'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+      username: 'system',
+      password: '111111',
+      desc: '系统管理员',
+      roles: ['系统管理员'],
+      buttons: ['cuser.detail', 'cuser.user'],
+      routes: ['home'],
+      token: 'System Token',
     },
   ];
 }
 function createRoutes() {
   return [
     {
-      path: "/acl",
-      component: () => import("layout/default/index.vue"),
-      name: "acl",
+      path: '/acl',
+      component: () => import('layout/default/index.vue'),
+      name: 'acl',
       meta: {
-        title: "权限管理",
-        icon: "Lock",
+        title: '权限管理',
+        icon: 'Lock',
       },
-      redirect: "/acl/user",
+      redirect: '/acl/user',
       children: [
         {
-          path: "/acl/user",
-          component: () => import("@/views/acl/user/index.vue"),
-          name: "user",
+          path: '/acl/user',
+          component: () => import('@/views/acl/user/index.vue'),
+          name: 'user',
           meta: {
-            title: "用户管理",
-            icon: "User",
+            title: '用户管理',
+            icon: 'User',
           },
         },
         {
-          path: "/acl/role",
+          path: '/acl/role',
           // component: () => import("@/views/acl/role/index.vue"),
-          name: "Role",
+          name: 'Role',
           meta: {
-            title: "角色管理",
-            icon: "UserFilled",
+            title: '角色管理',
+            icon: 'UserFilled',
           },
         },
         {
-          path: "/acl/permission2",
+          path: '/acl/permission2',
           // component: () => import("@/views/acl/permission/index.vue"),
-          name: "permission2",
+          name: 'permission2',
           meta: {
-            title: "菜单管理1",
-            icon: "Monitor",
+            title: '菜单管理1',
+            icon: 'Monitor',
           },
           children: [
             {
-              path: "/acl/permission/category",
-              name: "Category",
+              path: '/acl/permission/category',
+              name: 'Category',
               meta: {
-                title: "菜单分类",
+                title: '菜单分类',
               },
             },
             {
-              path: "/acl/permission/menu",
-              name: "MenuList",
+              path: '/acl/permission/menu',
+              name: 'MenuList',
               meta: {
-                title: "菜单列表",
-                icon: "Menu",
+                title: '菜单列表',
+                icon: 'Menu',
               },
             },
           ],
@@ -86,44 +86,44 @@ function createRoutes() {
       ],
     },
     {
-      path: "/product",
-      name: "Product",
+      path: '/product',
+      name: 'Product',
       meta: {
-        title: "商品管理",
-        icon: "goods",
+        title: '商品管理',
+        icon: 'goods',
       },
-      redirect: "/product/trademark",
+      redirect: '/product/trademark',
       children: [
         {
-          path: "/product/trademark",
-          name: "Trademark",
+          path: '/product/trademark',
+          name: 'Trademark',
           meta: {
-            title: "品牌管理",
-            icon: "ShoppingCartFull",
+            title: '品牌管理',
+            icon: 'ShoppingCartFull',
           },
         },
         {
-          path: "/product/attr",
-          name: "Attr",
+          path: '/product/attr',
+          name: 'Attr',
           meta: {
-            title: "属性管理",
-            icon: "ChromeFilled",
+            title: '属性管理',
+            icon: 'ChromeFilled',
           },
         },
         {
-          path: "/product/spu",
-          name: "Spu",
+          path: '/product/spu',
+          name: 'Spu',
           meta: {
-            title: "SPU管理",
-            icon: "Calendar",
+            title: 'SPU管理',
+            icon: 'Calendar',
           },
         },
         {
-          path: "/product/sku",
-          name: "Sku",
+          path: '/product/sku',
+          name: 'Sku',
           meta: {
-            title: "SKU管理",
-            icon: "Orange",
+            title: 'SKU管理',
+            icon: 'Orange',
           },
         },
       ],
@@ -136,8 +136,8 @@ function createRoutes() {
 export default [
   // 用户登录接口
   {
-    url: "/api/user/login", //请求地址
-    method: "post", //请求方式
+    url: '/api/user/login', //请求地址
+    method: 'post', //请求方式
     response: ({ body }) => {
       //获取请求体携带过来的用户名与密码
       const { username, password } = body;
@@ -147,7 +147,7 @@ export default [
       );
       //没有用户返回失败信息
       if (!checkUser) {
-        return { code: 9999, data: { message: "账号或者密码不正确" } };
+        return { code: 9999, data: { message: '账号或者密码不正确' } };
       }
       //如果有返回成功信息
       const { token } = checkUser;
@@ -156,8 +156,8 @@ export default [
   },
   // 获取用户信息
   {
-    url: "/api/user/info",
-    method: "get",
+    url: '/api/user/info',
+    method: 'get',
     response: (request) => {
       //获取请求头携带token
       const token = request.headers.token;
@@ -165,20 +165,20 @@ export default [
       const checkUser = createUserList().find((item) => item.token === token);
       //没有返回失败的信息
       if (!checkUser) {
-        return { code: 201, data: { message: "获取用户信息失败" } };
+        return { code: 201, data: { message: '获取用户信息失败' } };
       }
       //如果有返回成功信息
       return { code: 200, data: { checkUser } };
     },
   },
   {
-    url: "/api/user/routes",
-    method: "get",
+    url: '/api/user/routes',
+    method: 'get',
     response: (request) => {
       //获取请求头携带token
       const token = request.headers.token;
-      console.log("🚀 ~ token:", token);
-      if (!token) return { code: 200, data: { message: "获取用户信息失败" } };
+      console.log('🚀 ~ token:', token);
+      if (!token) return { code: 200, data: { message: '获取用户信息失败' } };
       return { code: 200, data: createRoutes() };
     },
   },

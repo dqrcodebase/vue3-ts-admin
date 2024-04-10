@@ -40,20 +40,20 @@
   </ul>
 </template>
 <script setup lang="ts">
-import useLayoutStore from "@/store/layout.ts";
-import { storeToRefs } from "pinia";
-import { useRoute } from "vue-router";
-import type { AppRouteRecordRaw } from "@/router/type.d.ts";
+import useLayoutStore from '@/store/layout.ts';
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import type { AppRouteRecordRaw } from '@/router/type.d.ts';
 const layoutStore = useLayoutStore();
 const { openTabs } = storeToRefs(layoutStore);
 const $route = useRoute();
 function isActive(item: AppRouteRecordRaw) {
-  console.log("🚀 ~ isActive ~ $route.fullPath:", $route.path);
+  console.log('🚀 ~ isActive ~ $route.fullPath:', $route.path);
 
   return item.path === $route.path;
 }
 function openMenu(item: AppRouteRecordRaw, event: MouseEvent) {
-  console.log("🚀 ~ openMenu ~ item", item, event);
+  console.log('🚀 ~ openMenu ~ item', item, event);
 }
 </script>
 

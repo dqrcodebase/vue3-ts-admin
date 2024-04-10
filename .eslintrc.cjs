@@ -5,28 +5,28 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    jest: true,
+    jest: true
   },
   /* 指定如何解析语法 */
-  parser: "vue-eslint-parser",
+  parser: 'vue-eslint-parser',
   /** 优先级低于 parse 的语法解析配置 */
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    parser: "@typescript-eslint/parser",
-    jsxPragma: "React",
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    parser: '@typescript-eslint/parser',
+    jsxPragma: 'React',
     ecmaFeatures: {
-      jsx: true,
-    },
+      jsx: true
+    }
   },
   /* 继承已有的规则 */
   extends: [
-    "eslint:recommended",
-    "plugin:vue/vue3-essential",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
+    'eslint:recommended',
+    'plugin:vue/vue3-essential',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:prettier/recommended'
   ],
-  plugins: ["vue", "@typescript-eslint"],
+  plugins: ['vue', '@typescript-eslint'],
   /*
    * "off" 或 0    ==>  关闭规则
    * "warn" 或 1   ==>  打开的规则作为警告（不影响代码执行）
@@ -34,37 +34,39 @@ module.exports = {
    */
   rules: {
     // eslint（https://eslint.bootcss.com/docs/rules/）
-    "no-var": "error", // 要求使用 let 或 const 而不是 var
-    "no-console": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
-    "no-unexpected-multiline": "error", // 禁止使用令人困惑的多行表达式
-    "no-useless-escape": "off", // 禁止不必要的转义字符
-    "no-undef": "off", // 禁用未声明的变量
+    'no-var': 'error', // 要求使用 let 或 const 而不是 var
+    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-unexpected-multiline': 'error', // 禁止使用令人困惑的多行表达式
+    'no-useless-escape': 'off', // 禁止不必要的转义字符
+    'no-undef': 'off', // 禁用未声明的变量
 
     // typeScript (https://typescript-eslint.io/rules)
-    "@typescript-eslint/no-unused-vars": "off", // 禁止定义未使用的变量
-    "@typescript-eslint/prefer-ts-expect-error": "error", // 禁止使用 @ts-ignore
-    "@typescript-eslint/no-explicit-any": "off", // 禁止使用 any 类型
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-namespace": "off", // 禁止使用自定义 TypeScript 模块和命名空间。
-    "@typescript-eslint/semi": "off",
-    "@typescript-eslint/no-var-requires": "off", // 禁止使用 require 语句
+    '@typescript-eslint/no-unused-vars': 'off', // 禁止定义未使用的变量
+    '@typescript-eslint/prefer-ts-expect-error': 'error', // 禁止使用 @ts-ignore
+    '@typescript-eslint/no-explicit-any': 'off', // 禁止使用 any 类型
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-namespace': 'off', // 禁止使用自定义 TypeScript 模块和命名空间。
+    '@typescript-eslint/semi': 'off',
+    '@typescript-eslint/no-var-requires': 'off', // 禁止使用 require 语句
 
     // eslint-plugin-vue (https://eslint.vuejs.org/rules/)
-    "vue/multi-word-component-names": "off", // 要求组件名称始终为 “-” 链接的单词
-    "vue/script-setup-uses-vars": "error", // 防止<script setup>使用的变量<template>被标记为未使用
-    "vue/no-mutating-props": "off", // 不允许组件 prop的改变
-    "vue/attribute-hyphenation": "off", // 对模板中的自定义组件强制执行属性命名样式
+    'vue/multi-word-component-names': 'off', // 要求组件名称始终为 “-” 链接的单词
+    'vue/script-setup-uses-vars': 'error', // 防止<script setup>使用的变量<template>被标记为未使用
+    'vue/no-mutating-props': 'off', // 不允许组件 prop的改变
+    'vue/attribute-hyphenation': 'off', // 对模板中的自定义组件强制执行属性命名样式
 
     // prettier (https://prettier.io/docs/en/options.html)
-    "prettier/prettier": [
-      "error",
+    'prettier/prettier': [
+      'error',
       {
         // 解决 prettier 与 eslint 冲突
         //  Prettier 的默认行为是删除连续的空行，这是不能通过配置来更改的
         // 所以对于有多个空行报 Delete `⏎`错误，不可以通过配置来解决
-        endOfLine: "auto",
-      },
-    ],
-  },
-};
+        endOfLine: 'auto',
+        singleQuote: true,
+        semi: true
+      }
+    ]
+  }
+}

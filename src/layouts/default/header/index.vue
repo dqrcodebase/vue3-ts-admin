@@ -17,6 +17,6 @@
 </template>
 
 <script setup lang="ts">
-import useLayoutStore from "@/store/layout";
+import useLayoutStore from '@/store/layout';
 const layoutStore = useLayoutStore();
 </script>

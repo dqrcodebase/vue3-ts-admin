@@ -1,6 +1,6 @@
-import type { RouteRecordRaw, RouteMeta } from "vue-router";
+import type { RouteRecordRaw, RouteMeta } from 'vue-router';
 
-export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, "meta"> {
+export interface AppRouteRecordRaw extends Omit<RouteRecordRaw, 'meta'> {
   name: string;
   meta?: RouteMeta;
   component?: Component | string;

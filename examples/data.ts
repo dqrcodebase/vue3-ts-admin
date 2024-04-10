@@ -1,66 +1,66 @@
-import type { AppRouteRecordRaw } from "../src/router/type.d.ts";
+import type { AppRouteRecordRaw } from '../src/router/type.d.ts';
 
 export const createRoutes = (): Array<AppRouteRecordRaw> => {
   return [
     {
-      path: "/acl",
+      path: '/acl',
       // component: () => import("layout/default/index.vue"),
-      component: "/src/layouts/default/index.vue",
-      name: "acl",
+      component: '/src/layouts/default/index.vue',
+      name: 'acl',
       meta: {
-        title: "权限管理",
-        icon: "Lock",
+        title: '权限管理',
+        icon: 'Lock',
       },
-      redirect: "/acl/user",
+      redirect: '/acl/user',
       children: [
         {
-          path: "/acl/user",
-          component: "/src/views/acl/user/index.vue",
-          name: "user",
+          path: '/acl/user',
+          component: '/src/views/acl/user/index.vue',
+          name: 'user',
           meta: {
-            title: "用户管理",
-            icon: "User",
+            title: '用户管理',
+            icon: 'User',
           },
         },
         {
-          path: "/acl/router",
-          component: "/src/views/acl/router/index.vue",
-          name: "router",
+          path: '/acl/router',
+          component: '/src/views/acl/router/index.vue',
+          name: 'router',
           meta: {
-            title: "路由配置",
-            icon: "User",
+            title: '路由配置',
+            icon: 'User',
           },
         },
         {
-          path: "/acl/role",
-          name: "Role",
+          path: '/acl/role',
+          name: 'Role',
           meta: {
-            title: "角色管理",
-            icon: "UserFilled",
+            title: '角色管理',
+            icon: 'UserFilled',
           },
         },
         {
-          path: "/acl/permission2",
+          path: '/acl/permission2',
           // component: () => import("@/views/acl/permission/index.vue"),
-          name: "permission2",
+          name: 'permission2',
           meta: {
-            title: "菜单管理1",
-            icon: "Monitor",
+            title: '菜单管理1',
+            icon: 'Monitor',
           },
           children: [
             {
-              path: "/acl/permission/category",
-              name: "Category",
+              path: '/acl/permission/category',
+              name: 'Category',
               meta: {
-                title: "菜单分类",
+                title: '菜单分类',
               },
             },
             {
-              path: "/acl/permission/menu",
-              name: "MenuList",
+              path: '/acl/permission/menu',
+              name: 'MenuList',
               meta: {
-                title: "菜单列表",
-                icon: "Menu",
+                title: '菜单列表',
+                icon: 'Menu',
               },
             },
           ],
@@ -68,44 +68,44 @@ export const createRoutes = (): Array<AppRouteRecordRaw> => {
       ],
     },
     {
-      path: "/product",
-      name: "Product",
+      path: '/product',
+      name: 'Product',
       meta: {
-        title: "商品管理",
-        icon: "goods",
+        title: '商品管理',
+        icon: 'goods',
       },
-      redirect: "/product/trademark",
+      redirect: '/product/trademark',
       children: [
         {
-          path: "/product/trademark",
-          name: "Trademark",
+          path: '/product/trademark',
+          name: 'Trademark',
           meta: {
-            title: "品牌管理",
-            icon: "ShoppingCartFull",
+            title: '品牌管理',
+            icon: 'ShoppingCartFull',
           },
         },
         {
-          path: "/product/attr",
-          name: "Attr",
+          path: '/product/attr',
+          name: 'Attr',
           meta: {
-            title: "属性管理",
-            icon: "ChromeFilled",
+            title: '属性管理',
+            icon: 'ChromeFilled',
           },
         },
         {
-          path: "/product/spu",
-          name: "Spu",
+          path: '/product/spu',
+          name: 'Spu',
           meta: {
-            title: "SPU管理",
-            icon: "Calendar",
+            title: 'SPU管理',
+            icon: 'Calendar',
           },
         },
         {
-          path: "/product/sku",
-          name: "Sku",
+          path: '/product/sku',
+          name: 'Sku',
           meta: {
-            title: "SKU管理",
-            icon: "Orange",
+            title: 'SKU管理',
+            icon: 'Orange',
           },
         },
       ],

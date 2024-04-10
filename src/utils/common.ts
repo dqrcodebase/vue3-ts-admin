@@ -1,10 +1,10 @@
-import type { AppRouteRecordRaw } from "/src/router/types";
+import type { AppRouteRecordRaw } from '/src/router/types';
 const viewsComponent: Record<string, any> = import.meta.glob(
-  "/src/views/**/*.vue",
+  '/src/views/**/*.vue',
   { eager: true },
 );
 const layoutComponent: Record<string, any> = import.meta.glob(
-  "@/layouts/default/index.vue",
+  '@/layouts/default/index.vue',
   { eager: true },
 );
 

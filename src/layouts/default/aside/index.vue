@@ -19,20 +19,20 @@
   </div>
 </template>
 <script lang="ts" setup>
-import LayoutMenu from "@/layouts/default/menu/index.vue";
-import useLayoutStore from "@/store/layout";
-import useUserStore from "@/store/user";
-import { onBeforeRouteUpdate, onBeforeRouteLeave } from "vue-router";
+import LayoutMenu from '@/layouts/default/menu/index.vue';
+import useLayoutStore from '@/store/layout';
+import useUserStore from '@/store/user';
+import { onBeforeRouteUpdate, onBeforeRouteLeave } from 'vue-router';
 
 const layoutStore = useLayoutStore();
 const userStore = useUserStore();
 
 const handleOpen = (key: string, keyPath: string[]) => {
-  console.log("handleOpen", key, keyPath);
+  console.log('handleOpen', key, keyPath);
 };
 
 const handleClose = (key: string, keyPath: string[]) => {
-  console.log("handleClose", key, keyPath);
+  console.log('handleClose', key, keyPath);
 };
 onBeforeRouteUpdate((to) => {
   layoutStore.setOpenTabs(to);

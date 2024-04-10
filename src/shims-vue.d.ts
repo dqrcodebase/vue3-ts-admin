@@ -5,7 +5,7 @@
 // 要包含至少一个顶级的 import 或 export 即使它只是 export {}
 
 export {};
-declare module "vue" {
+declare module 'vue' {
   interface ComponentCustomProperties {
     $globalStyle: any;
   }

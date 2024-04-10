@@ -5,5 +5,5 @@
   </div>
 </template>
 <script setup>
-import Tabs from "../tabs/index.vue";
+import Tabs from '../tabs/index.vue';
 </script>

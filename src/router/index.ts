@@ -1,8 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
-import { constantRoute, constantMenuRoute } from "./routers";
-import { RouteRecordRaw } from "vue-router";
-import { setupRouterHooks } from "./guard";
-import type { App } from "vue";
+import { createRouter, createWebHistory } from 'vue-router';
+import { constantRoute, constantMenuRoute } from './routers';
+import { RouteRecordRaw } from 'vue-router';
+import { setupRouterHooks } from './guard';
+import type { App } from 'vue';
 const basicRoutes = [...constantRoute, ...constantMenuRoute];
 export const router = createRouter({
   history: createWebHistory(),

@@ -1,6 +1,6 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const { createRoutes } = require("./data");
+const express = require('express');
+const bodyParser = require('body-parser');
+const { createRoutes } = require('./data');
 
 const router = express.Router();
 const app = express();
@@ -32,17 +32,17 @@ const port = process.env.PORT || 8090;
 app.listen(port, () => {
   console.log(`Server listening on http://localhost:${port}, Ctrl+C to stop`);
 });
-router.get("/sse", (req, res) => {
+router.get('/sse', (req, res) => {
   res.set({
-    "Content-Type": "text/event-stream", //设定数据类型
-    "Cache-Control": "no-cache", // 长链接拒绝缓存
-    Connection: "keep-alive", //设置长链接
+    'Content-Type': 'text/event-stream', //设定数据类型
+    'Cache-Control': 'no-cache', // 长链接拒绝缓存
+    Connection: 'keep-alive', //设置长链接
   });
 
-  console.log("进入到长连接了");
+  console.log('进入到长连接了');
   //持续返回数据
   setInterval(() => {
-    console.log("正在持续返回数据中ing");
+    console.log('正在持续返回数据中ing');
     const data = {
       message: `Current time is ${new Date().toLocaleTimeString()}`,
     };
@@ -51,10 +51,10 @@ router.get("/sse", (req, res) => {
 });
 
 function registerUserRouter() {
-  router.get("/user/routes", function (req, res) {
+  router.get('/user/routes', function (req, res) {
     // console.log("-------------------------");
     const token = req.headers.token;
-    console.log("🚀 ~ token:", token);
+    console.log('🚀 ~ token:', token);
     // if (!token) return { code: 200, data: { message: "获取用户信息失败" } };
     const data = { code: 200, data: createRoutes() };
     setTimeout(() => {
