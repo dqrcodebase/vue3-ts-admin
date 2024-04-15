@@ -5,7 +5,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
-    jest: true
+    jest: true,
   },
   /* 指定如何解析语法 */
   parser: 'vue-eslint-parser',
@@ -16,15 +16,15 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     jsxPragma: 'React',
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   /* 继承已有的规则 */
   extends: [
     'eslint:recommended',
     'plugin:vue/vue3-essential',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   plugins: ['vue', '@typescript-eslint'],
   /*
@@ -65,8 +65,8 @@ module.exports = {
         // 所以对于有多个空行报 Delete `⏎`错误，不可以通过配置来解决
         endOfLine: 'auto',
         singleQuote: true,
-        semi: true
-      }
-    ]
-  }
-}
+        semi: true,
+      },
+    ],
+  },
+};
