@@ -1,16 +1,29 @@
-import { createRouter, createWebHistory } from 'vue-router';
-import { constantRoute, constantMenuRoute } from './routers';
-import { RouteRecordRaw } from 'vue-router';
-import { setupRouterHooks } from './guard';
-import type { App } from 'vue';
-const basicRoutes = [...constantRoute, ...constantMenuRoute];
-export const router = createRouter({
-  history: createWebHistory(),
-  routes: basicRoutes as RouteRecordRaw[],
-});
+/*
+ * @Author: dqr
+ * @Date: 2025-05-22 11:32:40
+ * @LastEditors: D Q R 852601818@qq.com
+ * @LastEditTime: 2025-05-23 09:28:33
+ * @FilePath: /vue3-ts-admin/src/router/index.ts
+ * @Description:
+ *
+ */
+import { createWebHistory, createRouter } from 'vue-router'
+import { type Router } from 'vue-router'
+import common  from './modules/common'
 
-export function setupRouter(app: App<Element>): void {
-  // 路由钩子函数
-  app.use(router);
-  setupRouterHooks();
-}
+// 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件
+const modules: Record<string, any> = import.meta.glob('./modules/**/*.ts', {
+  eager: true,
+})
+/** 原始静态路由（未做任何处理） */
+const routes = []
+
+Object.keys(modules).forEach((key) => {
+  routes.push(modules[key].default)
+})
+const router: Router = createRouter({
+  history: createWebHistory(),
+  routes: [...common],
+})
+
+export default router

@@ -1,50 +1,34 @@
-import { defineConfig } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from 'path';
-//引入svg需要用到插件
-import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
-import AutoImport from 'unplugin-auto-import/vite';
-import UnoCSS from 'unocss/vite';
-// https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
-  return {
-    plugins: [
-      vue(),
-      createSvgIconsPlugin({
-        iconDirs: [path.resolve(process.cwd(), 'src/assets/icons')],
-        symbolId: 'icon-[name]',
-      }),
-      AutoImport({
-        imports: ['vue'],
-        dts: 'src/auto-import.d.ts',
-      }),
-      UnoCSS(),
-    ],
-    server: {
-      host: '0.0.0.0',
-      port: 8088,
-      proxy: {
-        '/api': {
-          target: 'http://localhost:8090/',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
-        },
-      },
+/*
+ * @Author: dqr
+ * @Date: 2025-05-22 10:08:03
+ * @LastEditors: D Q R 852601818@qq.com
+ * @LastEditTime: 2025-05-26 23:10:49
+ * @FilePath: /vue3-ts-admin/vite.config.ts
+ * @Description:
+ *
+ */
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { vitePluginFakeServer } from 'vite-plugin-fake-server'
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    vitePluginFakeServer({
+      logger: false,
+      include: 'mock',
+      infixName: false,
+      enableProd: true,
+    }),
+  ],
+  resolve: {
+    alias: {
+      '@': '/src',
     },
-    resolve: {
-      alias: {
-        '@': path.resolve('./src'),
-        '#': path.resolve('./types'),
-        layouts: path.resolve('./src/layouts'),
-      },
-    },
-    css: {
-      preprocessorOptions: {
-        scss: {
-          javascriptEnabled: true,
-          additionalData: '@import "./src/styles/variable.scss";',
-        },
-      },
-    },
-  };
-});
+  },
+  // 服务端渲染
+  server: {
+    // 端口号
+    host: '0.0.0.0',
+  },
+})

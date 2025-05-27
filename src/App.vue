@@ -1,43 +1,16 @@
-<template>
-  <router-view></router-view>
-</template>
+<!--
+ * @Author: dqr
+ * @Date: 2025-05-22 10:08:03
+ * @LastEditors: D Q R 852601818@qq.com
+ * @LastEditTime: 2025-05-23 09:38:54
+ * @FilePath: /vue3-ts-admin/src/App.vue
+ * @Description: 
+ * 
+-->
 <script setup lang="ts">
-// import useUserStore from "@/store/user";
-// import { useRouter } from "vue-router";
-// import { storeToRefs } from "pinia";
-// import type { AppRouteRecordRaw } from "./router/type";
-// import type { RouteRecordRaw } from "vue-router";
-
-// const userStore = useUserStore();
-// const { userRoutes } = storeToRefs(userStore);
-// const router = useRouter();
-// router.beforeEach(async (to, from, next) => {
-//   const userRoutes = await userStore.reqUserRoutes();
-
-//   let num = 0;
-//   userRoutes.value.forEach((route: AppRouteRecordRaw) => {
-//     router.addRoute(route as RouteRecordRaw);
-//     num++;
-//   });
-//   console.log(
-//     "🚀 ~ userRoutes.value.forEach ~ userRoutes:",
-//     userRoutes,
-//     router.getRoutes(),
-//   );
-//   if (userRoutes.value.length === num) {
-//     next();
-//   }
-// });
-
-// watch(userRoutes, (newVal) => {
-//   newVal.forEach((route: AppRouteRecordRaw) => {
-//     router.addRoute(route as RouteRecordRaw);
-//   });
-//   console.log("---------", router.getRoutes());
-// });
 </script>
-<style>
-#app {
-  height: 100vh;
-}
-</style>
+
+<template>
+ <RouterView />
+</template>
+

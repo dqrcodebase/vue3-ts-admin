@@ -1,7 +1,5 @@
-import { mapState } from 'pinia';
-import userStore from './user';
-export default {
-  computed: {
-    ...mapState(userStore, {}),
-  },
-};
+import { createPinia } from 'pinia'
+
+const pinia = createPinia()
+
+export default pinia

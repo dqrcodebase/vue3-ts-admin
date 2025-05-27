@@ -1,94 +1,124 @@
+<!--
+ * @Author: dqr
+ * @Date: 2025-05-22 11:29:46
+ * @LastEditors: D Q R 852601818@qq.com
+ * @LastEditTime: 2025-05-27 10:15:11
+ * @FilePath: /vue3-ts-admin/src/views/login/index.vue
+ * @Description: 
+ * 
+-->
+
+<script lang="ts" setup>
+import { reactive, computed } from 'vue'
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
+import { useLoginStore } from '@/store/modules/login'
+interface FormState {
+  username: string
+  password: string
+}
+const state: FormState = reactive({
+  username: '',
+  password: '',
+  remember: false
+})
+const formState = reactive<FormState>({
+  username: '',
+  password: '',
+  remember: false
+})
+const onFinish = (values: any) => {
+  console.log('Success:', values)
+  console.log("🚀 ~ onFinish ~ formState.value:", formState)
+
+  useLoginStore().loginByUsername(formState)
+}
+
+const onFinishFailed = (errorInfo: any) => {
+  console.log('Failed:', errorInfo)
+}
+const disabled = computed(() => {
+  return !(formState.username && formState.password)
+})
+</script>
 <template>
-  <div class="login_container">
-    <el-row>
-      <el-col :span="12" :xs="0"></el-col>
-      <el-col :span="12" :xs="24">
-        <!-- 登录的表单 -->
-        <el-form
-          class="login_form"
-          :model="loginForm"
-          :rules="rules"
-          ref="loginForms"
+  <div class="login-container">
+    <div class="login">
+      <h2>ADMIN</h2>
+      <h1>LOGIN</h1>
+      <div>
+        <a-form
+          :model="formState"
+          name="normal_login"
+          class="login-form"
+          autocomplete="off"
+          :wrapper-col="{ span: 24 }"
+          @finish="onFinish"
+          @finishFailed="onFinishFailed"
         >
-          <h1>Hello</h1>
-          <h2>欢迎来到硅谷甄选</h2>
-          <el-form-item prop="username">
-            <el-input
-              :prefix-icon="User"
-              v-model="loginForm.username"
-            ></el-input>
-          </el-form-item>
-          <el-form-item prop="password">
-            <el-input
-              type="password"
-              :prefix-icon="Lock"
-              v-model="loginForm.password"
-              show-password
-            ></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button
-              :loading="loading"
-              class="login_btn"
+          <a-form-item
+            name="username"
+            :rules="[
+              { required: true, message: 'Please input your username!' },
+            ]"
+          >
+            <a-input v-model:value="formState.username">
+              <template #prefix>
+                <UserOutlined class="site-form-item-icon" />
+              </template>
+            </a-input>
+          </a-form-item>
+
+          <a-form-item
+            name="password"
+            :rules="[
+              { required: true, message: 'Please input your password!' },
+            ]"
+          >
+            <a-input-password v-model:value="formState.password">
+              <template #prefix>
+                <LockOutlined class="site-form-item-icon" />
+              </template>
+            </a-input-password>
+          </a-form-item>
+
+          <a-form-item>
+            <a-button
+              :disabled="disabled"
               type="primary"
-              size="default"
-              @click="login"
+              html-type="submit"
+              class="login-form-button"
+              >Log in</a-button
             >
-              登录
-            </el-button>
-          </el-form-item>
-        </el-form>
-      </el-col>
-    </el-row>
+          </a-form-item>
+        </a-form>
+      </div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { User, Lock } from '@element-plus/icons-vue';
-import useUserStore from '@/store/user';
-import { useRoute, useRouter } from 'vue-router';
-//收集账号与密码的数据
-let loginForm = reactive({ username: 'admin', password: 'atguigu123' });
-const store = useUserStore();
-const $route = useRoute();
-//获取路由器
-let $router = useRouter();
-async function login() {
-  await store.userLogin(loginForm);
-  let redirect: any = $route.query.redirect;
-  $router.push({ path: redirect || '/' });
-}
-</script>
-
 <style scoped lang="scss">
-.login_container {
+.login-container {
+  background-color: #e3e5e4;
+  height: 100%;
   width: 100%;
-  height: 100vh;
-  background: url('@/assets/images/background.jpg') no-repeat;
-  background-size: cover;
-
-  .login_form {
-    position: relative;
-    width: 80%;
-    top: 30vh;
-    background: url('@/assets/images/login_form.png') no-repeat;
-    background-size: cover;
-    padding: 40px;
-
-    h1 {
-      color: white;
-      font-size: 40px;
-    }
-
-    h2 {
-      font-size: 20px;
-      color: white;
-      margin: 20px 0px;
-    }
-
-    .login_btn {
-      width: 100%;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  .login {
+    width: 400px;
+    height: 500px;
+    background-color: #fbfcfd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #aaaaaa
   }
+}
+.login-form-button {
+  width: 100%;
 }
 </style>
