@@ -2,15 +2,16 @@
  * @Author: dqr
  * @Date: 2025-05-26 16:43:39
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-27 10:07:32
+ * @LastEditTime: 2025-05-28 10:36:09
  * @FilePath: /vue3-ts-admin/src/store/modules/login.ts
  * @Description:
  *
  */
 import { defineStore } from 'pinia'
-import { type userType } from '../type.d.ts'
-import { getLogin } from '@/api/login'
-
+import { type userType } from '../type'
+import { getLogin, type UserResult } from '@/api/login'
+import { type ApiResponse } from '@/utils/service/type'
+import { setToken } from '@/utils/auth'
 export const useLoginStore = defineStore('userStore', {
   state: (): userType => {
     return {
@@ -21,12 +22,11 @@ export const useLoginStore = defineStore('userStore', {
   },
   actions: {
     /** 登入 */
-    async loginByUsername(data) {
-      return new Promise<UserResult>((resolve, reject) => {
+    async loginByUsername(data: object) {
+      return new Promise<ApiResponse<UserResult>>((resolve, reject) => {
         getLogin(data)
           .then((data) => {
-            console.log("🚀 ~ .then ~ data:", data)
-            if (data?.success) setToken(data.data)
+            if (data?.success) setToken(data.data.accessToken)
             resolve(data)
           })
           .catch((error) => {

@@ -12,7 +12,6 @@ import {
 } from 'axios'
 
 export interface ApiResponse<T> extends AxiosResponse<T>  {
-  code: number;
   data: T;
-  message: string;
+  success: boolean;
 };

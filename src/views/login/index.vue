@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-22 11:29:46
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-27 10:15:11
+ * @LastEditTime: 2025-05-27 21:19:11
  * @FilePath: /vue3-ts-admin/src/views/login/index.vue
  * @Description: 
  * 
@@ -12,6 +12,7 @@
 import { reactive, computed } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { useLoginStore } from '@/store/modules/login'
+import {useRequest} from '@/hooks/useRequest'
 interface FormState {
   username: string
   password: string
@@ -24,13 +25,10 @@ const state: FormState = reactive({
 const formState = reactive<FormState>({
   username: '',
   password: '',
-  remember: false
 })
+const {run} = useRequest(useLoginStore().loginByUsername)
 const onFinish = (values: any) => {
-  console.log('Success:', values)
-  console.log("🚀 ~ onFinish ~ formState.value:", formState)
-
-  useLoginStore().loginByUsername(formState)
+  run(formState)
 }
 
 const onFinishFailed = (errorInfo: any) => {

@@ -2,18 +2,16 @@
  * @Author: dqr
  * @Date: 2025-05-26 22:29:32
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-27 10:01:02
+ * @LastEditTime: 2025-05-27 21:44:10
  * @FilePath: /vue3-ts-admin/src/api/login.ts
  * @Description:
  *
  */
 import service from '@/utils/service'
-import { type ApiResponse } from '@/utils/service/type.d.ts'
+import { type ApiResponse } from '@/utils/service/type'
 
 
 export type UserResult = {
-  success: boolean
-  data: {
     /** 头像 */
     avatar: string
     /** 用户名 */
@@ -30,14 +28,9 @@ export type UserResult = {
     refreshToken: string
     /** `accessToken`的过期时间（格式'xxxx/xx/xx xx:xx:xx'） */
     expires: Date
-  }
-}
-interface LoginType {
-  username: string
-  password: string
 }
 
-export const getLogin = (data: LoginType): ApiResponse<UserResult> => {
+export const getLogin = (data: any):Promise< ApiResponse<UserResult>> => {
   return service({
     url: '/login',
     method: 'post',

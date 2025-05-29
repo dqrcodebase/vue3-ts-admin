@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-26 16:10:40
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-26 23:12:30
+ * @LastEditTime: 2025-05-28 10:59:17
  * @FilePath: /vue3-ts-admin/mock/system.ts
  * @Description: 
  * 
@@ -56,6 +56,7 @@ export default defineFakeRoute([
       list = list.filter(item =>
         String(item.status).includes(String(body?.status))
       );
+
       if (body.phone) list = list.filter(item => item.phone === body.phone);
       if (body.deptId) list = list.filter(item => item.dept.id === body.deptId);
       return {
