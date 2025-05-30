@@ -1,3 +1,12 @@
+/*
+ * @Author: dqr
+ * @Date: 2025-05-27 22:01:43
+ * @LastEditors: D Q R 852601818@qq.com
+ * @LastEditTime: 2025-05-30 18:02:17
+ * @FilePath: /vue3-ts-admin/src/common/cacheKey.ts
+ * @Description: 
+ * 
+ */
 const SYSTEM_NAME = "vue3-ts-admin"
 
 /** 缓存数据时用到的 Key */
