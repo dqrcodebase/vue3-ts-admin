@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-22 11:29:46
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-27 21:19:11
+ * @LastEditTime: 2025-05-30 17:25:37
  * @FilePath: /vue3-ts-admin/src/views/login/index.vue
  * @Description: 
  * 
@@ -12,7 +12,6 @@
 import { reactive, computed } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { useLoginStore } from '@/store/modules/login'
-import {useRequest} from '@/hooks/useRequest'
 interface FormState {
   username: string
   password: string
@@ -26,9 +25,10 @@ const formState = reactive<FormState>({
   username: '',
   password: '',
 })
-const {run} = useRequest(useLoginStore().loginByUsername)
-const onFinish = (values: any) => {
-  run(formState)
+// 给run重新命名
+const onFinish = async (values: any) => {
+  const res = await useLoginStore().loginByUsername(values)
+
 }
 
 const onFinishFailed = (errorInfo: any) => {
@@ -44,21 +44,11 @@ const disabled = computed(() => {
       <h2>ADMIN</h2>
       <h1>LOGIN</h1>
       <div>
-        <a-form
-          :model="formState"
-          name="normal_login"
-          class="login-form"
-          autocomplete="off"
-          :wrapper-col="{ span: 24 }"
-          @finish="onFinish"
-          @finishFailed="onFinishFailed"
-        >
-          <a-form-item
-            name="username"
-            :rules="[
-              { required: true, message: 'Please input your username!' },
-            ]"
-          >
+        <a-form :model="formState" name="normal_login" class="login-form" autocomplete="off" :wrapper-col="{ span: 24 }"
+          @finish="onFinish" @finishFailed="onFinishFailed">
+          <a-form-item name="username" :rules="[
+            { required: true, message: 'Please input your username!' },
+          ]">
             <a-input v-model:value="formState.username">
               <template #prefix>
                 <UserOutlined class="site-form-item-icon" />
@@ -66,12 +56,9 @@ const disabled = computed(() => {
             </a-input>
           </a-form-item>
 
-          <a-form-item
-            name="password"
-            :rules="[
-              { required: true, message: 'Please input your password!' },
-            ]"
-          >
+          <a-form-item name="password" :rules="[
+            { required: true, message: 'Please input your password!' },
+          ]">
             <a-input-password v-model:value="formState.password">
               <template #prefix>
                 <LockOutlined class="site-form-item-icon" />
@@ -80,13 +67,7 @@ const disabled = computed(() => {
           </a-form-item>
 
           <a-form-item>
-            <a-button
-              :disabled="disabled"
-              type="primary"
-              html-type="submit"
-              class="login-form-button"
-              >Log in</a-button
-            >
+            <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button">Log in</a-button>
           </a-form-item>
         </a-form>
       </div>
@@ -104,6 +85,7 @@ const disabled = computed(() => {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
   .login {
     width: 400px;
     height: 500px;
@@ -116,6 +98,7 @@ const disabled = computed(() => {
     box-shadow: 0 0 10px #aaaaaa
   }
 }
+
 .login-form-button {
   width: 100%;
 }

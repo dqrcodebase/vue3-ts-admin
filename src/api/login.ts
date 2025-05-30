@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-26 22:29:32
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-27 21:44:10
+ * @LastEditTime: 2025-05-30 16:41:34
  * @FilePath: /vue3-ts-admin/src/api/login.ts
  * @Description:
  *
@@ -31,6 +31,12 @@ export type UserResult = {
 }
 
 export const getLogin = (data: any):Promise< ApiResponse<UserResult>> => {
+  console.log('----------',service({
+    url: '/login',
+    method: 'post',
+    data,
+  }));
+  
   return service({
     url: '/login',
     method: 'post',

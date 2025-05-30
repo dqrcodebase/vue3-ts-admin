@@ -10,7 +10,9 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "lib": ["esnext", "dom"]
+    "lib": ["esnext", "dom"],
+    "allowSyntheticDefaultImports": true, // 只影响代码编译阶段， 允许像 import xxx from 'xxx' 这样默认导入 CommonJS 模块
+    "esModuleInterop": true // 影响编译和运行阶段，允许像 import xxx from 'xxx' 这样默认导入 CommonJS 模块
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "exclude": ["dist", "**/*.js", "node_modules"]

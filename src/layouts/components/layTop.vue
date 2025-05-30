@@ -2,31 +2,24 @@
  * @Author: dqr
  * @Date: 2025-05-28 14:33:26
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-29 17:48:26
+ * @LastEditTime: 2025-05-30 16:18:33
  * @FilePath: /vue3-ts-admin/src/layouts/components/layTop.vue
  * @Description: 
  * 
 -->
- 
- <script lang="ts" setup>
- import {
+
+<script lang="ts" setup>
+import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  UserOutlined
 } from '@ant-design/icons-vue';
- const state = reactive({
-  collapsed: false,
-  selectedKeys: ['1'],
-  openKeys: ['sub1'],
-  preOpenKeys: ['sub1'],
-});
-const toggleCollapsed = () => {
-  state.collapsed = !state.collapsed;
-  state.openKeys = state.collapsed ? [] : state.preOpenKeys;
-};
+import { useMenuStore } from '@/store/modules/menu';
+const menuStore = useMenuStore();
 const panes = ref<{ title: string; content: string; key: string; closable?: boolean }[]>([
   { title: 'Tab 1', content: 'Content of Tab 1', key: '1' },
   { title: 'Tab 2', content: 'Content of Tab 2', key: '2' },
-  { title: 'Tab 3', content: 'Content of Tab 3', key: '3' },
+  { title: 'Tab 3', content: 'Content of Tab 3', key: '3', closable: false },
 ]);
 
 const activeKey = ref(panes.value[0].key);
@@ -53,7 +46,8 @@ const remove = (targetKey: string) => {
       activeKey.value = panes.value[0].key;
     }
   }
-}
+};
+
 const onEdit = (targetKey: string | MouseEvent, action: string) => {
   if (action === 'add') {
     add();
@@ -61,67 +55,44 @@ const onEdit = (targetKey: string | MouseEvent, action: string) => {
     remove(targetKey as string);
   }
 };
+
+
+
+
+
+const toggleCollapsed = () => {
+  menuStore.collapsed = !menuStore.collapsed;
+  menuStore.openKeys = menuStore.collapsed ? [] : menuStore.preOpenKeys;
+};
+
 </script>
 <template>
-  <div class="card-container">
-     <a-button type="primary"  @click="toggleCollapsed">
-      <MenuUnfoldOutlined v-if="state.collapsed" />
+  <div class="lay-top">
+    <a-button class="mr-[12px]" type="primary" @click="toggleCollapsed">
+      <MenuUnfoldOutlined v-if="menuStore.collapsed" />
       <MenuFoldOutlined v-else />
     </a-button>
-   <a-tabs class="flex-1" v-model:activeKey="activeKey" type="editable-card" @edit="onEdit" hideAdd>
-    <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
-      {{ pane.content }}
-    </a-tab-pane>
-  </a-tabs>
+    <a-tabs class="flex-1" v-model:activeKey="activeKey" hide-add type="editable-card" @edit="onEdit">
+      <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
+      </a-tab-pane>
+    </a-tabs>
+    <div class="ml-[12px]"> <a-avatar style="background-color: #87d068">
+        <template #icon>
+          <UserOutlined />
+        </template>
+      </a-avatar></div>
   </div>
 </template>
 
-<style scoped>
-.card-container  {
+<style scoped lang="scss">
+.lay-top {
   display: flex;
-}
-.card-container > .ant-tabs-card .ant-tabs-content {
-  height: 120px;
-  margin-top: -16px;
-}
-.card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
-  padding: 16px;
-  background: #fff;
-}
-.card-container > .ant-tabs-card > .ant-tabs-nav::before {
-  display: none;
-}
-.card-container > .ant-tabs-card .ant-tabs-tab,
-[data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-tab {
-  background: transparent;
-  border-color: transparent;
-}
-.card-container > .ant-tabs-card .ant-tabs-tab-active,
-[data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-tab-active {
-  background: #fff;
-  border-color: #fff;
-}
-#components-tabs-demo-card-top .code-box-demo {
-  padding: 24px;
-  overflow: hidden;
-  background: #f5f5f5;
-}
-[data-theme='compact'] .card-container > .ant-tabs-card .ant-tabs-content {
-  height: 120px;
-  margin-top: -8px;
-}
-[data-theme='dark'] .card-container > .ant-tabs-card .ant-tabs-tab {
-  background: transparent;
-  border-color: transparent;
-}
-[data-theme='dark'] #components-tabs-demo-card-top .code-box-demo {
-  background: #000;
-}
-[data-theme='dark'] .card-container > .ant-tabs-card .ant-tabs-content > .ant-tabs-tabpane {
-  background: #141414;
-}
-[data-theme='dark'] .card-container > .ant-tabs-card .ant-tabs-tab-active {
-  background: #141414;
-  border-color: #141414;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px;
+  background-color: #fff;
+  :deep .ant-tabs-nav {
+    margin: 0;
+  }
 }
 </style>

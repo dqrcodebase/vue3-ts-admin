@@ -2,27 +2,21 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:33:42
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-29 17:34:50
+ * @LastEditTime: 2025-05-30 09:35:28
  * @FilePath: /vue3-ts-admin/src/layouts/components/layLeft.vue
  * @Description: 
  * 
 -->
  <script lang="ts" setup>
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
   PieChartOutlined,
   MailOutlined,
   DesktopOutlined,
   InboxOutlined,
   AppstoreOutlined,
 } from '@ant-design/icons-vue';
-const state = reactive({
-  collapsed: false,
-  selectedKeys: ['1'],
-  openKeys: ['sub1'],
-  preOpenKeys: ['sub1'],
-});
+import { useMenuStore } from '@/store/modules/menu';
+const menuStore = useMenuStore();
 const items = reactive([
   {
     key: '1',
@@ -107,26 +101,26 @@ const items = reactive([
   },
 ]);
 watch(
-  () => state.openKeys,
+  () => menuStore.openKeys,
   (_val, oldVal) => {
-    state.preOpenKeys = oldVal;
+    menuStore.preOpenKeys = oldVal;
   },
 );
 
 </script>
 <template>
-  <div class="ant-menu" :class="state.collapsed ? 'is-collapsed' : 'no-collapsed'">
+  <div class="lay-left" :class="menuStore.collapsed ? 'is-collapsed' : 'no-collapsed'">
     <div class="logo-wrap">
      <img :width="50" src="@/assets/image/logo.png" alt=""></img>
-     <span class="project-name">vue3-ts-admin</span>
+     <span v-if="!menuStore.collapsed" class="project-name">vue3-ts-admin</span>
     </div>
     <a-menu
       class="flex-1"
-      v-model:openKeys="state.openKeys"
-      v-model:selectedKeys="state.selectedKeys"
+      v-model:openKeys="menuStore.openKeys"
+      v-model:selectedKeys="menuStore.selectedKeys"
       mode="inline"
       theme="dark"
-      :inline-collapsed="state.collapsed"
+      :inline-collapsed="menuStore.collapsed"
       :items="items"
     ></a-menu>
   </div>
@@ -142,7 +136,7 @@ watch(
 .no-collapsed {
   width: 256px;
 }
-.ant-menu {
+.lay-left {
   background-color: var(--menu-bg-color);
 }
 .project-name {
