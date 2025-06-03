@@ -31,12 +31,6 @@ export type UserResult = {
 }
 
 export const getLogin = (data: any):Promise< ApiResponse<UserResult>> => {
-  console.log('----------',service({
-    url: '/login',
-    method: 'post',
-    data,
-  }));
-  
   return service({
     url: '/login',
     method: 'post',

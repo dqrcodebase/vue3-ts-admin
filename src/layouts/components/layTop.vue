@@ -91,7 +91,7 @@ const toggleCollapsed = () => {
   align-items: baseline;
   padding: 10px;
   background-color: #fff;
-  :deep .ant-tabs-nav {
+  :deep(.ant-tabs-nav) {
     margin: 0;
   }
 }

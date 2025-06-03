@@ -10,7 +10,11 @@
 // import { CacheKey } from "@/common/cacheKey"
 import Cookies from 'js-cookie'
 
-export function setToken(token: string) {
+export const TokenKey = "authorized-token";
 
-  Cookies.set('token', 'token')
+export function setToken(token: string) {
+  Cookies.set(TokenKey, token)
+}
+export function getToken() {
+  return Cookies.get(TokenKey)
 }

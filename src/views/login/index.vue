@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-22 11:29:46
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-30 17:25:37
+ * @LastEditTime: 2025-06-03 09:49:04
  * @FilePath: /vue3-ts-admin/src/views/login/index.vue
  * @Description: 
  * 
@@ -25,9 +25,10 @@ const formState = reactive<FormState>({
   username: '',
   password: '',
 })
-// 给run重新命名
 const onFinish = async (values: any) => {
-  const res = await useLoginStore().loginByUsername(values)
+  await useLoginStore().loginByUsername(values)
+  
+
 
 }
 
