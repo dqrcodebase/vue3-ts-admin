@@ -2,16 +2,17 @@
  * @Author: dqr
  * @Date: 2025-05-22 11:29:46
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-03 09:49:04
+ * @LastEditTime: 2025-06-03 11:40:56
  * @FilePath: /vue3-ts-admin/src/views/login/index.vue
  * @Description: 
  * 
 -->
 
 <script lang="ts" setup>
-import { reactive, computed } from 'vue'
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
 import { useLoginStore } from '@/store/modules/login'
+import {setStorage} from '@/utils/auth'
+import {type Router,type RouteLocationNormalizedLoaded} from 'vue-router'
 interface FormState {
   username: string
   password: string
@@ -25,10 +26,14 @@ const formState = reactive<FormState>({
   username: '',
   password: '',
 })
+const loginStore = useLoginStore()
+const router:  Router = useRouter()
+const route: RouteLocationNormalizedLoaded = useRoute()
 const onFinish = async (values: any) => {
-  await useLoginStore().loginByUsername(values)
-  
-
+  const {data}= await loginStore.loginByUsername(values)
+  setStorage('user-info',JSON.stringify(data))
+  // 页面跳转
+   router.push(route.query.redirect as string || '/')
 
 }
 

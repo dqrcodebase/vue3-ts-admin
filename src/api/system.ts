@@ -10,10 +10,10 @@
 import service from '@/utils/service'
 import { type ApiResponse } from '@/utils/service/type'
 
-
-export const getUserList = ():Promise< ApiResponse<object[]>> => {
+// 获取菜单权限
+export const getRoleMenuList = ():Promise< ApiResponse<object[]>> => {
   return service({
-    url: '/user',
+    url: '/role-menu',
     method: 'post',
   })
 }
