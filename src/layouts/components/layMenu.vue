@@ -2,27 +2,12 @@
  * @Author: dqr
  * @Date: 2025-06-04 11:32:09
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-05 11:36:46
+ * @LastEditTime: 2025-06-05 17:53:53
  * @FilePath: /vue3-ts-admin/src/layouts/components/layMenu.vue
  * @Description: 
  * 
 -->
-<template>
- <template v-if="hasChildren">
-    <a-sub-menu :title="info.title" :key="'submenu-' + info.key">
-      <layMenu
-        v-for="item in info.children"
-        :key="item.key"
-        :info="item"
-      />
-    </a-sub-menu>
-  </template>
-  <template v-else>
-    <a-menu-item :key="'item-' + info.key" @click="handleClick">
-      {{ info.title }}
-    </a-menu-item>
-  </template>
-</template>
+
 <script lang="ts" setup>
 import { useMenuStore } from '@/store/modules/menu'
 import { type MenuItem } from '@/store/modules/menu';
@@ -46,6 +31,17 @@ const handleClick = () => {
   menuStore.openView(info)
 
 }
-
 </script>
+<template>
+  <template v-if="hasChildren">
+    <a-sub-menu :title="info.title" :key="'submenu-' + info.key">
+      <layMenu v-for="item in info.children" :key="item.key" :info="item" />
+    </a-sub-menu>
+  </template>
+  <template v-else>
+    <a-menu-item :key="'item-' + info.key" @click="handleClick">
+      {{ info.title }}
+    </a-menu-item>
+  </template>
+</template>
 <style lang="less" scoped></style>

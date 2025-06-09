@@ -12,7 +12,8 @@ declare global {
   interface CustomizeRouteMeta extends RouteMeta {
     title: string
     icon?: any
-    isHide?: boolean
+    isHide?: boolean,
+    closable?: boolean
   }
 }
 

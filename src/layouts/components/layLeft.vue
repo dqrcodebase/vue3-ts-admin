@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:33:42
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-05 17:08:50
+ * @LastEditTime: 2025-06-05 18:01:39
  * @FilePath: /vue3-ts-admin/src/layouts/components/layLeft.vue
  * @Description: 
  * 
@@ -22,11 +22,12 @@ const renderMenu = (
 ): MenuItem[] => {
   return routes
     .filter(route => !route.meta?.isHide)
-    .map(route => {
+    .map((route) => {
       const fullPath = `${basePath}/${route.path}`.replace(/\/+/g, '/')
       const item: MenuItem = {
         key: fullPath,
         title: route.meta.title,
+        closable: route.meta.closable
       }
       if (route.children?.length) {
         item.children = renderMenu(route.children, fullPath)
