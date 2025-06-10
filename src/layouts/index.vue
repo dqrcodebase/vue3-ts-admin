@@ -2,25 +2,48 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:32:52
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-05-30 16:24:39
+ * @LastEditTime: 2025-06-10 15:29:16
  * @FilePath: /vue3-ts-admin/src/layouts/index.vue
  * @Description: 
  * 
 -->
-<script setup>
+<script setup lang="ts">
 import layLeft from './components/layLeft.vue';
 import layTop from './components/layTop.vue';
 import layContent from './components/layContent.vue';
+import { useMenuStore } from '@/store/modules/menu';
+import type { CSSProperties } from 'vue';
+const menuStore = useMenuStore();
+
+const headerStyle: CSSProperties = {
+  backgroundColor: '#ffffff',
+  paddingLeft: '0',
+  paddingRight: '0',
+  height: 'auto',
+};
+
+const siderCollapsehandle = function () {
+  console.log('siderCollapsehandle');
+  // menuStore.setSiderCollapse(!menuStore.siderCollapse);
+};
+const onCollapsed = function () {
+
+ menuStore.collapsed = !menuStore.collapsed;
+  menuStore.openKeys = menuStore.collapsed ? [] : menuStore.preOpenKeys;
+};  
 </script>
 
 <template>
-  <div class="common-layout flex w-full h-full">
-    <layLeft class="flex flex-col h-full"/>
-    <div class="flex-1 h-full flex flex-col">
-      <layTop />
-      <layContent/>
-    </div>
-  </div>
+   <a-layout class="h-full" @collapse="siderCollapsehandle">
+      <a-layout-sider v-model:collapsed="menuStore.collapsed" :trigger="null" width='256px' @collapse="siderCollapsehandle" collapsible>
+        <div class="trigger" @collapse="siderCollapsehandle" >dafasdf</div>
+        <layLeft class="flex flex-col h-full"/>
+      </a-layout-sider>
+      <a-layout>
+        <a-layout-header :style="headerStyle" > <layTop  @collapsed="onCollapsed"/></a-layout-header>
+        <a-layout-content class="flex flex-1 "><layContent class="flex flex-1 overflow-hidden"/></a-layout-content>
+      </a-layout>
+    </a-layout>
 </template>
 
 <style scoped lang="scss">

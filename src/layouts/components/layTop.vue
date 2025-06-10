@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 14:33:26
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-06 17:29:26
+ * @LastEditTime: 2025-06-09 18:00:15
  * @FilePath: /vue3-ts-admin/src/layouts/components/layTop.vue
  * @Description: 
  * 
@@ -16,6 +16,10 @@ import {
 } from '@ant-design/icons-vue';
 import { useMenuStore } from '@/store/modules/menu';
 import { MenuItem } from '@/store/modules/menu'
+
+const emit = defineEmits(['collapsed'])
+
+
 const menuStore = useMenuStore();
 const visitedViews = computed(() => menuStore.visitedViews)
 
@@ -24,8 +28,8 @@ watch(() => visitedViews, (_val, oldVal) => {
   panes.value = _val.value;
 },)
 
-const activeKey = ref(menuStore.activeView);
-console.log("🚀 ~ activeKey:", activeKey)
+const activeView = ref(menuStore.activeView);
+const activeKey = ref(menuStore.activeView.key)
 
 
 const remove = (targetKey: string) => {
@@ -36,11 +40,11 @@ const remove = (targetKey: string) => {
     }
   });
   panes.value = panes.value.filter(pane => pane.key !== targetKey);
-  if (panes.value.length && activeKey.value === targetKey) {
+  if (panes.value.length && activeView.value.key === targetKey) {
     if (lastIndex >= 0) {
-      activeKey.value = panes.value[lastIndex].key;
+      activeView.value = panes.value[lastIndex];
     } else {
-      activeKey.value = panes.value[0].key;
+      activeView.value = panes.value[0];
     }
   }
 };
@@ -56,8 +60,8 @@ const onEdit = (targetKey: string | MouseEvent, action: string) => {
 
 
 const toggleCollapsed = () => {
-  menuStore.collapsed = !menuStore.collapsed;
-  menuStore.openKeys = menuStore.collapsed ? [] : menuStore.preOpenKeys;
+  emit('collapsed')
+
 };
 const onChangeTabs = (key: string) => {
   console.log("🚀 ~ onTabClick ~ key:", key)
@@ -67,12 +71,14 @@ const onChangeTabs = (key: string) => {
 </script>
 <template>
   <div class="lay-top">
-    <a-button class="mr-[12px]" type="primary" @click="toggleCollapsed">
-      <MenuUnfoldOutlined v-if="menuStore.collapsed" />
-      <MenuFoldOutlined v-else />
-    </a-button>
-    <a-tabs class="flex-1" v-model:activeKey="activeKey" hide-add type="editable-card" @edit="onEdit" @change="onChangeTabs">
-      <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable" >
+    <span class="pl-[10px] pr-[10px]">
+    <MenuUnfoldOutlined  class="trigger" v-if="menuStore.collapsed" @click="toggleCollapsed" />
+    <MenuFoldOutlined class="trigger" v-else @click="toggleCollapsed" />
+    </span>
+
+    <a-tabs class="flex-1" v-model:activeKey="activeKey" hide-add type="editable-card" @edit="onEdit"
+      @tabClick="onChangeTabs">
+      <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
       </a-tab-pane>
     </a-tabs>
     <div class="ml-[12px]"> <a-avatar style="background-color: #87d068">

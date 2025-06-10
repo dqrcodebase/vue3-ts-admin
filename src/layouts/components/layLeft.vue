@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:33:42
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-05 18:01:39
+ * @LastEditTime: 2025-06-09 17:49:57
  * @FilePath: /vue3-ts-admin/src/layouts/components/layLeft.vue
  * @Description: 
  * 
@@ -49,13 +49,13 @@ const onOpenChange = (openKeys: string[]): void => {
 };
 </script>
 <template>
-  <div class="lay-left" :class="menuStore.collapsed ? 'is-collapsed' : 'no-collapsed'">
+  <div class="lay-left" >
     <div class="logo-wrap">
       <img :width="50" src="@/assets/image/logo.png" alt="" />
       <span v-if="!menuStore.collapsed" class="project-name">vue3-ts-admin</span>
     </div>
     <a-menu mode="inline" theme="dark" @openChange="onOpenChange" :open-keys="menuStore.openKeys"
-      v-model:selectedKeys="menuStore.selectedKeys">
+       v-model:selectedKeys="menuStore.selectedKeys">
       <layMenu v-for="child in menuItems" :key="child.key" :info="child" />
     </a-menu>
   </div>

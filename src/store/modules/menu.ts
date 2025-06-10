@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-29 17:53:00
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-09 15:44:40
+ * @LastEditTime: 2025-06-09 16:11:03
  * @FilePath: /vue3-ts-admin/src/store/modules/menu.ts
  * @Description: 
  * 
@@ -75,7 +75,7 @@ export const useMenuStore = defineStore('menu', {
     },
     setActiveView(view: MenuItem) {
       this.activeView = view
-      setStorage('activeView', JSON.stringify(this.visitedViews))
+      setStorage('activeView', JSON.stringify(this.activeView))
     }
   }
 })

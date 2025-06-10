@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-06-04 11:32:09
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-05 17:53:53
+ * @LastEditTime: 2025-06-09 16:14:28
  * @FilePath: /vue3-ts-admin/src/layouts/components/layMenu.vue
  * @Description: 
  * 
@@ -27,6 +27,8 @@ const hasChildren = computed(() => {
 })
 
 const handleClick = () => {
+  console.log("🚀 ~ handleClick ~ info:", info)
+
   router.push(info.key)
   menuStore.openView(info)
 
