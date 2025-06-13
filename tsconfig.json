@@ -14,6 +14,6 @@
     "allowSyntheticDefaultImports": true, // 只影响代码编译阶段， 允许像 import xxx from 'xxx' 这样默认导入 CommonJS 模块
     "esModuleInterop": true // 影响编译和运行阶段，允许像 import xxx from 'xxx' 这样默认导入 CommonJS 模块
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","types/*.d.ts",""],
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue","types/*.d.ts","", "src/views/user/index3.vue"],
   "exclude": ["dist", "**/*.js", "node_modules"]
 }

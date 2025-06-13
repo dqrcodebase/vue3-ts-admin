@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 14:33:26
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-09 18:00:15
+ * @LastEditTime: 2025-06-12 15:53:32
  * @FilePath: /vue3-ts-admin/src/layouts/components/layTop.vue
  * @Description: 
  * 
@@ -22,29 +22,26 @@ const emit = defineEmits(['collapsed'])
 
 const menuStore = useMenuStore();
 const visitedViews = computed(() => menuStore.visitedViews)
-
 const panes = ref<MenuItem[]>(visitedViews.value);
-watch(() => visitedViews, (_val, oldVal) => {
-  panes.value = _val.value;
-},)
-
-const activeView = ref(menuStore.activeView);
-const activeKey = ref(menuStore.activeView.key)
 
 
 const remove = (targetKey: string) => {
-  let lastIndex = 0;
+ let lastIndex = 0;
   panes.value.forEach((pane, i) => {
     if (pane.key === targetKey) {
       lastIndex = i - 1;
     }
   });
   panes.value = panes.value.filter(pane => pane.key !== targetKey);
-  if (panes.value.length && activeView.value.key === targetKey) {
-    if (lastIndex >= 0) {
-      activeView.value = panes.value[lastIndex];
-    } else {
-      activeView.value = panes.value[0];
+  if (panes.value.length) {
+    if (lastIndex < 0) {
+      lastIndex = 0;
+    } 
+    menuStore.visitedViews = panes.value
+    const pane = panes.value[lastIndex];
+    menuStore.setVisitedViews(panes.value)
+    if(targetKey === menuStore.activeViewKey) {
+    menuStore.tabsViewChange(pane.key)
     }
   }
 };
@@ -64,8 +61,7 @@ const toggleCollapsed = () => {
 
 };
 const onChangeTabs = (key: string) => {
-  console.log("🚀 ~ onTabClick ~ key:", key)
-  // menuStore.openKeys = menuStore.collapsed ? [] : menuStore.preOpenKeys;
+  menuStore.tabsViewChange(key)
 }
 
 </script>
@@ -76,7 +72,7 @@ const onChangeTabs = (key: string) => {
     <MenuFoldOutlined class="trigger" v-else @click="toggleCollapsed" />
     </span>
 
-    <a-tabs class="flex-1" v-model:activeKey="activeKey" hide-add type="editable-card" @edit="onEdit"
+    <a-tabs class="flex-1" v-model:activeKey="menuStore.activeViewKey" hide-add type="editable-card" @edit="onEdit"
       @tabClick="onChangeTabs">
       <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
       </a-tab-pane>

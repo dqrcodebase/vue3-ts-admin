@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:32:52
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-10 15:29:16
+ * @LastEditTime: 2025-06-11 17:28:18
  * @FilePath: /vue3-ts-admin/src/layouts/index.vue
  * @Description: 
  * 
@@ -36,7 +36,6 @@ const onCollapsed = function () {
 <template>
    <a-layout class="h-full" @collapse="siderCollapsehandle">
       <a-layout-sider v-model:collapsed="menuStore.collapsed" :trigger="null" width='256px' @collapse="siderCollapsehandle" collapsible>
-        <div class="trigger" @collapse="siderCollapsehandle" >dafasdf</div>
         <layLeft class="flex flex-col h-full"/>
       </a-layout-sider>
       <a-layout>

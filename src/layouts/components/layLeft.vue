@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:33:42
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-09 17:49:57
+ * @LastEditTime: 2025-06-13 15:14:23
  * @FilePath: /vue3-ts-admin/src/layouts/components/layLeft.vue
  * @Description: 
  * 
@@ -11,23 +11,25 @@
 import { useMenuStore } from '@/store/modules/menu';
 import { type MenuItem } from '@/store/modules/menu';
 import layMenu from './layMenu.vue';
-
+import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
 
 
 const menuStore = useMenuStore();
 const menuList = computed(() => menuStore.menuList);
 const renderMenu = (
   routes: RouterType[],
-  basePath = ''
+  basePath: string = ''
 ): MenuItem[] => {
   return routes
     .filter(route => !route.meta?.isHide)
     .map((route) => {
-      const fullPath = `${basePath}/${route.path}`.replace(/\/+/g, '/')
+      // 判断path是否是绝对路径，
+      const fullPath = route.path.startsWith('/') ? route.path : `${basePath}/${route.path}`.replace(/\/+/g, '/')
       const item: MenuItem = {
         key: fullPath,
         title: route.meta.title,
-        closable: route.meta.closable
+        closable: route.meta.closable,
+        parentPath: basePath,
       }
       if (route.children?.length) {
         item.children = renderMenu(route.children, fullPath)
@@ -45,7 +47,7 @@ watch(
 );
 const onOpenChange = (openKeys: string[]): void => {
   const latestOpenKey = openKeys.find(key => menuStore.openKeys.indexOf(key) === -1);
-  menuStore.openKeys = latestOpenKey ? [latestOpenKey] : []
+  menuStore.setOpenViewKeys(latestOpenKey ? [latestOpenKey] : [])
 };
 </script>
 <template>
