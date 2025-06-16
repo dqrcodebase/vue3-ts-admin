@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:33:42
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-13 15:14:23
+ * @LastEditTime: 2025-06-16 17:01:57
  * @FilePath: /vue3-ts-admin/src/layouts/components/layLeft.vue
  * @Description: 
  * 
@@ -11,9 +11,13 @@
 import { useMenuStore } from '@/store/modules/menu';
 import { type MenuItem } from '@/store/modules/menu';
 import layMenu from './layMenu.vue';
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
-
-
+import {resolveIcon,resolveIcon1} from '@/utils/resolveIcon';
+import {
+  MailOutlined,
+  CalendarOutlined,
+  AppstoreOutlined,
+  SettingOutlined,
+} from '@ant-design/icons-vue';
 const menuStore = useMenuStore();
 const menuList = computed(() => menuStore.menuList);
 const renderMenu = (
@@ -30,15 +34,15 @@ const renderMenu = (
         title: route.meta.title,
         closable: route.meta.closable,
         parentPath: basePath,
-      }
-      if (route.children?.length) {
-        item.children = renderMenu(route.children, fullPath)
+        icon: route.meta?.icon ? resolveIcon(route.meta.icon) : undefined,
+        children: route.children ? renderMenu(route.children, fullPath) : undefined
       }
       return item
     })
 }
-
+console.log(resolveComponent('i-ant-design-user-outlined'));
 const menuItems = computed(() => renderMenu(menuList.value));
+console.log("🚀 ~ menuItems:", menuItems.value)
 watch(
   () => menuStore.openKeys,
   (_val, oldVal) => {

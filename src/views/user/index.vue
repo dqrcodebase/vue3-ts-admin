@@ -2,12 +2,12 @@
  * @Author: dqr
  * @Date: 2025-05-28 10:55:22
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-12 15:59:15
+ * @LastEditTime: 2025-06-13 17:19:22
  * @FilePath: /vue3-ts-admin/src/views/user/index.vue
  * @Description: 
  * 
 -->
- <script lang="ts" setup>
+<script lang="ts" setup>
 const columns = [
   {
     title: 'Name',
@@ -65,6 +65,223 @@ const data = [
     money: '￥120,000.00',
     address: 'Sidney No. 1 Lake Park',
   },
+  {
+    key: '1',
+    name: 'John Brown',
+    money: '￥300,000.00',
+    address: 'New York No. 1 Lake Park',
+  },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+  // {
+  //   key: '1',
+  //   name: 'John Brown',
+  //   money: '￥300,000.00',
+  //   address: 'New York No. 1 Lake Park',
+  // },
+  // {
+  //   key: '2',
+  //   name: 'Jim Green',
+  //   money: '￥1,256,000.00',
+  //   address: 'London No. 1 Lake Park',
+  // },
+  // {
+  //   key: '3',
+  //   name: 'Joe Black',
+  //   money: '￥120,000.00',
+  //   address: 'Sidney No. 1 Lake Park',
+  // },
+
 ];
 </script>
 <template>
@@ -74,8 +291,7 @@ const data = [
         <a>{{ text }}</a>
       </template>
     </template>
-    <template #title>Header</template>
-    <template #footer>Footer</template>
+    <template #title>用户列表</template>
   </a-table>
 </template>
 

@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-06-04 11:32:09
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-13 16:12:10
+ * @LastEditTime: 2025-06-16 17:58:32
  * @FilePath: /vue3-ts-admin/src/layouts/components/layMenu.vue
  * @Description: 
  * 
@@ -11,7 +11,6 @@
 <script lang="ts" setup>
 import { useMenuStore } from '@/store/modules/menu'
 import { type MenuItem } from '@/store/modules/menu';
-import { MailOutlined, AppstoreOutlined, SettingOutlined } from '@ant-design/icons-vue';
 
 
 
@@ -39,12 +38,17 @@ const handleClick = () => {
 <template>
   <template v-if="hasChildren">
     <a-sub-menu :title="info.title" :key="info.key" :icon="info.icon">
+      <template #icon>
+        <component :is="info.icon" />
+        <i-ant-design-user-outlined />
+      </template>
+      <i-ant-design-user-outlined />
+      <component :is="info.icon"
       <layMenu v-for="item in info.children" :key="item.key" :info="item" />
     </a-sub-menu>
   </template>
   <template v-else>
     <a-menu-item :key="info.key" @click="handleClick" :icon="info.icon">
-     <component :is="AppstoreOutlined" />
       {{ info.title }}
     </a-menu-item>
   </template>

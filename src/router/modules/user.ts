@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-06-04 17:41:57
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-12 16:02:17
+ * @LastEditTime: 2025-06-16 15:21:10
  * @FilePath: /vue3-ts-admin/src/router/modules/user.ts
  * @Description: 
  * 
@@ -15,7 +15,9 @@ const userRoutes: RouterType[] = [
     name: "System",
     meta: {
       title: "系统管理",
-      icon: 'SettingOutlined'
+      icon1: 'SettingOutlined',
+      icon: 'user-outlined'
+      
     },
     children: [
       {
