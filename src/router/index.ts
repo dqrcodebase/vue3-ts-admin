@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-22 11:32:40
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-13 17:48:13
+ * @LastEditTime: 2025-06-19 16:45:16
  * @FilePath: /vue3-ts-admin/src/router/index.ts
  * @Description:
  *
@@ -10,7 +10,11 @@
 import { createWebHistory, createRouter } from 'vue-router'
 import { type Router } from 'vue-router'
 import { getToken } from '@/utils/auth'
+import { useMenuStoreHook } from '@/store/modules/menu'
 
+
+const menuStore = useMenuStoreHook()
+console.log("🚀 ~ menuStore:", menuStore)
 // 定义公开路由（不需要认证）
 const publicPaths = ['/login', '/404', '/forgot-password'];
 // 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件
@@ -40,6 +44,7 @@ const router: Router = createRouter({
   routes: routesFlat
 })
 router.beforeEach((to, _from) => {
+  console.log("🚀 ~ router.beforeEach ~ to:", to)
   const token = getToken();
   const isAuthenticated = !publicPaths.includes(to.path)
   if (token && to.path === '/login') {

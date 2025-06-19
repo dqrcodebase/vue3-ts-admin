@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 14:33:26
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-12 15:53:32
+ * @LastEditTime: 2025-06-19 15:48:53
  * @FilePath: /vue3-ts-admin/src/layouts/components/layTop.vue
  * @Description: 
  * 
@@ -16,7 +16,7 @@ import {
 } from '@ant-design/icons-vue';
 import { useMenuStore } from '@/store/modules/menu';
 import { MenuItem } from '@/store/modules/menu'
-
+import type { MenuProps } from 'ant-design-vue';
 const emit = defineEmits(['collapsed'])
 
 
@@ -26,7 +26,7 @@ const panes = ref<MenuItem[]>(visitedViews.value);
 
 
 const remove = (targetKey: string) => {
- let lastIndex = 0;
+  let lastIndex = 0;
   panes.value.forEach((pane, i) => {
     if (pane.key === targetKey) {
       lastIndex = i - 1;
@@ -36,12 +36,12 @@ const remove = (targetKey: string) => {
   if (panes.value.length) {
     if (lastIndex < 0) {
       lastIndex = 0;
-    } 
+    }
     menuStore.visitedViews = panes.value
     const pane = panes.value[lastIndex];
     menuStore.setVisitedViews(panes.value)
-    if(targetKey === menuStore.activeViewKey) {
-    menuStore.tabsViewChange(pane.key)
+    if (targetKey === menuStore.activeViewKey) {
+      menuStore.tabsViewChange(pane.key)
     }
   }
 };
@@ -64,12 +64,19 @@ const onChangeTabs = (key: string) => {
   menuStore.tabsViewChange(key)
 }
 
+const visible = ref(false);
+const handleMenuClick: MenuProps['onClick'] = e => {
+  if (e.key === '3') {
+    visible.value = false;
+  }
+};
+
 </script>
 <template>
   <div class="lay-top">
     <span class="pl-[10px] pr-[10px]">
-    <MenuUnfoldOutlined  class="trigger" v-if="menuStore.collapsed" @click="toggleCollapsed" />
-    <MenuFoldOutlined class="trigger" v-else @click="toggleCollapsed" />
+      <MenuUnfoldOutlined class="trigger" v-if="menuStore.collapsed" @click="toggleCollapsed" />
+      <MenuFoldOutlined class="trigger" v-else @click="toggleCollapsed" />
     </span>
 
     <a-tabs class="flex-1" v-model:activeKey="menuStore.activeViewKey" hide-add type="editable-card" @edit="onEdit"
@@ -77,11 +84,23 @@ const onChangeTabs = (key: string) => {
       <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
       </a-tab-pane>
     </a-tabs>
-    <div class="ml-[12px]"> <a-avatar style="background-color: #87d068">
-        <template #icon>
-          <UserOutlined />
+    <div class="ml-[12px]">
+      <a-dropdown v-model:open="visible">
+        <a-avatar class="cursor-pointer">
+          <template #icon>
+            <UserOutlined />
+          </template>
+        </a-avatar>
+        <template #overlay>
+          <a-menu @click="handleMenuClick">
+            <a-menu-item key="1">首页</a-menu-item>
+            <a-menu-item key="2">用户中心</a-menu-item>
+            <a-menu-item key="3">退出登录</a-menu-item>
+          </a-menu>
         </template>
-      </a-avatar></div>
+      </a-dropdown>
+
+    </div>
   </div>
 </template>
 

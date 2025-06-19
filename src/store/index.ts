@@ -7,8 +7,9 @@
  * @Description: 
  * 
  */
-import { createPinia } from 'pinia'
 
-const pinia = createPinia()
+import type { App } from "vue";
+import { createPinia } from "pinia";
+const store = createPinia();
 
-export default pinia
+export { store };

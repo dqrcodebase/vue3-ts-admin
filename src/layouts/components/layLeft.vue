@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:33:42
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-16 17:01:57
+ * @LastEditTime: 2025-06-19 16:46:48
  * @FilePath: /vue3-ts-admin/src/layouts/components/layLeft.vue
  * @Description: 
  * 
@@ -11,14 +11,10 @@
 import { useMenuStore } from '@/store/modules/menu';
 import { type MenuItem } from '@/store/modules/menu';
 import layMenu from './layMenu.vue';
-import {resolveIcon,resolveIcon1} from '@/utils/resolveIcon';
-import {
-  MailOutlined,
-  CalendarOutlined,
-  AppstoreOutlined,
-  SettingOutlined,
-} from '@ant-design/icons-vue';
+import { menuRoutes } from '@/router/index'
+
 const menuStore = useMenuStore();
+menuStore.menuList = menuRoutes
 const menuList = computed(() => menuStore.menuList);
 const renderMenu = (
   routes: RouterType[],
@@ -34,7 +30,7 @@ const renderMenu = (
         title: route.meta.title,
         closable: route.meta.closable,
         parentPath: basePath,
-        icon: route.meta?.icon ? resolveIcon(route.meta.icon) : undefined,
+        icon: route.meta?.icon || undefined,
         children: route.children ? renderMenu(route.children, fullPath) : undefined
       }
       return item
@@ -53,6 +49,7 @@ const onOpenChange = (openKeys: string[]): void => {
   const latestOpenKey = openKeys.find(key => menuStore.openKeys.indexOf(key) === -1);
   menuStore.setOpenViewKeys(latestOpenKey ? [latestOpenKey] : [])
 };
+
 </script>
 <template>
   <div class="lay-left" >

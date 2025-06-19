@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-06-04 11:32:09
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-16 17:58:32
+ * @LastEditTime: 2025-06-18 16:44:17
  * @FilePath: /vue3-ts-admin/src/layouts/components/layMenu.vue
  * @Description: 
  * 
@@ -11,9 +11,6 @@
 <script lang="ts" setup>
 import { useMenuStore } from '@/store/modules/menu'
 import { type MenuItem } from '@/store/modules/menu';
-
-
-
 // 注册自身为递归组件
 const LayMenu = defineAsyncComponent(() => import('./layMenu.vue'))
 interface LayMenuProps {
@@ -37,19 +34,17 @@ const handleClick = () => {
 </script>
 <template>
   <template v-if="hasChildren">
-    <a-sub-menu :title="info.title" :key="info.key" :icon="info.icon">
-      <template #icon>
-        <component :is="info.icon" />
-        <i-ant-design-user-outlined />
+    <a-sub-menu :key="info.key">
+      <template #title>
+        <Iconify :icon="info.icon" width="16" height="16" class="mr-[6px]"/>
+        <span>{{ info.title }}</span>
       </template>
-      <i-ant-design-user-outlined />
-      <component :is="info.icon"
       <layMenu v-for="item in info.children" :key="item.key" :info="item" />
     </a-sub-menu>
   </template>
   <template v-else>
     <a-menu-item :key="info.key" @click="handleClick" :icon="info.icon">
-      {{ info.title }}
+      <span>{{ info.title }}</span>
     </a-menu-item>
   </template>
 </template>

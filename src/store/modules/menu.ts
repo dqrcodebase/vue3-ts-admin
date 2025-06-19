@@ -8,8 +8,8 @@
  * 
  */
 import { defineStore } from 'pinia'
-import { menuRoutes } from '@/router/index'
 import { setStorage } from '@/utils/auth/index'
+import { store } from '../index'
 interface MenuState {
   menuList: RouterType[]
   collapsed: boolean
@@ -37,7 +37,7 @@ export const useMenuStore = defineStore('menu', {
   state: (): MenuState => {
 
     const initState: MenuState = {
-      menuList: menuRoutes, // 菜单列表
+      menuList: [], // 菜单列表
       collapsed: false, // 菜单是否收起
       openKeys: [], // 菜单展开的key
       preOpenKeys: [], // 之前菜单展开的key
@@ -92,3 +92,7 @@ export const useMenuStore = defineStore('menu', {
     }
   }
 })
+
+export const useMenuStoreHook = () => {
+  return useMenuStore(store)
+}
