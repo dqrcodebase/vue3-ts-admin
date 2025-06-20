@@ -2,14 +2,15 @@
  * @Author: dqr
  * @Date: 2025-05-29 17:53:00
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-12 15:55:40
+ * @LastEditTime: 2025-06-20 17:35:54
  * @FilePath: /vue3-ts-admin/src/store/modules/menu.ts
  * @Description: 
  * 
  */
 import { defineStore } from 'pinia'
-import { setStorage } from '@/utils/auth/index'
+import { setStorage,clearStorage } from '@/utils/auth/index'
 import { store } from '../index'
+
 interface MenuState {
   menuList: RouterType[]
   collapsed: boolean
@@ -89,7 +90,10 @@ export const useMenuStore = defineStore('menu', {
     setOpenViewKeys(latestOpenKey: string[]) {
       this.openKeys = latestOpenKey
       setStorage('openKeys', JSON.stringify(this.openKeys))
-    }
+    },
+    clearView() {
+      clearStorage()
+    },
   }
 })
 

@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 14:33:26
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-19 15:48:53
+ * @LastEditTime: 2025-06-20 17:52:12
  * @FilePath: /vue3-ts-admin/src/layouts/components/layTop.vue
  * @Description: 
  * 
@@ -17,9 +17,10 @@ import {
 import { useMenuStore } from '@/store/modules/menu';
 import { MenuItem } from '@/store/modules/menu'
 import type { MenuProps } from 'ant-design-vue';
+import { clearStorage,clearToken } from '@/utils/auth/index'
+
 const emit = defineEmits(['collapsed'])
-
-
+const route = useRoute()
 const menuStore = useMenuStore();
 const visitedViews = computed(() => menuStore.visitedViews)
 const panes = ref<MenuItem[]>(visitedViews.value);
@@ -67,7 +68,11 @@ const onChangeTabs = (key: string) => {
 const visible = ref(false);
 const handleMenuClick: MenuProps['onClick'] = e => {
   if (e.key === '3') {
-    visible.value = false;
+    clearStorage()
+    clearToken()
+    // 拼接地址需要转译一下
+    window.location.href = '/login?redirect='+encodeURIComponent(route.path)
+    
   }
 };
 

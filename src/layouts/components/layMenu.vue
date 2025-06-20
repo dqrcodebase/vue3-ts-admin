@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-06-04 11:32:09
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-18 16:44:17
+ * @LastEditTime: 2025-06-20 17:28:53
  * @FilePath: /vue3-ts-admin/src/layouts/components/layMenu.vue
  * @Description: 
  * 
@@ -36,16 +36,38 @@ const handleClick = () => {
   <template v-if="hasChildren">
     <a-sub-menu :key="info.key">
       <template #title>
-        <Iconify :icon="info.icon" width="16" height="16" class="mr-[6px]"/>
-        <span>{{ info.title }}</span>
+        <div>
+          <span class="menu-icon mr-[6px]">
+            <Iconify :icon="info.icon" width="16" height="16" />
+          </span>
+          <span class="menu-title">{{ info.title }}</span>
+        </div>
+
       </template>
       <layMenu v-for="item in info.children" :key="item.key" :info="item" />
     </a-sub-menu>
   </template>
   <template v-else>
     <a-menu-item :key="info.key" @click="handleClick" :icon="info.icon">
-      <span>{{ info.title }}</span>
+      <div>
+        <span class="menu-icon mr-[6px]">
+          <Iconify :icon="info.icon" width="16" height="16" />
+        </span>
+        <span class="menu-title">{{ info.title }}</span>
+      </div>
     </a-menu-item>
   </template>
 </template>
-<style lang="less" scoped></style>
+<style lang="scss" scoped>
+.menu-icon {
+  display: inline-flex;
+}
+
+.menu-title {
+  overflow: hidden;
+  transition: all .3s;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: 2px;
+}
+</style>

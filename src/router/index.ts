@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-22 11:32:40
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-19 16:45:16
+ * @LastEditTime: 2025-06-20 17:32:00
  * @FilePath: /vue3-ts-admin/src/router/index.ts
  * @Description:
  *
@@ -11,7 +11,7 @@ import { createWebHistory, createRouter } from 'vue-router'
 import { type Router } from 'vue-router'
 import { getToken } from '@/utils/auth'
 import { useMenuStoreHook } from '@/store/modules/menu'
-
+import { type MenuItem } from '@/store/modules/menu';
 
 const menuStore = useMenuStoreHook()
 console.log("🚀 ~ menuStore:", menuStore)
@@ -58,6 +58,14 @@ router.beforeEach((to, _from) => {
       },
     }
   }
+  
+  // const info: MenuItem = {
+  //   key: to.path,
+  //   title: to.meta.title as string,
+  //   closable: true,
+  //   parentPath: to.meta.parentPath as string,
+  // }
+  // menuStore.openView(info)
   return true
 })
 export default router
