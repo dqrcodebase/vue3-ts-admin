@@ -9,40 +9,39 @@
 -->
 
 <script lang="ts" setup>
-import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'
-import { useLoginStore } from '@/store/modules/login'
-import {setStorage} from '@/utils/auth'
-import {type Router,type RouteLocationNormalizedLoaded} from 'vue-router'
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
+import { useLoginStore } from '@/store/modules/login';
+import { setStorage } from '@/utils/auth';
+import { type Router, type RouteLocationNormalizedLoaded } from 'vue-router';
 interface FormState {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 const state: FormState = reactive({
   username: '',
   password: '',
-  remember: false
-})
+  remember: false,
+});
 const formState = reactive<FormState>({
   username: '',
   password: '',
-})
-const loginStore = useLoginStore()
-const router:  Router = useRouter()
-const route: RouteLocationNormalizedLoaded = useRoute()
+});
+const loginStore = useLoginStore();
+const router: Router = useRouter();
+const route: RouteLocationNormalizedLoaded = useRoute();
 const onFinish = async (values: any) => {
-  const {data}= await loginStore.loginByUsername(values)
-  setStorage('user-info',JSON.stringify(data))
+  const { data } = await loginStore.loginByUsername(values);
+  setStorage('user-info', JSON.stringify(data));
   // 页面跳转
-   router.push(route.query.redirect as string || '/')
-
-}
+  router.push((route.query.redirect as string) || '/');
+};
 
 const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo)
-}
+  console.log('Failed:', errorInfo);
+};
 const disabled = computed(() => {
-  return !(formState.username && formState.password)
-})
+  return !(formState.username && formState.password);
+});
 </script>
 <template>
   <div class="login-container">
@@ -50,11 +49,21 @@ const disabled = computed(() => {
       <h2>ADMIN</h2>
       <h1>LOGIN</h1>
       <div>
-        <a-form :model="formState" name="normal_login" class="login-form" autocomplete="off" :wrapper-col="{ span: 24 }"
-          @finish="onFinish" @finishFailed="onFinishFailed">
-          <a-form-item name="username" :rules="[
-            { required: true, message: 'Please input your username!' },
-          ]">
+        <a-form
+          :model="formState"
+          name="normal_login"
+          class="login-form"
+          autocomplete="off"
+          :wrapper-col="{ span: 24 }"
+          @finish="onFinish"
+          @finishFailed="onFinishFailed"
+        >
+          <a-form-item
+            name="username"
+            :rules="[
+              { required: true, message: 'Please input your username!' },
+            ]"
+          >
             <a-input v-model:value="formState.username">
               <template #prefix>
                 <UserOutlined class="site-form-item-icon" />
@@ -62,9 +71,12 @@ const disabled = computed(() => {
             </a-input>
           </a-form-item>
 
-          <a-form-item name="password" :rules="[
-            { required: true, message: 'Please input your password!' },
-          ]">
+          <a-form-item
+            name="password"
+            :rules="[
+              { required: true, message: 'Please input your password!' },
+            ]"
+          >
             <a-input-password v-model:value="formState.password">
               <template #prefix>
                 <LockOutlined class="site-form-item-icon" />
@@ -73,7 +85,14 @@ const disabled = computed(() => {
           </a-form-item>
 
           <a-form-item>
-            <a-button :disabled="disabled" type="primary" html-type="submit" class="login-form-button">Log in</a-button>
+            <a-button
+              :disabled="disabled"
+              type="primary"
+              html-type="submit"
+              class="login-form-button"
+            >
+              Log in
+            </a-button>
           </a-form-item>
         </a-form>
       </div>
@@ -84,24 +103,24 @@ const disabled = computed(() => {
 </template>
 <style scoped lang="scss">
 .login-container {
-  background-color: #e3e5e4;
-  height: 100%;
-  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #e3e5e4;
 
   .login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 400px;
     height: 500px;
     background-color: #fbfcfd;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
     border-radius: 8px;
-    box-shadow: 0 0 10px #aaaaaa
+    box-shadow: 0 0 10px #aaa;
   }
 }
 

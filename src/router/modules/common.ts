@@ -4,31 +4,31 @@
  * @LastEditors: D Q R 852601818@qq.com
  * @LastEditTime: 2025-06-06 17:22:41
  * @FilePath: /vue3-ts-admin/src/router/modules/common.ts
- * @Description: 
- * 
+ * @Description:
+ *
  */
-import Layouts from "@/layouts/index.vue";
+import Layouts from '@/layouts/index.vue';
 const commonRoutes: RouterType[] = [
   {
-    path: "/",
+    path: '/',
     component: Layouts,
-    redirect: "/home",
+    redirect: '/home',
     meta: {
       isHide: true,
-      title: "首页",
+      title: '首页',
     },
     children: [
       {
-        path: "/home",
-        name: "Home",
-        component: () => import("@/views/home/index.vue"),
+        path: '/home',
+        name: 'Home',
+        component: () => import('@/views/home/index.vue'),
         meta: {
           title: '首页',
-          closable:  false
-        }
+          closable: false,
+        },
       },
-    ]
+    ],
   },
-]
+];
 
-export default commonRoutes
+export default commonRoutes;

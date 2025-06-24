@@ -7,6 +7,9 @@ module.exports = {
     'stylelint-config-recess-order', // 配置stylelint css属性书写顺序插件,
     'stylelint-config-prettier', // 配置stylelint和prettier兼容
   ],
+   plugins: [
+    'stylelint-scss' // 添加 SCSS 插件支持
+  ],
   overrides: [
     {
       files: ['**/*.(scss|css|vue|html)'],
@@ -31,6 +34,25 @@ module.exports = {
    * always => 必须
    */
   rules: {
+    // 解决 Tailwind 指令识别问题
+    'at-rule-no-unknown': null, // 禁用标准规则
+    'scss/at-rule-no-unknown': [ // 启用 SCSS 版本规则
+      true,
+      {
+        ignoreAtRules: [
+          'tailwind', // 忽略 Tailwind 指令
+          'apply',
+          'variants',
+          'responsive',
+          'screen'
+        ]
+      }
+    ],
+    
+    // 修复其他 SCSS 规则问题
+    'scss/dollar-variable-pattern': null,
+    'scss/at-import-partial-extension': null,
+    
     'value-keyword-case': null, // 在 css 中使用 v-bind，不报错
     'no-descending-specificity': null, // 禁止在具有较高优先级的选择器后出现被其覆盖的较低优先级的选择器
     'function-url-quotes': 'always', // 要求或禁止 URL 的引号 "always(必须加上引号)"|"never(没有引号)"

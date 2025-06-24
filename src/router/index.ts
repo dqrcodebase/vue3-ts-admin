@@ -7,48 +7,51 @@
  * @Description:
  *
  */
-import { createWebHistory, createRouter } from 'vue-router'
-import { type Router } from 'vue-router'
-import { getToken } from '@/utils/auth'
-import { useMenuStoreHook } from '@/store/modules/menu'
+import { createWebHistory, createRouter } from 'vue-router';
+import { type Router } from 'vue-router';
+import { getToken } from '@/utils/auth';
+import { useMenuStoreHook } from '@/store/modules/menu';
 import { type MenuItem } from '@/store/modules/menu';
 
-const menuStore = useMenuStoreHook()
-console.log("🚀 ~ menuStore:", menuStore)
+const menuStore = useMenuStoreHook();
+console.log('🚀 ~ menuStore:', menuStore);
 // 定义公开路由（不需要认证）
 const publicPaths = ['/login', '/404', '/forgot-password'];
 // 自动导入全部静态路由，无需再手动引入！匹配 src/router/modules 目录（任何嵌套级别）中具有 .ts 扩展名的所有文件
-const modules: Record<string, any> = import.meta.glob<RouterType[]>('./modules/**/*.ts', {
-  eager: true,
-})
+const modules: Record<string, any> = import.meta.glob<RouterType[]>(
+  './modules/**/*.ts',
+  {
+    eager: true,
+  },
+);
 /** 原始静态路由（未做任何处理） */
-const routeModuleList: RouterType[] = []
-
+const routeModuleList: RouterType[] = [];
 
 Object.values(modules).forEach((mod) => {
-
   try {
-    const routes = mod.default ?? []
-    routeModuleList.push(...(Array.isArray(routes) ? routes : [routes]))
+    const routes = mod.default ?? [];
+    routeModuleList.push(...(Array.isArray(routes) ? routes : [routes]));
   } catch (error) {
-    console.error(`路由 ${mod} 加载失败：`, error)
+    console.error(`路由 ${mod} 加载失败：`, error);
   }
-})
-const routesFlat = routeModuleList.flat(1)
+});
+const routesFlat = routeModuleList.flat(1);
 // 参与菜单渲染的路由
-export const menuRoutes: RouterType[] = routesFlat.filter((item: RouterType) => {
-  return !item.meta.isHide
-})
+export const menuRoutes: RouterType[] = routesFlat.filter(
+  (item: RouterType) => {
+    return !item.meta.isHide;
+  },
+);
 const router: Router = createRouter({
   history: createWebHistory(),
-  routes: routesFlat
-})
+  routes: routesFlat,
+});
 router.beforeEach((to, _from) => {
-  console.log("🚀 ~ router.beforeEach ~ to:", to)
+  console.log('🚀 ~ router.beforeEach ~ to:', to);
   const token = getToken();
-  const isAuthenticated = !publicPaths.includes(to.path)
+  const isAuthenticated = !publicPaths.includes(to.path);
   if (token && to.path === '/login') {
-    return '/'
+    return '/';
   }
   if (!token && isAuthenticated) {
     return {
@@ -56,9 +59,9 @@ router.beforeEach((to, _from) => {
       query: {
         redirect: to.fullPath,
       },
-    }
+    };
   }
-  
+
   // const info: MenuItem = {
   //   key: to.path,
   //   title: to.meta.title as string,
@@ -66,6 +69,6 @@ router.beforeEach((to, _from) => {
   //   parentPath: to.meta.parentPath as string,
   // }
   // menuStore.openView(info)
-  return true
-})
-export default router
+  return true;
+});
+export default router;

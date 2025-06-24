@@ -281,7 +281,6 @@ const data = [
   //   money: '￥120,000.00',
   //   address: 'Sidney No. 1 Lake Park',
   // },
-
 ];
 </script>
 <template>

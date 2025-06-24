@@ -7,13 +7,13 @@
  * @Description:
  *
  */
-import service from '@/utils/service'
-import { type ApiResponse } from '@/utils/service/type'
+import service from '@/utils/service';
+import { type ApiResponse } from '@/utils/service/type';
 
 // 获取菜单权限
-export const getRoleMenuList = ():Promise< ApiResponse<object[]>> => {
+export const getRoleMenuList = (): Promise<ApiResponse<object[]>> => {
   return service({
     url: '/role-menu',
     method: 'post',
-  })
-}
+  });
+};

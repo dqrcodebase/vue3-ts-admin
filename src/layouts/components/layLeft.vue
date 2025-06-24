@@ -11,34 +11,38 @@
 import { useMenuStore } from '@/store/modules/menu';
 import { type MenuItem } from '@/store/modules/menu';
 import layMenu from './layMenu.vue';
-import { menuRoutes } from '@/router/index'
+import { menuRoutes } from '@/router/index';
 
 const menuStore = useMenuStore();
-menuStore.menuList = menuRoutes
+menuStore.menuList = menuRoutes;
 const menuList = computed(() => menuStore.menuList);
 const renderMenu = (
   routes: RouterType[],
-  basePath: string = ''
+  basePath: string = '',
 ): MenuItem[] => {
   return routes
-    .filter(route => !route.meta?.isHide)
+    .filter((route) => !route.meta?.isHide)
     .map((route) => {
       // 判断path是否是绝对路径，
-      const fullPath = route.path.startsWith('/') ? route.path : `${basePath}/${route.path}`.replace(/\/+/g, '/')
+      const fullPath = route.path.startsWith('/')
+        ? route.path
+        : `${basePath}/${route.path}`.replace(/\/+/g, '/');
       const item: MenuItem = {
         key: fullPath,
         title: route.meta.title,
         closable: route.meta.closable,
         parentPath: basePath,
         icon: route.meta?.icon || undefined,
-        children: route.children ? renderMenu(route.children, fullPath) : undefined
-      }
-      return item
-    })
-}
+        children: route.children
+          ? renderMenu(route.children, fullPath)
+          : undefined,
+      };
+      return item;
+    });
+};
 console.log(resolveComponent('i-ant-design-user-outlined'));
 const menuItems = computed(() => renderMenu(menuList.value));
-console.log("🚀 ~ menuItems:", menuItems.value)
+console.log('🚀 ~ menuItems:', menuItems.value);
 watch(
   () => menuStore.openKeys,
   (_val, oldVal) => {
@@ -46,19 +50,27 @@ watch(
   },
 );
 const onOpenChange = (openKeys: string[]): void => {
-  const latestOpenKey = openKeys.find(key => menuStore.openKeys.indexOf(key) === -1);
-  menuStore.setOpenViewKeys(latestOpenKey ? [latestOpenKey] : [])
+  const latestOpenKey = openKeys.find(
+    (key) => menuStore.openKeys.indexOf(key) === -1,
+  );
+  menuStore.setOpenViewKeys(latestOpenKey ? [latestOpenKey] : []);
 };
-
 </script>
 <template>
-  <div class="lay-left" >
+  <div class="lay-left">
     <div class="logo-wrap">
       <img :width="50" src="@/assets/image/logo.png" alt="" />
-      <span v-if="!menuStore.collapsed" class="project-name">vue3-ts-admin</span>
+      <span v-if="!menuStore.collapsed" class="project-name">
+        vue3-ts-admin
+      </span>
     </div>
-    <a-menu mode="inline" theme="dark" @openChange="onOpenChange" :open-keys="menuStore.openKeys"
-       v-model:selectedKeys="menuStore.selectedKeys">
+    <a-menu
+      mode="inline"
+      theme="dark"
+      @openChange="onOpenChange"
+      :open-keys="menuStore.openKeys"
+      v-model:selectedKeys="menuStore.selectedKeys"
+    >
       <layMenu v-for="child in menuItems" :key="child.key" :info="child" />
     </a-menu>
   </div>
@@ -82,9 +94,9 @@ const onOpenChange = (openKeys: string[]): void => {
 }
 
 .project-name {
-  font-size: 20px;
-  color: #fff;
-  font-weight: 600;
   padding-left: 10px;
+  font-size: 20px;
+  font-weight: 600;
+  color: #fff;
 }
 </style>

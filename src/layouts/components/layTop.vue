@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 14:33:26
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-20 17:52:12
+ * @LastEditTime: 2025-06-24 10:55:20
  * @FilePath: /vue3-ts-admin/src/layouts/components/layTop.vue
  * @Description: 
  * 
@@ -12,37 +12,36 @@
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
-  UserOutlined
+  UserOutlined,
 } from '@ant-design/icons-vue';
 import { useMenuStore } from '@/store/modules/menu';
-import { MenuItem } from '@/store/modules/menu'
+import { MenuItem } from '@/store/modules/menu';
 import type { MenuProps } from 'ant-design-vue';
-import { clearStorage,clearToken } from '@/utils/auth/index'
+import { clearStorage, clearToken } from '@/utils/auth/index';
 
-const emit = defineEmits(['collapsed'])
-const route = useRoute()
+const emit = defineEmits(['collapsed']);
+const route = useRoute();
 const menuStore = useMenuStore();
-const visitedViews = computed(() => menuStore.visitedViews)
+const visitedViews = computed(() => menuStore.visitedViews);
 const panes = ref<MenuItem[]>(visitedViews.value);
 
-
-const remove = (targetKey: string) => {
+let remove = (targetKey: string) => {
   let lastIndex = 0;
   panes.value.forEach((pane, i) => {
     if (pane.key === targetKey) {
       lastIndex = i - 1;
     }
   });
-  panes.value = panes.value.filter(pane => pane.key !== targetKey);
+  panes.value = panes.value.filter((pane) => pane.key !== targetKey);
   if (panes.value.length) {
     if (lastIndex < 0) {
       lastIndex = 0;
     }
-    menuStore.visitedViews = panes.value
+    menuStore.visitedViews = panes.value;
     const pane = panes.value[lastIndex];
-    menuStore.setVisitedViews(panes.value)
+    menuStore.setVisitedViews(panes.value);
     if (targetKey === menuStore.activeViewKey) {
-      menuStore.tabsViewChange(pane.key)
+      menuStore.tabsViewChange(pane.key);
     }
   }
 };
@@ -53,41 +52,48 @@ const onEdit = (targetKey: string | MouseEvent, action: string) => {
   }
 };
 
-
-
-
-
 const toggleCollapsed = () => {
-  emit('collapsed')
-
+  emit('collapsed');
 };
 const onChangeTabs = (key: string) => {
-  menuStore.tabsViewChange(key)
-}
-
-const visible = ref(false);
-const handleMenuClick: MenuProps['onClick'] = e => {
-  if (e.key === '3') {
-    clearStorage()
-    clearToken()
-    // 拼接地址需要转译一下
-    window.location.href = '/login?redirect='+encodeURIComponent(route.path)
-    
-  }
+  menuStore.tabsViewChange(key);
 };
 
+const visible = ref(false);
+const handleMenuClick: MenuProps['onClick'] = (e) => {
+  if (e.key === '3') {
+    clearStorage();
+    clearToken();
+    // 拼接地址需要转译一下
+    window.location.href = '/login?redirect=' + encodeURIComponent(route.path);
+  }
+};
 </script>
 <template>
   <div class="lay-top">
     <span class="pl-[10px] pr-[10px]">
-      <MenuUnfoldOutlined class="trigger" v-if="menuStore.collapsed" @click="toggleCollapsed" />
+      <MenuUnfoldOutlined
+        class="trigger"
+        v-if="menuStore.collapsed"
+        @click="toggleCollapsed"
+      />
       <MenuFoldOutlined class="trigger" v-else @click="toggleCollapsed" />
     </span>
 
-    <a-tabs class="flex-1" v-model:activeKey="menuStore.activeViewKey" hide-add type="editable-card" @edit="onEdit"
-      @tabClick="onChangeTabs">
-      <a-tab-pane v-for="pane in panes" :key="pane.key" :tab="pane.title" :closable="pane.closable">
-      </a-tab-pane>
+    <a-tabs
+      class="flex-1"
+      v-model:activeKey="menuStore.activeViewKey"
+      hide-add
+      type="editable-card"
+      @edit="onEdit"
+      @tabClick="onChangeTabs"
+    >
+      <a-tab-pane
+        v-for="pane in panes"
+        :key="pane.key"
+        :tab="pane.title"
+        :closable="pane.closable"
+      ></a-tab-pane>
     </a-tabs>
     <div class="ml-[12px]">
       <a-dropdown v-model:open="visible">
@@ -104,7 +110,6 @@ const handleMenuClick: MenuProps['onClick'] = e => {
           </a-menu>
         </template>
       </a-dropdown>
-
     </div>
   </div>
 </template>
@@ -112,8 +117,8 @@ const handleMenuClick: MenuProps['onClick'] = e => {
 <style scoped lang="scss">
 .lay-top {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
+  justify-content: space-between;
   padding: 10px;
   background-color: #fff;
 

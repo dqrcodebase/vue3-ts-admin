@@ -7,22 +7,20 @@
  * @Description: 
  * 
 -->
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <div class="lay-content">
     <div class="flex flex-1 overflow-auto">
-    <RouterView class="flex-1"></RouterView>
-
+      <RouterView class="flex-1"></RouterView>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .lay-content {
+  margin: 10px;
   background-color: #fff;
   border-radius: 8px;
-  margin: 10px;
 }
 </style>

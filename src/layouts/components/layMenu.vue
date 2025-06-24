@@ -9,28 +9,27 @@
 -->
 
 <script lang="ts" setup>
-import { useMenuStore } from '@/store/modules/menu'
+import { useMenuStore } from '@/store/modules/menu';
 import { type MenuItem } from '@/store/modules/menu';
 // 注册自身为递归组件
-const LayMenu = defineAsyncComponent(() => import('./layMenu.vue'))
+const LayMenu = defineAsyncComponent(() => import('./layMenu.vue'));
 interface LayMenuProps {
-  info: MenuItem
+  info: MenuItem;
 }
 
-const menuStore = useMenuStore()
-const props = defineProps<LayMenuProps>()
-const { info } = props
-const router = useRouter()
+const menuStore = useMenuStore();
+const props = defineProps<LayMenuProps>();
+const { info } = props;
+const router = useRouter();
 // 这个 computed 确保 info.children 是非空数组才渲染 sub-menu
 const hasChildren = computed(() => {
-  return Array.isArray(info.children) && info.children.length > 0
-})
+  return Array.isArray(info.children) && info.children.length > 0;
+});
 
 const handleClick = () => {
-  router.push(info.key)
-  menuStore.openView(info)
-
-}
+  router.push(info.key);
+  menuStore.openView(info);
+};
 </script>
 <template>
   <template v-if="hasChildren">
@@ -42,7 +41,6 @@ const handleClick = () => {
           </span>
           <span class="menu-title">{{ info.title }}</span>
         </div>
-
       </template>
       <layMenu v-for="item in info.children" :key="item.key" :info="item" />
     </a-sub-menu>
@@ -65,9 +63,9 @@ const handleClick = () => {
 
 .menu-title {
   overflow: hidden;
-  transition: all .3s;
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: 2px;
+  transition: all 0.3s;
 }
 </style>

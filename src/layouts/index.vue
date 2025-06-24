@@ -27,22 +27,31 @@ const siderCollapsehandle = function () {
   // menuStore.setSiderCollapse(!menuStore.siderCollapse);
 };
 const onCollapsed = function () {
-
- menuStore.collapsed = !menuStore.collapsed;
+  menuStore.collapsed = !menuStore.collapsed;
   menuStore.openKeys = menuStore.collapsed ? [] : menuStore.preOpenKeys;
-};  
+};
 </script>
 
 <template>
-   <a-layout class="h-full" @collapse="siderCollapsehandle">
-      <a-layout-sider v-model:collapsed="menuStore.collapsed" :trigger="null" width='256px' @collapse="siderCollapsehandle" collapsible>
-        <layLeft class="flex flex-col h-full"/>
-      </a-layout-sider>
-      <a-layout>
-        <a-layout-header :style="headerStyle" > <layTop  @collapsed="onCollapsed"/></a-layout-header>
-        <a-layout-content class="flex flex-1 "><layContent class="flex flex-1 overflow-hidden"/></a-layout-content>
-      </a-layout>
+  <a-layout class="h-full" @collapse="siderCollapsehandle">
+    <a-layout-sider
+      v-model:collapsed="menuStore.collapsed"
+      :trigger="null"
+      width="256px"
+      @collapse="siderCollapsehandle"
+      collapsible
+    >
+      <layLeft class="flex flex-col h-full" />
+    </a-layout-sider>
+    <a-layout>
+      <a-layout-header :style="headerStyle">
+        <layTop @collapsed="onCollapsed" />
+      </a-layout-header>
+      <a-layout-content class="flex flex-1">
+        <layContent class="flex flex-1 overflow-hidden" />
+      </a-layout-content>
     </a-layout>
+  </a-layout>
 </template>
 
 <style scoped lang="scss">
