@@ -39,7 +39,7 @@ let remove = (targetKey: string) => {
     }
     menuStore.visitedViews = panes.value;
     const pane = panes.value[lastIndex];
-    menuStore.setVisitedViews(panes.value);
+    menuStore.setVisitedViews(panes.value)
     if (targetKey === menuStore.activeViewKey) {
       menuStore.tabsViewChange(pane.key);
     }
