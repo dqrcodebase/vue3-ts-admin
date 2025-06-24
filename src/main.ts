@@ -19,6 +19,6 @@ import 'ant-design-vue/dist/reset.css';
 
 const app = createApp(App);
 
-app.component('Iconify', Icon)
+app.component('Iconify', Icon);
 
 app.use(router).use(store).use(Antd).mount('#app');
