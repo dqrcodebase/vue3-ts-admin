@@ -14,7 +14,7 @@
     "lint:style": "stylelint \"src/**/*.{css,scss,vue}\" --cache --fix",
     "commitlint": "commitlint --config commitlint.config.cjs -e -V",
     "lint:lint-staged": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky && husky install"
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",
