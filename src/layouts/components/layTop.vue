@@ -65,7 +65,7 @@ const handleMenuClick: MenuProps['onClick'] = (e) => {
     clearStorage();
     clearToken();
     // 拼接地址需要转译一下
-    // window.location.href = '/login?redirect=' + encodeURIComponent(route.path);
+    window.location.href = '/login?redirect=' + encodeURIComponent(route.path);
   }
 };
 </script>
