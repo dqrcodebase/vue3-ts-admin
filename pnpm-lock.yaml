@@ -117,6 +117,9 @@ importers:
       stylelint:
         specifier: ^16.21.0
         version: 16.21.0(typescript@5.8.3)
+      stylelint-config-html:
+        specifier: ^1.1.0
+        version: 1.1.0(postcss-html@1.8.0)(stylelint@16.21.0(typescript@5.8.3))
       stylelint-config-prettier:
         specifier: ^9.0.5
         version: 9.0.5(stylelint@16.21.0(typescript@5.8.3))
@@ -126,6 +129,9 @@ importers:
       stylelint-config-recommended-scss:
         specifier: 14.1.0
         version: 14.1.0(postcss@8.5.6)(stylelint@16.21.0(typescript@5.8.3))
+      stylelint-config-recommended-vue:
+        specifier: ^1.6.0
+        version: 1.6.0(postcss-html@1.8.0)(stylelint@16.21.0(typescript@5.8.3))
       stylelint-config-standard:
         specifier: 36.0.1
         version: 36.0.1(stylelint@16.21.0(typescript@5.8.3))
@@ -138,6 +144,9 @@ importers:
       stylelint-order:
         specifier: ^7.0.0
         version: 7.0.0(stylelint@16.21.0(typescript@5.8.3))
+      stylelint-prettier:
+        specifier: ^5.0.3
+        version: 5.0.3(prettier@3.6.0)(stylelint@16.21.0(typescript@5.8.3))
       stylelint-scss:
         specifier: ^6.12.1
         version: 6.12.1(stylelint@16.21.0(typescript@5.8.3))
@@ -3367,6 +3376,13 @@ packages:
     engines: {node: '>=20.19.0'}
     peerDependencies:
       stylelint: ^16.18.0
+
+  stylelint-prettier@5.0.3:
+    resolution: {integrity: sha512-B6V0oa35ekRrKZlf+6+jA+i50C4GXJ7X1PPmoCqSUoXN6BrNF6NhqqhanvkLjqw2qgvrS0wjdpeC+Tn06KN3jw==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      prettier: '>=3.0.0'
+      stylelint: '>=16.0.0'
 
   stylelint-scss@6.12.1:
     resolution: {integrity: sha512-UJUfBFIvXfly8WKIgmqfmkGKPilKB4L5j38JfsDd+OCg2GBdU0vGUV08Uw82tsRZzd4TbsUURVVNGeOhJVF7pA==}
@@ -6885,6 +6901,12 @@ snapshots:
     dependencies:
       postcss: 8.5.6
       postcss-sorting: 9.1.0(postcss@8.5.6)
+      stylelint: 16.21.0(typescript@5.8.3)
+
+  stylelint-prettier@5.0.3(prettier@3.6.0)(stylelint@16.21.0(typescript@5.8.3)):
+    dependencies:
+      prettier: 3.6.0
+      prettier-linter-helpers: 1.0.0
       stylelint: 16.21.0(typescript@5.8.3)
 
   stylelint-scss@6.12.1(stylelint@16.21.0(typescript@5.8.3)):

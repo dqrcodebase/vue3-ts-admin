@@ -35,7 +35,7 @@ const handleClick = () => {
   <template v-if="hasChildren">
     <a-sub-menu :key="info.key">
       <template #title>
-        <div>
+        <div class="flex items-center">
           <span class="menu-icon mr-[6px]">
             <Iconify :icon="info.icon" width="16" height="16" />
           </span>
@@ -47,7 +47,7 @@ const handleClick = () => {
   </template>
   <template v-else>
     <a-menu-item :key="info.key" @click="handleClick" :icon="info.icon">
-      <div>
+      <div class="flex items-center">
         <span class="menu-icon mr-[6px]">
           <Iconify :icon="info.icon" width="16" height="16" />
         </span>
@@ -65,7 +65,6 @@ const handleClick = () => {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  vertical-align: 2px;
   transition: all 0.3s;
 }
 </style>

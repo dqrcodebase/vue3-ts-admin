@@ -1,6 +1,5 @@
-@use '@/assets/styles/tailwind.scss';
+@use '@/assets/styles/tailwind';
 @use '@/assets/styles/variable';
-
 
 :root {
   --menu-bg-color: #{variable.$menu-bg-color};

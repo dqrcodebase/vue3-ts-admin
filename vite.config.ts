@@ -1,12 +1,3 @@
-/*
- * @Author: dqr
- * @Date: 2025-05-22 10:08:03
- * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-18 16:11:30
- * @FilePath: /vue3-ts-admin/vite.config.ts
- * @Description:
- *
- */
 import { defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import { vitePluginFakeServer } from 'vite-plugin-fake-server';
@@ -23,7 +14,6 @@ export default defineConfig({
     }),
     tailwindcss(),
     AutoImport({
-      // @iconify/vue 也自动导入
       imports: ['vue', 'vue-router'], //自动引入vue的ref、toRefs、onmounted等，无需在页面中再次引入
       dts: 'src/auto-import.d.ts', //自动引入类型定义文件
       eslintrc: {

@@ -9,11 +9,6 @@
 -->
 
 <script lang="ts" setup>
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  UserOutlined,
-} from '@ant-design/icons-vue';
 import { useMenuStore } from '@/store/modules/menu';
 import { MenuItem } from '@/store/modules/menu';
 import type { MenuProps } from 'ant-design-vue';
@@ -71,13 +66,21 @@ const handleMenuClick: MenuProps['onClick'] = (e) => {
 </script>
 <template>
   <div class="lay-top">
-    <span class="pl-[10px] pr-[10px]">
-      <MenuUnfoldOutlined
-        class="trigger"
+    <span class="pr-[10px]">
+      <Iconify
+        icon="foundation:indent-more"
+        width="24"
+        height="24"
         v-if="menuStore.collapsed"
         @click="toggleCollapsed"
       />
-      <MenuFoldOutlined class="trigger" v-else @click="toggleCollapsed" />
+      <Iconify
+        icon="foundation:indent-less"
+        width="24"
+        height="24"
+        v-else
+        @click="toggleCollapsed"
+      />
     </span>
 
     <a-tabs
@@ -99,7 +102,10 @@ const handleMenuClick: MenuProps['onClick'] = (e) => {
       <a-dropdown v-model:open="visible">
         <a-avatar class="cursor-pointer">
           <template #icon>
-            <UserOutlined />
+            <img
+              src="https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fimg3.doubanio.com%2Fview%2Fgroup_topic%2Fl%2Fpublic%2Fp671761172.jpg&refer=http%3A%2F%2Fimg3.doubanio.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1753411424&t=425c09418b152ffa5fda0043a08206da"
+              alt=""
+            />
           </template>
         </a-avatar>
         <template #overlay>
@@ -117,13 +123,18 @@ const handleMenuClick: MenuProps['onClick'] = (e) => {
 <style scoped lang="scss">
 .lay-top {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
   padding: 10px;
+  line-height: 1;
   background-color: #fff;
 
   :deep(.ant-tabs-nav) {
     margin: 0;
+  }
+
+  .cursor-pointer {
+    line-height: 34px;
   }
 }
 </style>
