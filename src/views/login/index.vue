@@ -9,7 +9,6 @@
 -->
 
 <script lang="ts" setup>
-import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
 import { useLoginStore } from '@/store/modules/login';
 import { setStorage } from '@/utils/auth';
 import { type Router, type RouteLocationNormalizedLoaded } from 'vue-router';
@@ -66,7 +65,7 @@ const disabled = computed(() => {
           >
             <a-input v-model:value="formState.username">
               <template #prefix>
-                <UserOutlined class="site-form-item-icon" />
+                <Iconify icon="icon-park-solid:user" />
               </template>
             </a-input>
           </a-form-item>
@@ -79,7 +78,7 @@ const disabled = computed(() => {
           >
             <a-input-password v-model:value="formState.password">
               <template #prefix>
-                <LockOutlined class="site-form-item-icon" />
+                <Iconify icon="icon-park-solid:lock" />
               </template>
             </a-input-password>
           </a-form-item>

@@ -7,6 +7,7 @@ const commonRoutes: RouterType[] = [
     meta: {
       isHide: true,
       title: '首页',
+      isTopMenu: true,
     },
     children: [
       {

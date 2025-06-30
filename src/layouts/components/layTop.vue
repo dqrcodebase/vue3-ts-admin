@@ -1,33 +1,23 @@
-<!--
- * @Author: dqr
- * @Date: 2025-05-28 14:33:26
- * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-24 10:55:20
- * @FilePath: /vue3-ts-admin/src/layouts/components/layTop.vue
- * @Description: 
- * 
--->
-
 <script lang="ts" setup>
 import { useMenuStore } from '@/store/modules/menu';
 import { MenuItem } from '@/store/modules/menu';
 import type { MenuProps } from 'ant-design-vue';
 import { clearStorage, clearToken } from '@/utils/auth/index';
-
+const router = useRouter();
 const emit = defineEmits(['collapsed']);
 const route = useRoute();
 const menuStore = useMenuStore();
 const visitedViews = computed(() => menuStore.visitedViews);
 const panes = ref<MenuItem[]>(visitedViews.value);
 
-let remove = (targetKey: string) => {
+let remove = (targetPath: string) => {
   let lastIndex = 0;
   panes.value.forEach((pane, i) => {
-    if (pane.key === targetKey) {
+    if (pane.path === targetPath) {
       lastIndex = i - 1;
     }
   });
-  panes.value = panes.value.filter((pane) => pane.key !== targetKey);
+  panes.value = panes.value.filter((pane) => pane.path !== targetPath);
   if (panes.value.length) {
     if (lastIndex < 0) {
       lastIndex = 0;
@@ -35,23 +25,25 @@ let remove = (targetKey: string) => {
     menuStore.visitedViews = panes.value;
     const pane = panes.value[lastIndex];
     menuStore.setVisitedViews(panes.value);
-    if (targetKey === menuStore.activeViewKey) {
-      menuStore.tabsViewChange(pane.key);
+    if (targetPath === menuStore.activeViewKey) {
+      router.push({ path: pane.path });
+      menuStore.tabsViewChange(pane.path);
     }
   }
 };
 
-const onEdit = (targetKey: string | MouseEvent, action: string) => {
+const onEdit = (targetPath: string | MouseEvent, action: string) => {
   if (action === 'remove') {
-    remove(targetKey as string);
+    remove(targetPath as string);
   }
 };
 
 const toggleCollapsed = () => {
   emit('collapsed');
 };
-const onChangeTabs = (key: string) => {
-  menuStore.tabsViewChange(key);
+const onChangeTabs = (path: string) => {
+  router.push({ path: path });
+  menuStore.tabsViewChange(path);
 };
 
 const visible = ref(false);
@@ -93,7 +85,7 @@ const handleMenuClick: MenuProps['onClick'] = (e) => {
     >
       <a-tab-pane
         v-for="pane in panes"
-        :key="pane.key"
+        :key="pane.path"
         :tab="pane.title"
         :closable="pane.closable"
       ></a-tab-pane>

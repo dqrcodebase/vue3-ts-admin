@@ -19,6 +19,7 @@ const menuList = computed(() => menuStore.menuList);
 const renderMenu = (
   routes: RouterType[],
   basePath: string = '',
+  menuKey: string[] = [],
 ): MenuItem[] => {
   return routes
     .filter((route) => !route.meta?.isHide)
@@ -27,22 +28,30 @@ const renderMenu = (
       const fullPath = route.path.startsWith('/')
         ? route.path
         : `${basePath}/${route.path}`.replace(/\/+/g, '/');
+      const key = [];
+      if (route.meta.isTopMenu) menuKey = [];
+      if (route.children) menuKey.push(route.path);
+      key.push(...menuKey);
       const item: MenuItem = {
-        key: fullPath,
+        path: fullPath,
+        menuKey: key,
         title: route.meta.title,
         closable: route.meta.closable,
         parentPath: basePath,
         icon: route.meta?.icon || undefined,
         children: route.children
-          ? renderMenu(route.children, fullPath)
+          ? renderMenu(route.children, fullPath, menuKey)
           : undefined,
       };
       return item;
     });
 };
-console.log(resolveComponent('i-ant-design-user-outlined'));
+menuList.value.forEach((item) => {
+  if (item.meta?.isTopMenu) {
+    menuStore.rootSubmenuKeys.push(item.path);
+  }
+});
 const menuItems = computed(() => renderMenu(menuList.value));
-console.log('🚀 ~ menuItems:', menuItems.value);
 watch(
   () => menuStore.openKeys,
   (_val, oldVal) => {
@@ -50,19 +59,24 @@ watch(
   },
 );
 const onOpenChange = (openKeys: string[]): void => {
+  const openKey = ['/demo'];
   const latestOpenKey = openKeys.find(
     (key) => menuStore.openKeys.indexOf(key) === -1,
   );
-  menuStore.setOpenViewKeys(latestOpenKey ? [latestOpenKey] : []);
+  if (menuStore.rootSubmenuKeys.indexOf(latestOpenKey as string) === -1) {
+    menuStore.openKeys = openKeys;
+  } else {
+    menuStore.openKeys = latestOpenKey ? [latestOpenKey as string] : [];
+  }
 };
 </script>
 <template>
   <div class="lay-left">
     <div class="logo-wrap">
       <img :width="50" src="@/assets/image/logo.png" alt="" />
-      <span v-if="!menuStore.collapsed" class="project-name">
+      <!-- <span v-if="!menuStore.collapsed" class="project-name">
         vue3-ts-admin
-      </span>
+      </span> -->
     </div>
     <a-menu
       mode="inline"

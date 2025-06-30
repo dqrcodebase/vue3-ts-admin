@@ -27,13 +27,13 @@ const hasChildren = computed(() => {
 });
 
 const handleClick = () => {
-  router.push(info.key);
+  router.push({ path: info.path });
   menuStore.openView(info);
 };
 </script>
 <template>
   <template v-if="hasChildren">
-    <a-sub-menu :key="info.key">
+    <a-sub-menu :key="info.path">
       <template #title>
         <div class="flex items-center">
           <span class="menu-icon mr-[6px]">
@@ -42,11 +42,11 @@ const handleClick = () => {
           <span class="menu-title">{{ info.title }}</span>
         </div>
       </template>
-      <layMenu v-for="item in info.children" :key="item.key" :info="item" />
+      <layMenu v-for="item in info.children" :key="item.path" :info="item" />
     </a-sub-menu>
   </template>
   <template v-else>
-    <a-menu-item :key="info.key" @click="handleClick" :icon="info.icon">
+    <a-menu-item :key="info.path" @click="handleClick" :icon="info.icon">
       <div class="flex items-center">
         <span class="menu-icon mr-[6px]">
           <Iconify :icon="info.icon" width="16" height="16" />

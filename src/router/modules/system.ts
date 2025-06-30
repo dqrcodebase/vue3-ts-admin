@@ -7,6 +7,7 @@ const userRoutes: RouterType[] = [
     meta: {
       title: '系统管理',
       icon: 'subway:settong',
+      isTopMenu: true,
     },
     children: [
       {

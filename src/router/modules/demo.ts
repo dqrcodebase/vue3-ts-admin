@@ -4,8 +4,9 @@ const demoRoutes: RouterType[] = [
     path: '/demo',
     component: Layouts,
     meta: {
-      title: '例子',
+      title: 'demo',
       icon: 'ep:scale-to-original',
+      isTopMenu: true,
     },
     children: [
       {
@@ -14,8 +15,25 @@ const demoRoutes: RouterType[] = [
         component: () => import('@/views/demo/largeAmountList/index.vue'),
         meta: {
           title: '海量数据列表',
-          closable: false,
         },
+      },
+      {
+        path: '/liquidGlass',
+        name: 'LiquidGlass',
+        meta: {
+          title: '液体玻璃',
+        },
+        children: [
+          {
+            path: '/liquidGlassFirstEdition',
+            name: 'LiquidGlassFirstEdition',
+            component: () =>
+              import('@/views/demo/liquidGlass/firstEdition.vue'),
+            meta: {
+              title: '液体玻璃初版',
+            },
+          },
+        ],
       },
     ],
   },

@@ -12,6 +12,7 @@ import { setStorage, clearStorage } from '@/utils/auth/index';
 import { store } from '../index';
 
 interface MenuState {
+  rootSubmenuKeys: string[];
   menuList: RouterType[];
   collapsed: boolean;
   openKeys: (string | never)[];
@@ -22,22 +23,25 @@ interface MenuState {
 }
 
 export interface MenuItem {
-  key: string;
+  path: string;
+  menuKey: Array<string>;
   title: string;
   children?: MenuItem[];
   icon?: any;
   closable?: boolean;
   parentPath?: string;
+  isTopMenu?: boolean;
 }
 
 const initVisitedViews: MenuItem[] = [
-  { key: '/home', title: '首页', closable: false },
+  { path: '/home', title: '首页', closable: false, menuKey: ['/'] },
 ];
 const initActiveViewKey: string = '/home';
 
 export const useMenuStore = defineStore('menu', {
   state: (): MenuState => {
     const initState: MenuState = {
+      rootSubmenuKeys: [], // 根级菜单key
       menuList: [], // 菜单列表
       collapsed: false, // 菜单是否收起
       openKeys: [], // 菜单展开的key
@@ -70,26 +74,27 @@ export const useMenuStore = defineStore('menu', {
       return this.menuList;
     },
     openView(view: MenuItem) {
-      const exists = this.visitedViews.some((v) => v.key === view.key);
+      const exists = this.visitedViews.some((v) => v.path === view.path);
       if (!exists) {
         this.visitedViews.push(view);
         this.setVisitedViews(this.visitedViews);
       }
-      this.setActiveViewKey(view.key);
-      this.setOpenViewKeys([view.parentPath || '']);
-      this.tabsViewChange(view.key);
+      this.setActiveViewKey(view.path);
+      this.setOpenViewKeys(view.menuKey);
+      this.tabsViewChange(view.path);
     },
-    tabsViewChange(key: string) {
-      this.setActiveViewKey(key);
-      const view = this.visitedViews.find((v) => v.key === key) as MenuItem;
-      this.selectedKeys = [key];
-      this.setOpenViewKeys([view.parentPath || '']);
+    tabsViewChange(path: string) {
+      this.setActiveViewKey(path);
+      const view = this.visitedViews.find((v) => v.path === path) as MenuItem;
+      this.selectedKeys = [path];
+      this.setOpenViewKeys(view.menuKey);
     },
     setVisitedViews(visitedViews: MenuItem[]) {
       setStorage('visitedViews', JSON.stringify(visitedViews));
     },
-    setActiveViewKey(key: string) {
-      this.activeViewKey = key;
+    setActiveViewKey(path: string) {
+      this.activeViewKey = path;
+
       setStorage('activeViewKey', this.activeViewKey);
     },
     setOpenViewKeys(latestOpenKey: string[]) {
