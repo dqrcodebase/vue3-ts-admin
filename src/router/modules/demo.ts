@@ -33,6 +33,15 @@ const demoRoutes: RouterType[] = [
               title: '液体玻璃初版',
             },
           },
+          {
+            path: '/liquidGlassUltimatelyEdition',
+            name: 'LiquidGlassUltimatelyEdition',
+            component: () =>
+              import('@/views/demo/liquidGlass/ultimatelyEdition.vue'),
+            meta: {
+              title: '液体玻璃终版',
+            },
+          },
         ],
       },
     ],

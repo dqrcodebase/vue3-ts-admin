@@ -74,13 +74,11 @@
     "vue-tsc": "^2.2.8"
   },
   "lint-staged": {
-    "ignore": [
-      "**/node_modules/**"
-    ],
     "**/*.{scss,vue}": [
       "npm run lint:style"
     ],
     "**/*.{js,jsx,tsx,ts,json}": [
+      "prettier --write ./src",
       "npm run lint:eslint"
     ]
   }

@@ -138,8 +138,6 @@
   </div>
 </template>
 <style lang="scss">
-
-
 @keyframes moveBackground {
   from {
     background-position: 0% 0%;
@@ -168,7 +166,7 @@
   inset: 0;
   z-index: 0;
   overflow: hidden;
-  filter: url("#glass-distortion");
+  filter: url('#glass-distortion');
   isolation: isolate;
   backdrop-filter: blur(3px);
 }
