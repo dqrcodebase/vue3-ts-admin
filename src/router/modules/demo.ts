@@ -10,11 +10,11 @@ const demoRoutes: RouterType[] = [
     },
     children: [
       {
-        path: '/largeAmountList',
-        name: 'LargeAmountList',
-        component: () => import('@/views/demo/largeAmountList/index.vue'),
+        path: '/verticalList',
+        name: 'VerticalList',
+        component: () => import('@/views/demo/verticalList/index.vue'),
         meta: {
-          title: '海量数据列表',
+          title: '虚拟列表',
         },
       },
       {

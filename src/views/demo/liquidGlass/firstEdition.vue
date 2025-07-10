@@ -1,7 +1,31 @@
-<script setup></script>
+<script setup>
+const open = ref(false);
+
+const showModal = () => {
+  open.value = true;
+};
+
+const handleOk = (e) => {
+  console.log(e);
+  open.value = false;
+};
+</script>
 
 <template>
   <div class="liquidGlass">
+    <div>
+      <a-button type="primary" @click="showModal">Open Modal</a-button>
+      <a-modal
+        v-if="open"
+        v-model:open="open"
+        title="Basic Modal"
+        @ok="handleOk"
+      >
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+        <p>Some contents...</p>
+      </a-modal>
+    </div>
     <svg style="display: none">
       <filter
         id="glass-distortion"
@@ -137,7 +161,7 @@
     </div>
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scoped>
 @keyframes moveBackground {
   from {
     background-position: 0% 0%;

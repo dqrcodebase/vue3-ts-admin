@@ -74,7 +74,6 @@ const handleMenuClick: MenuProps['onClick'] = (e) => {
         @click="toggleCollapsed"
       />
     </span>
-
     <a-tabs
       class="flex-1"
       v-model:activeKey="menuStore.activeViewKey"
