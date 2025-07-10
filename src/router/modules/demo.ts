@@ -15,6 +15,7 @@ const demoRoutes: RouterType[] = [
         component: () => import('@/views/demo/verticalList/index.vue'),
         meta: {
           title: '虚拟列表',
+          subMenuOpenKeys: ['/demo'],
         },
       },
       {
@@ -31,6 +32,7 @@ const demoRoutes: RouterType[] = [
               import('@/views/demo/liquidGlass/firstEdition.vue'),
             meta: {
               title: '液体玻璃初版',
+              subMenuOpenKeys: ['/demo', '/liquidGlass'],
             },
           },
           {
@@ -40,6 +42,7 @@ const demoRoutes: RouterType[] = [
               import('@/views/demo/liquidGlass/ultimatelyEdition.vue'),
             meta: {
               title: '液体玻璃终版',
+              subMenuOpenKeys: ['/demo', '/liquidGlass'],
             },
           },
         ],

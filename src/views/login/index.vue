@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { useLoginStore } from '@/store/modules/login';
-import { setStorage } from '@/utils/auth';
+import { setLocalStorage } from '@/utils/auth';
 import { type Router, type RouteLocationNormalizedLoaded } from 'vue-router';
 interface FormState {
   username: string;
@@ -30,7 +30,7 @@ const router: Router = useRouter();
 const route: RouteLocationNormalizedLoaded = useRoute();
 const onFinish = async (values: any) => {
   const { data } = await loginStore.loginByUsername(values);
-  setStorage('user-info', JSON.stringify(data));
+  setLocalStorage('user-info', JSON.stringify(data));
   // 页面跳转
   router.push((route.query.redirect as string) || '/');
 };

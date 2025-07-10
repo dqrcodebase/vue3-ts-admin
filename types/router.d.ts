@@ -11,5 +11,6 @@ declare global {
     icon?: any;
     isHide?: boolean;
     closable?: boolean;
+    subMenuOpenKeys?: string[];
   }
 }

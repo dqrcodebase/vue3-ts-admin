@@ -5,7 +5,7 @@ const publicRouter: RouterType[] = [
     component: () => import('@/views/login/index.vue'),
     meta: {
       title: '登录',
-      isHide: true,
+      isNotMenu: true,
     },
   },
 ];

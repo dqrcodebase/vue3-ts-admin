@@ -8,7 +8,7 @@
  *
  */
 import { defineStore } from 'pinia';
-import { setStorage, clearStorage } from '@/utils/auth/index';
+import { setSessionStorage, clearSessionStorage } from '@/utils/auth/index';
 import { store } from '../index';
 
 interface MenuState {
@@ -24,17 +24,16 @@ interface MenuState {
 
 export interface MenuItem {
   path: string;
-  menuKey: Array<string>;
+  subMenuOpenKeys: Array<string>;
   title: string;
   children?: MenuItem[];
   icon?: any;
   closable?: boolean;
-  parentPath?: string;
   isTopMenu?: boolean;
 }
 
 const initVisitedViews: MenuItem[] = [
-  { path: '/home', title: '首页', closable: false, menuKey: ['/'] },
+  { path: '/home', title: '首页', closable: false, subMenuOpenKeys: ['/'] },
 ];
 const initActiveViewKey: string = '/home';
 
@@ -53,6 +52,7 @@ export const useMenuStore = defineStore('menu', {
 
     // 持久化状态初始话
     try {
+      console.log('11111');
       return {
         ...initState,
         openKeys: JSON.parse(
@@ -66,6 +66,8 @@ export const useMenuStore = defineStore('menu', {
         selectedKeys: [localStorage.getItem('activeViewKey') || ''],
       };
     } catch {
+      console.log('33333');
+
       return initState;
     }
   },
@@ -80,29 +82,29 @@ export const useMenuStore = defineStore('menu', {
         this.setVisitedViews(this.visitedViews);
       }
       this.setActiveViewKey(view.path);
-      this.setOpenViewKeys(view.menuKey);
+      this.setOpenViewKeys(view.subMenuOpenKeys);
       this.tabsViewChange(view.path);
     },
     tabsViewChange(path: string) {
       this.setActiveViewKey(path);
       const view = this.visitedViews.find((v) => v.path === path) as MenuItem;
       this.selectedKeys = [path];
-      this.setOpenViewKeys(view.menuKey);
+      this.setOpenViewKeys(view.subMenuOpenKeys);
     },
     setVisitedViews(visitedViews: MenuItem[]) {
-      setStorage('visitedViews', JSON.stringify(visitedViews));
+      setSessionStorage('visitedViews', JSON.stringify(visitedViews));
     },
     setActiveViewKey(path: string) {
       this.activeViewKey = path;
 
-      setStorage('activeViewKey', this.activeViewKey);
+      setSessionStorage('activeViewKey', this.activeViewKey);
     },
     setOpenViewKeys(latestOpenKey: string[]) {
       this.openKeys = latestOpenKey;
-      setStorage('openKeys', JSON.stringify(this.openKeys));
+      setSessionStorage('openKeys', JSON.stringify(this.openKeys));
     },
     clearView() {
-      clearStorage();
+      clearSessionStorage();
     },
   },
 });

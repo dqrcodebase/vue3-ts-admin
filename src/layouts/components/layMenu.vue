@@ -28,7 +28,7 @@ const hasChildren = computed(() => {
 
 const handleClick = () => {
   router.push({ path: info.path });
-  menuStore.openView(info);
+  // menuStore.openView(info);
 };
 </script>
 <template>

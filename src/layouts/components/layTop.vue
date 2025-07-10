@@ -2,7 +2,11 @@
 import { useMenuStore } from '@/store/modules/menu';
 import { MenuItem } from '@/store/modules/menu';
 import type { MenuProps } from 'ant-design-vue';
-import { clearStorage, clearToken } from '@/utils/auth/index';
+import {
+  clearLocalStorage,
+  clearSessionStorage,
+  clearToken,
+} from '@/utils/auth/index';
 const router = useRouter();
 const emit = defineEmits(['collapsed']);
 const route = useRoute();
@@ -27,7 +31,7 @@ let remove = (targetPath: string) => {
     menuStore.setVisitedViews(panes.value);
     if (targetPath === menuStore.activeViewKey) {
       router.push({ path: pane.path });
-      menuStore.tabsViewChange(pane.path);
+      // menuStore.tabsViewChange(pane.path);
     }
   }
 };
@@ -43,13 +47,14 @@ const toggleCollapsed = () => {
 };
 const onChangeTabs = (path: string) => {
   router.push({ path: path });
-  menuStore.tabsViewChange(path);
+  // menuStore.tabsViewChange(path);
 };
 
 const visible = ref(false);
 const handleMenuClick: MenuProps['onClick'] = (e) => {
   if (e.key === '3') {
-    clearStorage();
+    clearLocalStorage();
+    clearSessionStorage();
     clearToken();
     // 拼接地址需要转译一下
     window.location.href = '/login?redirect=' + encodeURIComponent(route.path);

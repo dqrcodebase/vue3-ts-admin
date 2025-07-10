@@ -9,6 +9,7 @@
  */
 import { createWebHistory, createRouter } from 'vue-router';
 import { type Router } from 'vue-router';
+import { type MenuItem } from '@/store/modules/menu';
 import { getToken } from '@/utils/auth';
 import { useMenuStoreHook } from '@/store/modules/menu';
 
@@ -37,7 +38,7 @@ const routesFlat = routeModuleList.flat(1);
 // 参与菜单渲染的路由
 export const menuRoutes: RouterType[] = routesFlat.filter(
   (item: RouterType) => {
-    return !item.meta.isHide;
+    return !item.meta.isNotMenu;
   },
 );
 const router: Router = createRouter({
@@ -60,13 +61,16 @@ router.beforeEach((to, _from) => {
     };
   }
 
-  // const info: MenuItem = {
-  //   key: to.path,
-  //   title: to.meta.title as string,
-  //   closable: true,
-  //   parentPath: to.meta.parentPath as string,
-  // }
-  // menuStore.openView(info)
+  if (!to.meta.isNotMenu) {
+    const info: MenuItem = {
+      path: to.path,
+      subMenuOpenKeys: to.meta.subMenuOpenKeys as string[],
+      title: to.meta.title as string,
+      closable: to.meta.closable as boolean | undefined,
+    };
+    menuStore.openView(info);
+  }
+
   return true;
 });
 export default router;

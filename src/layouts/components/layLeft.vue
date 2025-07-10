@@ -19,7 +19,7 @@ const menuList = computed(() => menuStore.menuList);
 const renderMenu = (
   routes: RouterType[],
   basePath: string = '',
-  menuKey: string[] = [],
+  subMenuOpenKeys: string[] = [],
 ): MenuItem[] => {
   return routes
     .filter((route) => !route.meta?.isHide)
@@ -29,18 +29,17 @@ const renderMenu = (
         ? route.path
         : `${basePath}/${route.path}`.replace(/\/+/g, '/');
       const key = [];
-      if (route.meta.isTopMenu) menuKey = [];
-      if (route.children) menuKey.push(route.path);
-      key.push(...menuKey);
+      if (route.meta.isTopMenu) subMenuOpenKeys = [];
+      if (route.children) subMenuOpenKeys.push(route.path);
+      key.push(...subMenuOpenKeys);
       const item: MenuItem = {
         path: fullPath,
-        menuKey: key,
+        subMenuOpenKeys: key,
         title: route.meta.title,
         closable: route.meta.closable,
-        parentPath: basePath,
         icon: route.meta?.icon || undefined,
         children: route.children
-          ? renderMenu(route.children, fullPath, menuKey)
+          ? renderMenu(route.children, fullPath, subMenuOpenKeys)
           : undefined,
       };
       return item;
@@ -59,7 +58,6 @@ watch(
   },
 );
 const onOpenChange = (openKeys: string[]): void => {
-  const openKey = ['/demo'];
   const latestOpenKey = openKeys.find(
     (key) => menuStore.openKeys.indexOf(key) === -1,
   );
@@ -85,7 +83,7 @@ const onOpenChange = (openKeys: string[]): void => {
       :open-keys="menuStore.openKeys"
       v-model:selectedKeys="menuStore.selectedKeys"
     >
-      <layMenu v-for="child in menuItems" :key="child.key" :info="child" />
+      <layMenu v-for="child in menuItems" :key="child.path" :info="child" />
     </a-menu>
   </div>
 </template>

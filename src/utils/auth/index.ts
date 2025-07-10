@@ -21,12 +21,22 @@ export function getToken() {
 export function clearToken() {
   Cookies.remove(TokenKey);
 }
-export function setStorage(key: string, value: string) {
+export function setLocalStorage(key: string, value: string) {
   localStorage.setItem(key, value);
 }
-export function getStorage(key: string) {
+export function getLocalStorage(key: string) {
   return localStorage.getItem(key);
 }
-export function clearStorage() {
+export function clearLocalStorage() {
   localStorage.clear();
+}
+
+export function setSessionStorage(key: string, value: string) {
+  sessionStorage.setItem(key, value);
+}
+export function getSessionStorage(key: string) {
+  return sessionStorage.getItem(key);
+}
+export function clearSessionStorage() {
+  sessionStorage.clear();
 }
