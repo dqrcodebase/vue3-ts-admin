@@ -14,7 +14,7 @@ module.exports = {
     ecmaVersion: 'latest',
     sourceType: 'module',
     parser: '@typescript-eslint/parser',
-    jsxPragma: 'React',
+    jsxPragma: 'Vue',
     ecmaFeatures: {
       jsx: true,
     },
