@@ -52,7 +52,6 @@ export const useMenuStore = defineStore('menu', {
 
     // 持久化状态初始话
     try {
-      console.log('11111');
       return {
         ...initState,
         openKeys: JSON.parse(

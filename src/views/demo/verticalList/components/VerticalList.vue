@@ -1,59 +1,24 @@
-<script setup>
-import { faker } from 'https://esm.sh/@faker-js/faker';
-// fn是我们需要包装的事件回调, delay是时间间隔的阈值
-function throttle(fn, delay) {
-  // last为上一次触发回调的时间, timer是定时器
-  let last = 0,
-    timer = null;
-  // 将throttle处理结果当作函数返回
-
-  return function () {
-    // 保留调用时的this上下文
-    let context = this;
-    // 保留调用时传入的参数
-    let args = arguments;
-    // 记录本次触发回调的时间
-    let now = +new Date();
-
-    // 判断上次触发的时间和本次触发的时间差是否小于时间间隔的阈值
-    if (now - last < delay) {
-      // 如果时间间隔小于我们设定的时间间隔阈值，则为本次触发操作设立一个新的定时器
-      clearTimeout(timer);
-      timer = setTimeout(function () {
-        last = now;
-        fn.apply(context, args);
-      }, delay);
-    } else {
-      // 如果时间间隔超出了我们设定的时间间隔阈值，那就不等了，无论如何要反馈给用户一次响应
-      last = now;
-      fn.apply(context, args);
-    }
-  };
+<script setup lang="ts">
+interface Props {
+  listData: object[];
+  slotHeight: number;
+  itemRefs: Ref<HTMLDivElement[]>;
 }
-// 列表数据
-const listData = ref(
-  new Array(1000)
-    .fill({})
-    .map((item, index) => ({ index, text: faker.lorem.sentences() })),
-);
-// 预估子项高度
-const estimateHeight = ref(100);
-// 子项位置集合
-const itemPositions = ref({});
-// 子项元素集合
-const itemRefs = ref([]);
+const props = withDefaults(defineProps<Props>(), {
+  listData: () => [],
+});
+const { listData, slotHeight, itemRefs } = toRefs(props);
+const emit = defineEmits(['scrollBottom', 'slotUpdate']);
+// 可视区示例
+const containerRef = ref<HTMLDivElement>();
+// 内容可见区
+const contentRef = ref<HTMLDivElement>();
 // 可视区数据
 const visibleInfo = reactive({
   startIndex: 0, // 起始索引
   endIndex: 0, // 结束索引
   height: 0, // 可视区高度
-  count: 0, // 可视区子项个数
-});
-// 可视区内容
-const visibleData = computed(() => {
-  const start = visibleInfo.startIndex - aboveCount.value;
-  const end = visibleInfo.endIndex + belowCount.value;
-  return listData.value.slice(start, end);
+  count: 5, // 可视区子项个数
 });
 // 缓冲区比例（缓冲区数据与可视区数据的比例）
 const bufferRatio = 1;
@@ -68,121 +33,77 @@ const belowCount = computed(() => {
     visibleInfo.count * bufferRatio,
   );
 });
+// 可视区内容
+const visibleData = computed(() => {
+  const start = visibleInfo.startIndex;
+  const end = visibleInfo.startIndex + visibleInfo.count;
+  return listData.value.slice(start, end);
+});
 // 内容区需要被撑开的高度
 const phantomHeight = ref(0);
-// 可视区示例
-const containerRef = ref(null);
-// 偏移量
-const startOffset = ref(0);
-// 偏移量对应的style：滚动后偏移多少子项元素 需要增补回来
-const getTransform = computed(() => `translate3d(0,${startOffset.value}px,0)`);
+onUpdated(() => {
+  console.log('444444');
 
-// 初始化
-onMounted(() => {
-  // step1: 计算可视区高度、内容区撑开高度
-  visibleInfo.height = containerRef.value.clientHeight;
-  phantomHeight.value = listData.value.length * estimateHeight.value;
-
-  // step2: 根据预估高度来初始化可视区索引、可视区展示子项个数
-  visibleInfo.startIndex = 0;
-  visibleInfo.count = Math.ceil(visibleInfo.height / estimateHeight.value);
-  visibleInfo.endIndex = visibleInfo.startIndex + visibleInfo.count;
-
-  // step3：初始化 itemPositions 用来记录每个子项的高度及起止距离
-  itemPositions.value = listData.value.map((item, index) => {
-    return {
-      index,
-      top: index * estimateHeight.value,
-      bottom: (index + 1) * estimateHeight.value,
-      height: estimateHeight.value,
-    };
-  });
+  emit('slotUpdate');
 });
-// 监听子项高度变动
-onUpdated(
-  throttle(() => {
-    if (!itemRefs.value || !itemRefs.value.length) return;
-    // 计算更新可视区子项位置集合
-    computedVisualSize();
-    // 计算虚拟占位高度
-    phantomHeight.value =
-      itemPositions.value[itemPositions.value.length - 1].bottom;
-    // 计算偏移量
-    getOffsetY();
-  }, 100),
-);
-// 计算更新可视区子项位置集合
-const computedVisualSize = () => {
-  itemRefs.value.map((item) => {
-    const id = +item.id;
-    const curHeight = item.clientHeight;
-    const oldHeight = itemPositions.value[id].height;
-    const dValue = curHeight - oldHeight;
-    if (dValue) {
-      itemPositions.value[id].height = curHeight;
-      itemPositions.value[id].bottom = itemPositions.value[id].bottom + dValue;
+onMounted(() => {
+  emit('slotUpdate');
+});
 
-      for (let index = id + 1; index < itemPositions.value.length; index++) {
-        itemPositions.value[index].top =
-          itemPositions.value[index].top + dValue;
-        itemPositions.value[index].bottom =
-          itemPositions.value[index].bottom + dValue;
-      }
-    }
-  });
-};
-// 获取偏移量
-const getOffsetY = () => {
-  // 实际滑出可视区个数
-  const realStart = visibleInfo.startIndex - aboveCount.value;
-  if (realStart) {
-    startOffset.value = itemPositions.value[realStart].top;
+watch(listData.value, (newVal, oldVal) => {
+  visibleInfo.startIndex += 1;
+  visibleInfo.endIndex += 1;
+});
+watch(slotHeight, (newVal, oldVal) => {
+  console.log('🚀 ~ watch ~ slotHeight:', slotHeight);
+  if (slotHeight.value < containerRef.value!.clientHeight) {
+    visibleInfo.count += 1;
+    visibleInfo.endIndex = visibleInfo.startIndex + visibleInfo.count;
   } else {
-    startOffset.value = 0;
+    phantomHeight.value = computedVisualSize(itemRefs.value);
   }
-};
-// 监听可视区滚动事件
-const scrollEvent = throttle((e) => {
-  const scrollTop = e.target.scrollTop;
-  visibleInfo.startIndex = getStartIndex(scrollTop);
-  visibleInfo.endIndex = visibleInfo.startIndex + visibleInfo.count;
-  startOffset.value = getOffsetY();
-}, 100);
-// 二分法查找初始索引
-const getStartIndex = (scrollTop) => {
-  let start = 0;
-  let end = listData.value.length - 1;
-  let tempIndex = null;
-  while (start <= end) {
-    const midIndex = parseInt(String((end + start) / 2));
-    const midBottom = itemPositions.value[midIndex].bottom;
-    if (midBottom === scrollTop) {
-      tempIndex = midIndex + 1;
-      return tempIndex;
-    } else if (midBottom < scrollTop) {
-      start = midIndex + 1;
-    } else if (midBottom > scrollTop) {
-      if (tempIndex === null || tempIndex > midIndex) {
-        tempIndex = midIndex;
-      }
-      end = end - 1;
+});
+watch(itemRefs.value, (newVal, oldVal) => {
+  console.log('🚀 ~ watch ~ itemRefs.value:', itemRefs.value);
+  phantomHeight.value += itemRefs.value[visibleInfo.endIndex - 1].clientHeight;
+});
+function scrollEvent(e) {
+  const contentHeight = Math.floor(contentRef.value!.clientHeight);
+  if (e.target.scrollTop + containerRef.value!.clientHeight >= contentHeight) {
+    if (visibleInfo.endIndex < listData.value.length) {
+      visibleInfo.startIndex += 1;
+      visibleInfo.endIndex += 1;
+    } else {
+      emit('scrollBottom');
     }
   }
-  return tempIndex;
-};
+}
+// 计算更新可视区子项位置集合
+function computedVisualSize(itemRefs: HTMLDivElement[]) {
+  let height = 0;
+  itemRefs.map((item) => {
+    const curHeight = item.clientHeight;
+    height += curHeight;
+  });
+  return height;
+}
 </script>
 
 <template>
   <!-- 虚拟列表：固定子项高度 -->
   <div id="app">
     <!-- 可视区(container) -->
-    <!-- 可视区(container) -->
     <div ref="containerRef" class="container" @scroll="scrollEvent">
       <!-- 内容虚拟撑开区(phantom) -->
       <div class="phantom" :style="{ height: phantomHeight + 'px' }"></div>
       <!-- 内容可见区(content) -->
-      <div class="content" :style="{ transform: getTransform }">
-        <div
+      <div
+        class="content"
+        ref="contentRef"
+        :style="{ transform: getTransform }"
+      >
+        <slot ref="slotRef" :visibleData="visibleData"></slot>
+        <!-- <div
           v-for="item in visibleData"
           :key="item.index"
           class="content-item"
@@ -190,9 +111,10 @@ const getStartIndex = (scrollTop) => {
           :id="item.index"
         >
           {{ item.text }}
-        </div>
+        </div> -->
       </div>
     </div>
+    <!-- <div v-for="item in listData" :key="item.index">{{ item.text }}</div> -->
   </div>
 </template>
 

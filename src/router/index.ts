@@ -46,7 +46,6 @@ const router: Router = createRouter({
   routes: routesFlat,
 });
 router.beforeEach((to, _from) => {
-  console.log('🚀 ~ router.beforeEach ~ to:', to);
   const token = getToken();
   const isAuthenticated = !publicPaths.includes(to.path);
   if (token && to.path === '/login') {
