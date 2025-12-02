@@ -1,145 +1,157 @@
-<script setup lang="ts">
-interface Props {
-  listData: object[];
-  slotHeight: number;
-  itemRefs: Ref<HTMLDivElement[]>;
-}
-const props = withDefaults(defineProps<Props>(), {
-  listData: () => [],
-});
-const { listData, slotHeight, itemRefs } = toRefs(props);
-const emit = defineEmits(['scrollBottom', 'slotUpdate']);
-// 可视区示例
-const containerRef = ref<HTMLDivElement>();
-// 内容可见区
-const contentRef = ref<HTMLDivElement>();
-// 可视区数据
-const visibleInfo = reactive({
-  startIndex: 0, // 起始索引
-  endIndex: 0, // 结束索引
-  height: 0, // 可视区高度
-  count: 5, // 可视区子项个数
-});
-// 缓冲区比例（缓冲区数据与可视区数据的比例）
-const bufferRatio = 1;
-// 起始缓冲数量
-const aboveCount = computed(() => {
-  return Math.min(visibleInfo.startIndex, visibleInfo.count * bufferRatio);
-});
-// 终止缓冲数量
-const belowCount = computed(() => {
-  return Math.min(
-    listData.value.length - visibleInfo.endIndex,
-    visibleInfo.count * bufferRatio,
-  );
-});
-// 可视区内容
-const visibleData = computed(() => {
-  const start = visibleInfo.startIndex;
-  const end = visibleInfo.startIndex + visibleInfo.count;
-  return listData.value.slice(start, end);
-});
-// 内容区需要被撑开的高度
-const phantomHeight = ref(0);
-onUpdated(() => {
-  console.log('444444');
-
-  emit('slotUpdate');
-});
-onMounted(() => {
-  emit('slotUpdate');
-});
-
-watch(listData.value, (newVal, oldVal) => {
-  visibleInfo.startIndex += 1;
-  visibleInfo.endIndex += 1;
-});
-watch(slotHeight, (newVal, oldVal) => {
-  console.log('🚀 ~ watch ~ slotHeight:', slotHeight);
-  if (slotHeight.value < containerRef.value!.clientHeight) {
-    visibleInfo.count += 1;
-    visibleInfo.endIndex = visibleInfo.startIndex + visibleInfo.count;
-  } else {
-    phantomHeight.value = computedVisualSize(itemRefs.value);
-  }
-});
-watch(itemRefs.value, (newVal, oldVal) => {
-  console.log('🚀 ~ watch ~ itemRefs.value:', itemRefs.value);
-  phantomHeight.value += itemRefs.value[visibleInfo.endIndex - 1].clientHeight;
-});
-function scrollEvent(e) {
-  const contentHeight = Math.floor(contentRef.value!.clientHeight);
-  if (e.target.scrollTop + containerRef.value!.clientHeight >= contentHeight) {
-    if (visibleInfo.endIndex < listData.value.length) {
-      visibleInfo.startIndex += 1;
-      visibleInfo.endIndex += 1;
-    } else {
-      emit('scrollBottom');
-    }
-  }
-}
-// 计算更新可视区子项位置集合
-function computedVisualSize(itemRefs: HTMLDivElement[]) {
-  let height = 0;
-  itemRefs.map((item) => {
-    const curHeight = item.clientHeight;
-    height += curHeight;
-  });
-  return height;
-}
-</script>
-
+<!--
+ * @Author: dqr
+ * @Date: 2025-11-06 15:00:07
+ * @LastEditors: D Q R 852601818@qq.com
+ * @LastEditTime: 2025-12-02 09:56:49
+ * @FilePath: /vue3-ts-admin/src/views/demo/verticalList/components/VerticalList.vue
+ * @Description: 
+ * 
+-->
 <template>
-  <!-- 虚拟列表：固定子项高度 -->
-  <div id="app">
-    <!-- 可视区(container) -->
-    <div ref="containerRef" class="container" @scroll="scrollEvent">
-      <!-- 内容虚拟撑开区(phantom) -->
-      <div class="phantom" :style="{ height: phantomHeight + 'px' }"></div>
-      <!-- 内容可见区(content) -->
+  <div ref="container" class="container" @scroll="handleScroll($event)">
+    <div class="placeholder" :style="{ height: listHeight + 'px' }"></div>
+    <div class="list-wrapper" :style="{ transform: getTransform }">
       <div
-        class="content"
-        ref="contentRef"
-        :style="{ transform: getTransform }"
+        class="card-item"
+        v-for="item in renderList"
+        :key="item.index"
+        ref="itemRefs"
+        :data-index="item.index"
       >
-        <slot ref="slotRef" :visibleData="visibleData"></slot>
-        <!-- <div
-          v-for="item in visibleData"
-          :key="item.index"
-          class="content-item"
-          ref="itemRefs"
-          :id="item.index"
-        >
-          {{ item.text }}
-        </div> -->
+        <span style="color: red"
+          >{{ item.index }}
+          <img width="200" :src="item.imgUrl" alt="" />
+        </span>
+        {{ item.value }}
       </div>
     </div>
-    <!-- <div v-for="item in listData" :key="item.index">{{ item.text }}</div> -->
   </div>
 </template>
 
-<style scoped lang="scss">
+<script setup lang="ts">
+import { ref, computed, watch, onMounted, onUpdated } from "vue";
+const { listData, itemSize } = defineProps({
+  // 列表数据
+  listData: {
+    type: Array,
+    default: () => [],
+  },
+  // 预估item高度，不是真实item高度
+  itemSize: {
+    type: Number,
+    default: 300,
+  },
+});
+
+const container = ref(null);
+const containerHeight = ref(0);
+const start = ref(0);
+const offset = ref(0);
+const itemRefs = ref();
+const positions = ref<
+  {
+    index: number;
+    height: number;
+    top: number;
+    bottom: number;
+  }[]
+>([]);
+
+const end = computed(() => start.value + renderCount.value);
+const renderList = computed(() => listData.slice(start.value, end.value + 1));
+const renderCount = computed(() => Math.ceil(containerHeight.value / itemSize));
+const listHeight = computed(
+  () => positions.value[positions.value.length - 1].bottom
+);
+const getTransform = computed(() => `translate3d(0,${offset.value}px,0)`);
+
+watch(() => listData, initPosition, {
+  immediate: true,
+});
+
+function handleScroll(e: Event) {
+  const scrollTop = (e.target as HTMLElement).scrollTop;
+  start.value = getStart(scrollTop);
+  offset.value = positions.value[start.value].top;
+}
+
+function getStart(scrollTop: number) {
+  let left = 0;
+  let right = positions.value.length - 1;
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+    if (positions.value[mid].bottom === scrollTop) {
+      return mid + 1;
+    } else if (positions.value[mid].bottom < scrollTop) {
+      left = mid + 1;
+    } else {
+      right = mid - 1;
+    }
+  }
+  return left;
+}
+
+function initPosition() {
+  positions.value = [];
+  listData.forEach((_item, index) => {
+    positions.value.push({
+      index,
+      height: itemSize,
+      top: index * itemSize,
+      bottom: (index + 1) * itemSize,
+    });
+  });
+
+
+}
+
+function updatePosition() {
+  itemRefs.value.forEach((el) => {
+    const index = +el.getAttribute("data-index");
+    const realHeight = el.getBoundingClientRect().height;
+    let diffVal = positions.value[index].height - realHeight;
+    const curItem = positions.value[index];
+    if (diffVal !== 0) {
+      // 说明item的高度不等于预估值
+      curItem.height = realHeight;
+      curItem.bottom = curItem.bottom - diffVal;
+      for (let i = index + 1; i < positions.value.length - 1; i++) {
+        positions.value[i].top = positions.value[i].top - diffVal;
+        positions.value[i].bottom = positions.value[i].bottom - diffVal;
+      }
+    }
+  });
+}
+
+onMounted(() => {
+  containerHeight.value = container.value.clientHeight;
+});
+
+onUpdated(() => {
+  updatePosition();
+
+});
+</script>
+
+<style scoped>
 .container {
-  position: relative;
-  width: 300px;
-  height: 500px;
+  height: 100%;
   overflow: auto;
-  background-color: aqua;
-  -webkit-overflow-scrolling: touch;
+  position: relative;
 }
 
-.content {
+.placeholder {
   position: absolute;
-  top: 0;
   left: 0;
-  width: 100%;
-  background-color: yellow;
+  top: 0;
+  right: 0;
+  z-index: -1;
 }
 
-.content-item {
+.card-item {
+  padding: 10px;
+  color: #777;
   box-sizing: border-box;
-  color: #333;
-  text-align: center;
-  border: 1px solid #ddd;
+  border-bottom: 1px solid #e1e1e1;
 }
 </style>
