@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-28 11:33:42
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-19 16:46:48
+ * @LastEditTime: 2026-03-02 15:51:24
  * @FilePath: /vue3-ts-admin/src/layouts/components/layLeft.vue
  * @Description: 
  * 
@@ -11,10 +11,10 @@
 import { useMenuStore } from '@/store/modules/menu';
 import { type MenuItem } from '@/store/modules/menu';
 import layMenu from './layMenu.vue';
-import { menuRoutes } from '@/router/index';
+// import { menuRoutes } from '@/router/index';
 
 const menuStore = useMenuStore();
-menuStore.menuList = menuRoutes;
+// menuStore.menuList = menuRoutes;
 const menuList = computed(() => menuStore.menuList);
 const renderMenu = (
   routes: RouterType[],

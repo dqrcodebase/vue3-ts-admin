@@ -2,7 +2,7 @@
  * @Author: dqr
  * @Date: 2025-05-22 11:29:46
  * @LastEditors: D Q R 852601818@qq.com
- * @LastEditTime: 2025-06-20 17:46:31
+ * @LastEditTime: 2026-03-03 10:46:23
  * @FilePath: /vue3-ts-admin/src/views/login/index.vue
  * @Description: 
  * 
@@ -32,7 +32,9 @@ const onFinish = async (values: any) => {
   const { data } = await loginStore.loginByUsername(values);
   setLocalStorage('user-info', JSON.stringify(data));
   // 页面跳转
-  router.push((route.query.redirect as string) || '/');
+  const redirect = route.query.redirect as string || '/';
+  console.log("🚀 ~ onFinish ~ redirect:", redirect)
+  router.push(redirect);
 };
 
 const onFinishFailed = (errorInfo: any) => {

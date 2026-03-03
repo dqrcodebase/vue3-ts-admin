@@ -9,7 +9,7 @@
  */
 // import { CacheKey } from "@/common/cacheKey"
 import Cookies from 'js-cookie';
-
+import type { RouteRecordRaw } from 'vue-router'
 export const TokenKey = 'authorized-token';
 
 export function setToken(token: string) {
@@ -39,4 +39,23 @@ export function getSessionStorage(key: string) {
 }
 export function clearSessionStorage() {
   sessionStorage.clear();
+}
+export function filterRoutes(
+  routes: RouteRecordRaw[],
+  routeSet: Set<string>
+): RouteRecordRaw[] {
+  const res: RouteRecordRaw[] = []
+
+  routes.forEach(route => {
+    const tmp = { ...route }
+
+    if (route.meta?.id && routeSet.has(route.meta.id)) {
+      if (tmp.children) {
+        tmp.children = filterRoutes(tmp.children, routeSet)
+      }
+      res.push(tmp)
+    }
+  })
+
+  return res
 }
